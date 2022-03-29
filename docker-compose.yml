@@ -1,12 +1,22 @@
-version: '3'
+version: '3.7'
 
 services:
   db:
     image: mariadb
+    volumes:
+      - capstone_db_data:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: example
 
   web:
     build: .
     volumes:
-      - .:/usr/src/app
+      - ./:/usr/src/app
     ports:
       - "5000:5000"
+    depends_on:
+      - db
+
+
+volumes:
+  capstone_db_data:
