@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'capstone.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jobfindr',
+        'NAME': 'capstone_db',
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_PASS'],
-        'HOST': 'localhost',
+        'HOST': '172.24.0.2',
         'PORT': '3306',
     }
 }

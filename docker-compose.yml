@@ -6,7 +6,11 @@ services:
     volumes:
       - capstone_db_data:/var/lib/mysql
     environment:
-      MARIADB_ROOT_PASSWORD: example
+      MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASS}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
+      MARIADB_USER: "${DB_USER}"
+      MARIADB_PASSWORD: "${DB_PASS}"
+      MARIADB_DATABASE: capstone_db
 
   web:
     build: .
