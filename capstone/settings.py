@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'capstone_db',
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_PASS'],
-        'HOST': 'db',
+        'HOST':  os.environ['DB_HOST'] if os.environ.get('IS_CONTAINER') else '127.0.0.1',
         'PORT': '3306',
     }
 }

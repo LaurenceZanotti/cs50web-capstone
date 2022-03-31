@@ -22,6 +22,8 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    environment:
+      - IS_CONTAINER=1
 
 
 volumes:
