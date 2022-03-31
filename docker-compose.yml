@@ -5,6 +5,8 @@ services:
     image: mariadb
     volumes:
       - capstone_db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
     environment:
       MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASS}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
