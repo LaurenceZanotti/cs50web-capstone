@@ -34,6 +34,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Upgrade Chrome Browser
+      run: |
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
+        google-chrome --version
     - name: Run Tests
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
