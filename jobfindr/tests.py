@@ -1,7 +1,8 @@
-from webbrowser import Chrome
 from django.test import TestCase, Client, LiveServerTestCase
 from selenium import webdriver
+from selenium.webdriver import ChromeOptions
 from chromedriver_py import binary_path
+import os
 
 # Create your tests here.
 class IndexTests(TestCase):
@@ -15,7 +16,10 @@ class SeleniumIndexTests(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.selenium = webdriver.Chrome(binary_path)
+        chrome_options = ChromeOptions()
+        if os.environ.get('IS_CICD_TESTING'):
+            chrome_options.add_argument('--headless')
+        cls.selenium = webdriver.Chrome(binary_path, options=chrome_options)
         cls.selenium.implicitly_wait(10)
 
     @classmethod
