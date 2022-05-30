@@ -14,7 +14,7 @@ services:
       MARIADB_PASSWORD: "${DB_PASS}"
       MARIADB_DATABASE: capstone_db
 
-  web:
+  api:
     build: .
     volumes:
       - ./:/usr/src/app
@@ -25,6 +25,15 @@ services:
     environment:
       - IS_CONTAINER=1
 
+  front:
+    build: ./jobfindr_frontend
+    volumes:
+      - ./jobfindr_frontend:/usr/src/app_front
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - api
+    command: npm run dev
 
 volumes:
   capstone_db_data:
