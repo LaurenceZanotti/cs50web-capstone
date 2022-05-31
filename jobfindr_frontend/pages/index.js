@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 
 export default function Home({data}) {
   return (
-    <div>{data.msg}</div>
+    <main>{data.msg}</main>
   )
 }
 
