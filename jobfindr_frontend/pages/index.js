@@ -9,7 +9,7 @@ export default function Home({data}) {
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch('http://capstone-api-1:5000/api/hello')
+  const res = await fetch('http://host.docker.internal:5000/api/hello')
   const data = await res.json()
   // console.log(data);
 
