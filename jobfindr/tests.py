@@ -4,7 +4,8 @@ from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
 import os
 
-CONTAINER_URL = 'http://capstone-front-1:3000'
+DOMAIN = 'host.docker.internal'
+CONTAINER_URL = f'http://{DOMAIN}:3000'
 
 # Create your tests here.
 class IndexTests(TestCase):
@@ -22,7 +23,7 @@ class SeleniumIndexTests(LiveServerTestCase):
         if os.environ.get('IS_CICD_TESTING'):
             chrome_options.add_argument('--headless')
         cls.selenium = webdriver.Remote(
-            command_executor='http://capstone-selenium-1:4444', 
+            command_executor='http://host.docker.internal:4444', 
             options=chrome_options
         )
         # cls.selenium = webdriver.Chrome(options=chrome_options)

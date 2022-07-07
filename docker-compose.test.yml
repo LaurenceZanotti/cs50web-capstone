@@ -49,6 +49,8 @@ services:
     ports:
       - "6666:6666"
     depends_on:
+      - front
+      - selenium
       - db
     environment:
       - IS_CONTAINER=1
