@@ -31,7 +31,14 @@ services:
       - db
     environment:
       IS_CONTAINER: 1
+      IS_CICD_TESTING: 1
       SECRET_KEY: "${SECRET_KEY}"
+      DB_HOST: "${DB_HOST}"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+      DB_TEST_USER: "${DB_TEST_USER}"
+      DB_TEST_PASS: "${DB_TEST_PASS}"
+
     
   front:
     build: ./jobfindr_frontend
