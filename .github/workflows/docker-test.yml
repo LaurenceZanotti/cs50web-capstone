@@ -7,7 +7,11 @@ jobs:
       MARIADB_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASS }}
       MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASS }}
       MARIADB_USER: ${{ secrets.DB_USER }}
+      DB_ROOT_PASS: ${{ secrets.DB_ROOT_PASS }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
       MARIADB_PASSWORD: ${{ secrets.DB_PASS }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
       MARIADB_DATABASE: capstone_db
       IS_CONTAINER: 1
       IS_CICD_TESTING: 1
