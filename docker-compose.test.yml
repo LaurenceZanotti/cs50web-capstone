@@ -29,6 +29,10 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    restart_policy:
+      condition: on-failure
+      max_attempts: 5
+      window: 15s
     environment:
       IS_CONTAINER: 1
       IS_CICD_TESTING: 1
@@ -60,9 +64,12 @@ services:
       - front
       - selenium
       - db
+      - api
     environment:
-      - IS_CONTAINER=1
-      - IS_CICD_TESTING=1
+      IS_CONTAINER: 1
+      IS_CICD_TESTING: 1
+      SECRET_KEY: "${SECRET_KEY}"
+
     command: python manage.py test --keepdb
 
 volumes:
