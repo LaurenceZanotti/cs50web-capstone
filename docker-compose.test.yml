@@ -29,10 +29,7 @@ services:
       - "5000:5000"
     depends_on:
       - db
-    restart_policy:
-      condition: on-failure
-      max_attempts: 5
-      window: 15s
+    restart: on-failure
     environment:
       IS_CONTAINER: 1
       IS_CICD_TESTING: 1
@@ -69,6 +66,11 @@ services:
       IS_CONTAINER: 1
       IS_CICD_TESTING: 1
       SECRET_KEY: "${SECRET_KEY}"
+      DB_HOST: "${DB_HOST}"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+      DB_TEST_USER: "${DB_TEST_USER}"
+      DB_TEST_PASS: "${DB_TEST_PASS}"
 
     command: python manage.py test --keepdb
 
