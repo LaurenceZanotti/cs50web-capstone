@@ -8,12 +8,12 @@ services:
       - "4444:4444"
       - "7900:7900"
 
-  db:
+  mariadatabase:
     image: mariadb
     volumes:
       - capstone_db_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3307"
     environment:
       MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASS}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
@@ -28,7 +28,7 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - db
+      - mariadatabase
     restart: on-failure
     environment:
       IS_CONTAINER: 1
@@ -60,7 +60,7 @@ services:
     depends_on:
       - front
       - selenium
-      - db
+      - mariadatabase
       - api
     environment:
       IS_CONTAINER: 1
