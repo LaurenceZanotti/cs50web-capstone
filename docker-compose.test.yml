@@ -10,6 +10,7 @@ services:
 
   mariadatabase:
     image: mariadb
+    container_name: mariadatabase
     volumes:
       - capstone_db_data:/var/lib/mysql
     ports:

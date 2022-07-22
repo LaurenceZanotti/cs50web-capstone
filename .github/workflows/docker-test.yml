@@ -22,7 +22,7 @@ jobs:
       MARIADB_PASSWORD: ${{ secrets.DB_PASS }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       MARIADB_DATABASE: capstone_db
-      IS_CONTAINER: 1
+      IS_CONTAINER: "yes"
       IS_CICD_TESTING: ${{ secrets.IS_CICD_TESTING }}
 
     steps:
