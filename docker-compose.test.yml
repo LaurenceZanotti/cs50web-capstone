@@ -1,6 +1,14 @@
-version: '3.8'
+version: '3.7'
 
 services:
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-chrome
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+
   mariadatabase:
     image: mariadb
     container_name: mariadatabase
@@ -8,10 +16,6 @@ services:
       - capstone_db_data:/var/lib/mysql
     ports:
       - "3307:3307"
-    healthcheck:
-          test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-          timeout: 20s
-          retries: 10
     environment:
       MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASS}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
@@ -27,8 +31,7 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      mariadatabase:
-        condition: service_healthy
+      - mariadatabase
     restart: on-failure
     environment:
       IS_CONTAINER: 1
@@ -40,6 +43,7 @@ services:
       DB_TEST_USER: "${DB_TEST_USER}"
       DB_TEST_PASS: "${DB_TEST_PASS}"
 
+    
   front:
     container_name: front
     build: ./jobfindr_frontend
@@ -51,14 +55,6 @@ services:
       - api
     command: npm run dev
 
-  selenium:
-    container_name: selenium
-    image: selenium/standalone-chrome
-    shm_size: 2gb
-    ports:
-      - "4444:4444"
-      - "7900:7900"
-
   test:
     container_name: test
     build: .
@@ -68,6 +64,9 @@ services:
       - "6666:6666"
     depends_on:
       - front
+      - selenium
+      - mariadatabase
+      - api
     environment:
       IS_CONTAINER: 1
       IS_CICD_TESTING: 1
