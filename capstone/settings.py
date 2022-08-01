@@ -84,8 +84,8 @@ DATABASES = {
         'NAME': 'capstone_db',
         'USER': os.environ['DB_TEST_USER'] if os.environ.get('IS_CICD_TESTING') else os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_TEST_PASS'] if os.environ.get('IS_CICD_TESTING') else os.environ['DB_PASS'],
-        'HOST':  os.environ['DB_HOST'] if os.environ.get('IS_CONTAINER') else '127.0.0.1',
-        'PORT': '3306',
+        'HOST':  'mariadatabase' if os.environ.get('IS_CONTAINER') or os.environ.get('IS_CICD_TESTING') else '127.0.0.1',
+        'PORT': os.environ['DB_PORT'] if os.environ.get('DB_PORT') else '3306',
     }
 }
 

@@ -1,12 +1,12 @@
 version: '3.7'
 
 services:
-  db:
+  mariadatabase:
     image: mariadb
     volumes:
       - capstone_db_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3307"
     environment:
       MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASS}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
@@ -21,7 +21,7 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - db
+      - mariadatabase
     environment:
       - IS_CONTAINER=1
 
