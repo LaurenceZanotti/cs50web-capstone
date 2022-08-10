@@ -35,7 +35,7 @@ export default function Home(/*{data}*/) {
       {/* {data.msg} */}
       <header className="hero-section">
         <div>
-          <h2>A <span>job</span> is looking for <span>you!</span></h2>
+          <h2 className="text-3xl font-bold underline">A <span>job</span> is looking for <span>you!</span></h2>
         </div>
         <div>
           <div>
