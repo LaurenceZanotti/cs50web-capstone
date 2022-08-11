@@ -7,35 +7,42 @@ import WomanIcon from "../components/index/WomanIcon"
 import MobileLogin from "../components/index/MobileLogin"
 import SwipeProfile from "../components/index/SwipeProfile"
 import JobOffers from "../components/index/JobOffers"
+import SignMenu from "../components/index/SignMenu"
 
 // Libraries
-import { UserCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
+import { FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
 
 export default function Home(/*{data}*/) {
   return (
     <>
-    <nav>
-      <div>
+    <nav className="flex justify-between items-center p-4">
+      <div className="w-36">
         <h1>
           <JobfindrLogo />
         </h1>
       </div>
       <div>
-        <ul>
-          <li>Home</li>
-          <li>Search talents</li>
-          <li>About</li>
+        <ul className="list-none text-xl">
+          <a href="#home">
+            <li className="inline m-4 text-secondary-500">Home</li>
+          </a>
+          <a href="#hero-section">
+            <li className="inline m-4 text-primary">Search talents</li>
+          </a>
+          <a href="#">
+            <li className="inline m-4 text-primary">About</li>
+          </a>
         </ul>
       </div>
-      <div>
-        <UserCircle size={32} />
+      <div className="w-36 flex justify-center">
+        <SignMenu/>
       </div>
     </nav>
     <main>
       {/* {data.msg} */}
-      <header className="hero-section">
+      <header className="hero-section" id="home">
         <div>
-          <h2 className="text-3xl font-bold underline">A <span>job</span> is looking for <span>you!</span></h2>
+          <h2>A <span>job</span> is looking for <span>you!</span></h2>
         </div>
         <div>
           <div>
@@ -59,7 +66,7 @@ export default function Home(/*{data}*/) {
           </form>
         </div>
       </header>
-      <section>
+      <section id="hero-section">
         <h2>Getting your best <span>opportunity</span></h2>
         <div>
           <div>
@@ -82,12 +89,9 @@ export default function Home(/*{data}*/) {
           </div>
         </div>
       </section>
-      <section>
+      <section id="">
         <h2>Are you a <span>talent hunter</span>? We are here to help!</h2>
       </section>
-      <footer>
-
-      </footer>
     </main>
     <footer>
       <div>

@@ -2,6 +2,8 @@ function JobfindrLogo() {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
+        // width="120.9"
+        // height="25.35"
         width="186"
         height="39"
         fill="none"
