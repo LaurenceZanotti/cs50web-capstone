@@ -48,7 +48,7 @@ export default function Home(/*{data}*/) {
           <div className="m-8">
             <WomanIcon />
           </div>
-          <form action="" className="m-8">
+          <form action="" className="m-8 w-72">
             <div className="my-4">
               <p className="text-darktext font-bold text-xl text-justify">More than <span className="text-primary">270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
             </div>
