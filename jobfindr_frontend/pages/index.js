@@ -10,7 +10,7 @@ import JobOffers from "../components/index/JobOffers"
 import SignMenu from "../components/index/SignMenu"
 
 // Libraries
-import { FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
+import { CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
 
 export default function Home(/*{data}*/) {
   return (
@@ -40,28 +40,35 @@ export default function Home(/*{data}*/) {
     </nav>
     <main>
       {/* {data.msg} */}
-      <header className="hero-section" id="home">
-        <div>
-          <h2>A <span>job</span> is looking for <span>you!</span></h2>
+      <header className="hero-section bg-hero-wave bg-no-repeat bg-bottom" id="home">
+        <div className="m-auto text-center">
+          <h2 className="text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
         </div>
-        <div>
-          <div>
+        <div className="flex justify-center mx-96">
+          <div className="m-8">
             <WomanIcon />
           </div>
-          <form action="">
-            <div>
-              <p>More than <span>270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
+          <form action="" className="m-8">
+            <div className="my-4">
+              <p className="text-darktext font-bold text-xl text-justify">More than <span className="text-primary">270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
             </div>
-            <div>
-              <div>
-                <input type="text" placeholder="Search jobs"/>
-                <input type="submit" value="Send" />
+            <div className="flex flex-col items-center">
+              <div className="flex flex-row border border-gray-300 rounded-2xl ">
+                <input type="text" placeholder="Search jobs" className="text-darktext bg-gray-50/[.75] py-2 px-4 rounded-l-2xl outline-none placeholder:text-gray-600 backdrop-blur-sm"/>
+                {/* <input type="submit" value="Send" className="py-2 px-4 bg-secondary-300 rounded-r-2xl"/> */}
+                <div className="p-2 bg-secondary-300 rounded-r-2xl">
+                  <CheckCircle size={28} color="#3F3D56"/>
+                </div>
               </div>
-              <div>or</div>
-              <div>
-                <a href="">Create profile</a>
-              </div>
-              <ManWorking />              
+              <div className="text-darktext font-bold text-xl my-2">or</div>
+              <a href="#">
+                <div className="w-52 h-16 border border-none rounded-2xl bg-secondary-300 flex justify-center items-center">
+                  <span className="text-primary font-bold text-lg">Create profile</span>
+                </div>
+              </a>
+            </div>
+            <div className="relative w-0 h-0 -z-20 bottom-44 left-14 ">
+              <ManWorking />
             </div>
           </form>
         </div>

@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,14 +7,25 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'hero-wave': "url('/index/Wave.svg')",
+      }
+    },
     colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: colors.black,
+      gray: colors.gray,
+      white: colors.white,
+      slate: colors.slate,
       'primary': '#4D6CFF',
       'secondary': {
         500: '#50CB93',
         300: '#71EFA3',
         100: '#ACFFAD'
-      }
+      },
+      'darktext': '#3F3D56'
     }
   },
   plugins: [],
