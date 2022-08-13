@@ -49,18 +49,18 @@ export default function Home(/*{data}*/) {
             <WomanIcon />
           </div>
           <form action="" className="m-8 w-72">
-            <div className="my-4">
-              <p className="text-darktext font-bold text-xl text-justify">More than <span className="text-primary">270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
+            <div className="mt-0 mb-4">
+              <p className="text-darktext font-medium text-xl text-justify">More than <span className="text-primary">270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="flex flex-row border border-gray-300 rounded-2xl ">
+              <div className="flex flex-row border border-gray-300 rounded-2xl my-2">
                 <input type="text" placeholder="Search jobs" className="text-darktext bg-gray-50/[.75] py-2 px-4 rounded-l-2xl outline-none placeholder:text-gray-600 backdrop-blur-sm"/>
                 {/* <input type="submit" value="Send" className="py-2 px-4 bg-secondary-300 rounded-r-2xl"/> */}
                 <div className="p-2 bg-secondary-300 rounded-r-2xl">
                   <CheckCircle size={28} color="#3F3D56"/>
                 </div>
               </div>
-              <div className="text-darktext font-bold text-xl my-2">or</div>
+              <div className="text-darktext font-medium text-xl my-2">or</div>
               <a href="#">
                 <div className="w-52 h-16 border border-none rounded-2xl bg-secondary-300 flex justify-center items-center">
                   <span className="text-primary font-bold text-lg">Create profile</span>
