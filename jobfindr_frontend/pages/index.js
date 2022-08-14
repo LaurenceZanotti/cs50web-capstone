@@ -73,23 +73,23 @@ export default function Home(/*{data}*/) {
           </form>
         </div>
       </header>
-      <section id="hero-section">
-        <h2>Getting your best <span>opportunity</span></h2>
-        <div>
-          <div>
-            <h3>1. Sign in</h3>
+      <section className="flex flex-col items-center" id="hero-section">
+        <h2 className="text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
+        <div className="flex mb-8">
+          <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
+            <h3 className="text-primary text-2xl font-medium my-4"><span className="text-secondary-500 text-3xl inline-block relative left-0">1.</span> Sign in</h3>
             <div>
               <MobileLogin/>
             </div>
           </div>
-          <div>
-            <h3>2. Create a profile</h3>
+          <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
+            <h3 className="text-primary text-2xl font-medium my-4"><span className="text-secondary-500 text-3xl">2.</span> Create a profile</h3>
             <div>
               <SwipeProfile/>
             </div>
           </div>
-          <div>
-            <h3>3. Subscribe to a position</h3>
+          <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
+            <h3 className="text-primary text-2xl font-medium my-4"><span className="text-secondary-500 text-3xl">3.</span> Subscribe to a position</h3>
             <div>
               <JobOffers/>
             </div>
