@@ -14,6 +14,7 @@ module.exports = {
       },
       backgroundImage: {
         'hero-wave': "url('/index/Wave.svg')",
+        'talent-wave': "url('/index/HeroWave.svg')",
       }
     },
     colors: {

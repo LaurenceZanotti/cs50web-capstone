@@ -96,8 +96,11 @@ export default function Home(/*{data}*/) {
           </div>
         </div>
       </section>
-      <section id="">
-        <h2>Are you a <span>talent hunter</span>? We are here to help!</h2>
+      <section className="flex justify-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="">
+        <h2 className="text-center w-[16em] text-4xl font-bold text-darktext m-8">
+          <div>Are you a <span className="text-primary">talent hunter</span>?</div>
+          <div>We are here to help!</div>
+        </h2>
       </section>
     </main>
     <footer>
