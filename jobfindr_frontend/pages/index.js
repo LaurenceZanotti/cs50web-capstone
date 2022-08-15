@@ -5,7 +5,6 @@ import Head from 'next/head'
 import JobfindrLogo from "../components/JobFindrLogo/JobfindrLogo"
 
 // Page Icons
-import ManWorking from "../components/index/ManWorking"
 import WomanIcon from "../components/index/WomanIcon"
 import MobileLogin from "../components/index/MobileLogin"
 import SwipeProfile from "../components/index/SwipeProfile"
@@ -56,7 +55,7 @@ export default function Home(/*{data}*/) {
             <div className="m-8">
               <WomanIcon />
             </div>
-            <form action="" className="m-8 w-72">
+            <form action="" className="m-8 w-72 bg-man-working bg-no-repeat bg-bottom">
               <div className="mt-0 mb-4">
                 <p className="text-darktext font-medium text-xl text-justify">More than <span className="text-primary">270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
               </div>
@@ -74,10 +73,7 @@ export default function Home(/*{data}*/) {
                     <span className="text-primary font-bold text-lg">Create profile</span>
                   </div>
                 </a>
-              </div>
-              <div className="relative w-0 h-0 -z-20 bottom-44 left-14 ">
-                <ManWorking />
-              </div>
+              </div>              
             </form>
           </div>
         </header>
