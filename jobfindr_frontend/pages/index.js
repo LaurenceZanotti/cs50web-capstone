@@ -15,7 +15,7 @@ import { CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-
 export default function Home(/*{data}*/) {
   return (
     <>
-    <nav className="flex justify-between items-center p-4">
+    <nav className="flex justify-between items-center p-4 w-[60em] m-auto">
       <div className="w-36">
         <h1>
           <JobfindrLogo />
