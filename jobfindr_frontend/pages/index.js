@@ -103,40 +103,43 @@ export default function Home(/*{data}*/) {
         </h2>
       </section>
     </main>
-    <footer>
-      <div>
+    <footer className="w-[60em] m-auto">
+      <div className="flex justify-around">
         <div>
-          <JobfindrLogo />
-          <div>
-            <div className="social_icon"><FacebookLogo size={32} /></div>
-            <div className="social_icon"><TwitterLogo size={32} /></div>
-            <div className="social_icon"><InstagramLogo size={32} /></div>
+          <JobfindrLogo width="139.5" height="29.25"/>
+          <div className="flex justify-evenly mt-4">
+            <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><FacebookLogo size={32} /></div>
+            <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><TwitterLogo size={32} /></div>
+            <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><InstagramLogo size={32} /></div>
           </div>
         </div>
         <div>
-          <h2>Contact us</h2>
-          <p>contact@jobfindr.com</p>
-          <p>+1 111 111 1110</p>
-          <p>352 Park Ave, Brooklyn, NY</p>
+          <h2 className="text-primary text-lg font-medium">Contact us</h2>
+          <div className="text-xs">
+            <p>contact@jobfindr.com</p>
+            <p>+1 111 111 1110</p>
+            <p>352 Park Ave, Brooklyn, NY</p>
+          </div>
         </div>
         <div>
-          <h2>Subscribe</h2>
+          <h2 className="text-primary text-lg font-medium">Subscribe</h2>
           <form action="">
-            <div>
+            <div className="text-xs w-64">
               <p>Enter your email to get notified about our news and solutions!</p>
             </div>
-            <div>
-              <div>
-                <input type="text" placeholder="Email"/>
-                <input type="submit" value="Send" />
+            <div className="flex max-w-xs border border-gray-300 rounded-2xl my-2 justify-between h-10">
+              <input type="text" placeholder="Email" className="text-darktext text-xs bg-gray-50/[.75] py-2 px-4 rounded-l-2xl outline-none placeholder:text-gray-600 placeholder:text-xs backdrop-blur-sm"/>
+              {/* <input type="submit" value="Send" className="py-2 px-4 bg-secondary-300 rounded-r-2xl"/> */}
+              <div className="p-2 bg-secondary-300 rounded-r-2xl flex justify-center items-center">
+                <CheckCircle size={20} color="#3F3D56"/>
               </div>
             </div>
           </form>
         </div>
       </div>
-      <hr /> {/* Remove this later */}
-      <div>
-        <p> © 2022 Jobfindr Inc. All rights reserved</p>
+      <div className="w-full h-0 border border-b-secondary-500 mt-4" id="hr"/>
+      <div className="text-primary text-center font-normal my-4">
+        <p>© 2022 Jobfindr Inc. All rights reserved</p>
       </div>
     </footer>
     </>

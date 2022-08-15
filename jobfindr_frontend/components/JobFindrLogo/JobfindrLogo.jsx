@@ -1,11 +1,11 @@
-function JobfindrLogo() {
+function JobfindrLogo(props) {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         // width="120.9"
         // height="25.35"
-        width="186"
-        height="39"
+        width={props.width}
+        height={props.height}
         fill="none"
         viewBox="0 0 186 39"
       >
@@ -21,4 +21,10 @@ function JobfindrLogo() {
     );
   }
   
+  JobfindrLogo.defaultProps = {
+    width: "186",
+    height: "39",
+  }
+
+
   export default JobfindrLogo;
