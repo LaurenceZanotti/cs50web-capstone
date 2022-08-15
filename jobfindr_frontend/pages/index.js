@@ -20,6 +20,12 @@ export default function Home(/*{data}*/) {
     <>
       <Head>
         <title>Jobfindr - Your future happens now</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=7" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Find jobs and talents, or both. You choose." />
+        <meta name="keywords" content="job, jobs, find, find jobs, search jobs, talents, talent, recruiting, opportunities" />
       </Head>
       <div className="bg-gradient-to-b from-primary/[.6] to-white" id="main">
       <nav className="flex justify-between items-center p-4 w-[60em] m-auto bg-white">
