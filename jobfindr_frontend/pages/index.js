@@ -14,8 +14,8 @@ import { CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-
 
 export default function Home(/*{data}*/) {
   return (
-    <>
-    <nav className="flex justify-between items-center p-4 w-[60em] m-auto">
+    <div className="bg-gradient-to-b from-primary/[.6] to-white" id="main">
+    <nav className="flex justify-between items-center p-4 w-[60em] m-auto bg-white">
       <div className="w-36">
         <h1>
           <JobfindrLogo />
@@ -38,7 +38,7 @@ export default function Home(/*{data}*/) {
         <SignMenu/>
       </div>
     </nav>
-    <main>
+    <main className="bg-white w-[60em] m-auto">
       {/* {data.msg} */}
       <header className="hero-section bg-hero-wave bg-no-repeat bg-bottom" id="home">
         <div className="m-auto text-center">
@@ -142,7 +142,7 @@ export default function Home(/*{data}*/) {
         <p>© 2022 Jobfindr Inc. All rights reserved</p>
       </div>
     </footer>
-    </>
+    </div>
   )
 }
 
