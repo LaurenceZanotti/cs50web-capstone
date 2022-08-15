@@ -10,7 +10,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Roboto', ...defaultTheme.fontFamily.sans]
+        'sans': ['Roboto', ...defaultTheme.fontFamily.sans],
+        'logo': 'Righteous'
       },
       backgroundImage: {
         'hero-wave': "url('/index/Wave.svg')",

@@ -20,12 +20,7 @@ export default function Home(/*{data}*/) {
     <>
       <Head>
         <title>Jobfindr - Your future happens now</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=7" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Find jobs and talents, or both. You choose." />
-        <meta name="keywords" content="job, jobs, find, find jobs, search jobs, talents, talent, recruiting, opportunities" />
+        <meta property="og:title" content="Jobfindr - Your future happens now" key="title" />
       </Head>
       <div className="bg-gradient-to-b from-primary/[.6] to-white" id="main">
       <nav className="flex justify-between items-center p-4 w-[60em] m-auto bg-white">
@@ -90,19 +85,19 @@ export default function Home(/*{data}*/) {
           <h2 className="text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
           <div className="flex mb-8">
             <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
-              <h3 className="text-primary text-2xl font-medium my-4"><span className="text-secondary-500 text-3xl inline-block relative left-0">1.</span> Sign in</h3>
+              <h3 className="text-primary text-2xl text-center font-medium font-logo my-4"><span className="text-secondary-300 text-3xl inline-block relative left-0">1.</span> Sign in</h3>
               <div>
                 <MobileLogin/>
               </div>
             </div>
             <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
-              <h3 className="text-primary text-2xl font-medium my-4"><span className="text-secondary-500 text-3xl">2.</span> Create a profile</h3>
+              <h3 className="text-primary text-2xl text-center font-medium font-logo my-4"><span className="text-secondary-300 text-3xl">2.</span> Create a profile</h3>
               <div>
                 <SwipeProfile/>
               </div>
             </div>
             <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
-              <h3 className="text-primary text-2xl font-medium my-4"><span className="text-secondary-500 text-3xl">3.</span> Subscribe to a position</h3>
+              <h3 className="text-primary text-2xl text-center font-medium font-logo my-4"><span className="text-secondary-300 text-3xl">3.</span> Subscribe to a position</h3>
               <div>
                 <JobOffers/>
               </div>
