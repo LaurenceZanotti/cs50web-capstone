@@ -1,3 +1,6 @@
+// Built in
+import Head from 'next/head'
+
 // Libraries
 import { UserCircle, LockSimple } from 'phosphor-react'
 
@@ -14,6 +17,10 @@ import InputSubmit from "../components/login/InputSubmit";
 
 export default function Login() {
   return (
+    <>
+    <Head>
+        <title>Log in | Jobfindr</title>
+    </Head>
     <div>
         <AuthLayout>
             <AuthHeader/>
@@ -54,5 +61,6 @@ export default function Login() {
             </div>
         </AuthLayout>
     </div>
+    </>
   )
 }
