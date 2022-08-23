@@ -5,15 +5,15 @@ import Head from 'next/head'
 import { UserCircle, LockSimple } from 'phosphor-react'
 
 // Icons
-import GoogleIcon from "../components/login/icons/GoogleIcon";
-import FacebookIcon from "../components/login/icons/FacebookIcon";
-import LinkedinIcon from "../components/login/icons/LinkedinIcon";
+import GoogleIcon from "../../components/login/icons/GoogleIcon";
+import FacebookIcon from "../../components/login/icons/FacebookIcon";
+import LinkedinIcon from "../../components/login/icons/LinkedinIcon";
 
 // Components
-import AuthLayout from "../components/login/AuthLayout";
-import AuthHeader from "../components/login/AuthHeader";
-import InputText from "../components/login/InputText";
-import InputSubmit from "../components/login/InputSubmit";
+import AuthLayout from "../../components/login/AuthLayout";
+import AuthHeader from "../../components/login/AuthHeader";
+import InputText from "../../components/login/InputText";
+import InputSubmit from "../../components/login/InputSubmit";
 
 export default function Login() {
   return (
@@ -38,7 +38,7 @@ export default function Login() {
                     type="password"
                     placeholder="Password"
                 />
-                <InputSubmit value="Log in"/>
+                <InputSubmit value="Log in" className="bg-primary"/>
             </form>
             <div className='text-center mt-0 mb-10 leading-8'>
                 <p>I forgot my <a href="" className="text-primary font-medium">password</a></p>

@@ -5,15 +5,15 @@ import Head from 'next/head'
 import { UserCircle, LockSimple, Envelope, Repeat } from 'phosphor-react'
 
 // Icons
-import GoogleIcon from "../components/login/icons/GoogleIcon";
-import FacebookIcon from "../components/login/icons/FacebookIcon";
-import LinkedinIcon from "../components/login/icons/LinkedinIcon";
+import GoogleIcon from "../../components/login/icons/GoogleIcon";
+import FacebookIcon from "../../components/login/icons/FacebookIcon";
+import LinkedinIcon from "../../components/login/icons/LinkedinIcon";
 
 // Components
-import AuthLayout from "../components/login/AuthLayout";
-import AuthHeader from "../components/login/AuthHeader";
-import InputText from "../components/login/InputText";
-import InputSubmit from "../components/login/InputSubmit";
+import AuthLayout from "../../components/login/AuthLayout";
+import AuthHeader from "../../components/login/AuthHeader";
+import InputText from "../../components/login/InputText";
+import InputSubmit from "../../components/login/InputSubmit";
 
 
 
@@ -54,11 +54,11 @@ export default function Register() {
                     type="password"
                     placeholder="Confirm your password"
                 />
-                <InputSubmit value="Register" color="secondary-500" />
+                <InputSubmit value="Register" className="bg-secondary-500"/>
             </form>
             <div className='text-center mt-0 mb-10 leading-8'>
                 <p>Already have an account?
-                    <a href="/login" className='text-secondary-500 font-medium ml-1'>Sign in</a>
+                    <a href="/login" className='text-primary font-medium ml-1'>Sign in</a>
                 </p>
                 <p>or</p>
                 <p>Register using a social network</p>
