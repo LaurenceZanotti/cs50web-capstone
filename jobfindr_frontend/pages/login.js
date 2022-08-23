@@ -8,42 +8,50 @@ import LinkedinIcon from "../components/login/icons/LinkedinIcon";
 
 // Components
 import AuthLayout from "../components/login/AuthLayout";
+import AuthHeader from "../components/login/AuthHeader";
+import InputText from "../components/login/InputText";
+import InputSubmit from "../components/login/InputSubmit";
 
 export default function Login() {
   return (
     <div>
         <AuthLayout>
-          <div>
-              Welcome to
-              <h1 className="text-primary font-logo text-xl">Job<span className="text-secondary-500">findr</span></h1>
-              <p>Sign up to find the best opportunities and the best talents</p>
-          </div>
-          <form action="">
-              <div>
-                  <UserCircle size={28} color="#030303" weight="fill" />
-                  <input type="text" name="username" id="username" />
-              </div>
-              <div>
-                  <LockSimple size={28} color="#030303" weight="fill" />
-                  <input type="password" name="password" id="password" />
-              </div>
-              <div>
-                  <input type="submit" value="Log in" />
-              </div>
-          </form>
-          <div>
-              <p>Forgot my <a href="" className="text-primary font-medium">password</a></p>
-              <p>Don't have an account?
-                  <a href="" className='text-secondary-500 font-medium'>Create one</a>
-              </p>
-              <p>or</p>
-              <p>Continue with a social network</p>
-          </div>
-          <div>
-              <GoogleIcon />
-              <FacebookIcon />
-              <LinkedinIcon />
-          </div>
+            <AuthHeader/>
+            <form action="" method="post" className="w-80 m-auto">
+                <InputText 
+                    icon={<UserCircle size={28} color="black" weight="fill" className='mx-4'/>} 
+                    name="username"
+                    id="username"
+                    placeholder="Username"
+                />
+                <InputText 
+                    icon={<LockSimple size={28} color="black" weight="fill" className='mx-4'/>} 
+                    name="password"
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                />
+                <InputSubmit value="Log in"/>
+            </form>
+            <div className='text-center mt-0 mb-10 leading-8'>
+                <p>I forgot my <a href="" className="text-primary font-medium">password</a></p>
+                <p>Don't have an account?
+                    <a href="" className='text-secondary-500 font-medium ml-1'>Create one</a>
+                </p>
+                <p>or</p>
+                <p>Continue with a social network</p>
+            </div>
+            <div className='flex justify-center gap-x-14'>
+                <a href="">
+                    <GoogleIcon />
+                </a>
+                <a href="">
+                    <FacebookIcon />
+                </a>
+                <a href="">
+                    <LinkedinIcon />
+                </a>
+            </div>
         </AuthLayout>
     </div>
   )
