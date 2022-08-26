@@ -15,7 +15,7 @@ export default function AuthLayout(props) {
           sm:w-6/12 
           "
         >
-        </aside>
+        </aside>r
     </div>
   )
 }
