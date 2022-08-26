@@ -9,10 +9,10 @@ import WomanIcon from "../components/index/WomanIcon"
 import MobileLogin from "../components/index/MobileLogin"
 import SwipeProfile from "../components/index/SwipeProfile"
 import JobOffers from "../components/index/JobOffers"
-import SignMenu from "../components/index/SignMenu"
+import DropdownMenu from "../components/index/DropdownMenu"
 
 // Libraries
-import { CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
+import { UserCircle, List, CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
 
 export default function Home(/*{data}*/) {
   return (
@@ -22,27 +22,42 @@ export default function Home(/*{data}*/) {
         <meta property="og:title" content="Jobfindr - Your future happens now" key="title" />
       </Head>
       <div className="bg-gradient-to-b from-primary/[.6] to-white" id="main">
-      <nav className="flex justify-between items-center p-4 w-[60em] m-auto bg-white">
-        <div className="w-36">
-          <h1>
-            <JobfindrLogo />
+      <nav className="flex justify-between items-center p-4 w-screen sm:w-[60em] m-auto bg-white">
+        <div className="w-24 md:w-36">
+          <h1 className='font-logo text-primary text-4xl'>
+            Job
+            <span className='text-secondary-500'>findr</span>
           </h1>
         </div>
-        <div>
+        <div className='hidden sm:block'>
           <ul className="list-none text-xl">
             <a href="#home">
               <li className="inline m-4 text-secondary-500">Home</li>
             </a>
             <a href="#hero-section">
-              <li className="inline m-4 text-primary">Search talents</li>
+              <li className="inline m-4 text-primary">Search jobs</li>
             </a>
-            <a href="#">
-              <li className="inline m-4 text-primary">About</li>
+            <a href="#talent-hunter">
+              <li className="inline m-4 text-primary">Looking for talents</li>
+            </a>
+            <a href="#contact">
+              <li className="inline m-4 text-primary">Contact us</li>
             </a>
           </ul>
         </div>
-        <div className="w-36 flex justify-center">
-          <SignMenu/>
+        <div className="hidden sm:block w-auto sm:w-36 flex justify-center">
+          <DropdownMenu 
+            icon={<UserCircle size={36} />}
+            list_options={["Log in", "Sign up"]}
+            list_hrefs={["login", "register"]}
+          />
+        </div>
+        <div className="sm:hidden w-auto sm:w-36 flex justify-center">
+          <DropdownMenu 
+            icon={<List size={36} />}
+            list_options={["Home", "I'm looking for a job", "I'm hunting talents", "Contact us", "Log in", "Sign up"]}
+            list_hrefs={["#home", "#hero-section", "#talent-hunter", "#contact", "login", "register"]}
+          />
         </div>
       </nav>
       <main className="bg-white w-[60em] m-auto">
@@ -100,10 +115,10 @@ export default function Home(/*{data}*/) {
             </div>
           </div>
         </section>
-        <section className="flex justify-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="">
+        <section className="flex justify-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="talent-hunter">
           <h2 className="text-center w-[16em] text-4xl font-bold text-darktext m-8">
             <div>Are you a <span className="text-primary">talent hunter</span>?</div>
-            <div>We are here to help!</div>
+            <div>All you need is here!</div>
           </h2>
         </section>
       </main>
@@ -117,7 +132,7 @@ export default function Home(/*{data}*/) {
               <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><InstagramLogo size={32} /></div>
             </div>
           </div>
-          <div>
+          <div id="contact">
             <h2 className="text-primary text-lg font-medium">Contact us</h2>
             <div className="text-xs">
               <p>contact@jobfindr.com</p>
