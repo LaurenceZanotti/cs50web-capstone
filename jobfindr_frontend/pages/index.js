@@ -86,7 +86,7 @@ export default function Home(/*{data}*/) {
                 <div className="text-darktext font-medium text-xl my-2">or</div>
                 <a href="#">
                   <div className="w-52 h-16 border border-none rounded-2xl bg-secondary-300 flex justify-center items-center">
-                    <span className="text-primary font-bold text-lg">Create profile</span>
+                    <span className="text-primary font-bold text-lg">Create a profile</span>
                   </div>
                 </a>
               </div>              
