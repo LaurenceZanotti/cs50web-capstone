@@ -45,7 +45,7 @@ export default function Home(/*{data}*/) {
             </a>
           </ul>
         </div>
-        <div className="hidden sm:block w-auto sm:w-36 flex justify-center">
+        <div className="hidden sm:flex w-auto sm:w-36 justify-center">
           <DropdownMenu 
             icon={<UserCircle size={36} />}
             list_options={["Log in", "Sign up"]}
@@ -60,17 +60,17 @@ export default function Home(/*{data}*/) {
           />
         </div>
       </nav>
-      <main className="bg-white w-[60em] m-auto">
+      <main className="bg-white w-screen sm:w-[60em] m-auto">
         {/* {data.msg} */}
         <header className="hero-section bg-hero-wave bg-no-repeat bg-bottom" id="home">
           <div className="m-auto text-center">
-            <h2 className="text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
           </div>
-          <div className="flex justify-center mx-96">
-            <div className="m-8">
+          <div className="flex flex-col-reverse sm:flex-row justify-center">
+            <div className="sm:m-8">
               <WomanIcon />
             </div>
-            <form action="" className="m-8 w-72 bg-man-working bg-no-repeat bg-bottom">
+            <form action="" className="m-8 bg-man-working bg-no-repeat bg-bottom">
               <div className="mt-0 mb-4">
                 <p className="text-darktext font-medium text-xl text-justify">More than <span className="text-primary">270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
               </div>
