@@ -10,6 +10,7 @@ import MobileLogin from "../components/index/MobileLogin"
 import SwipeProfile from "../components/index/SwipeProfile"
 import JobOffers from "../components/index/JobOffers"
 import DropdownMenu from "../components/index/DropdownMenu"
+import Testimonial from "../components/index/Testimonial"
 
 // Libraries
 import { UserCircle, List, CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
@@ -115,11 +116,34 @@ export default function Home(/*{data}*/) {
             </div>
           </div>
         </section>
-        <section className="flex justify-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="talent-hunter">
-          <h2 className="text-center w-[16em] text-4xl font-bold text-darktext m-8">
+        <section className="flex flex-col items-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="talent-hunter">
+          <h2 className="text-center w-[16em] text-2xl sm:text-4xl font-bold text-darktext m-8">
             <div>Are you a <span className="text-primary">talent hunter</span>?</div>
             <div>All you need is here!</div>
           </h2>
+          <div className='flex flex-col sm:flex-row'>
+            <Testimonial 
+              img_src={"index/testmon1.jpg"} 
+              name="Isabella Brite"
+              role="Copny P&C Manager"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
+            </Testimonial>
+            <Testimonial 
+              img_src={"index/testmon2.jpg"} 
+              name="Jose Gonzalez"
+              role="Talent Hunter at Inc LTD"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
+            </Testimonial>
+            <Testimonial 
+              img_src={"index/testmon3.jpg"} 
+              name="Allie Mont"
+              role="People & Culture Coordinator"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
+            </Testimonial>
+          </div>
         </section>
       </main>
       <footer className="w-[60em] m-auto">
