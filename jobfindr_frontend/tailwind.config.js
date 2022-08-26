@@ -17,6 +17,7 @@ module.exports = {
         'hero-wave': "url('/index/Wave.svg')",
         'talent-wave': "url('/index/HeroWave.svg')",
         'man-working': "url('/index/ManWorking.svg')",
+        'woman-working': "url('/login/working_bg.jpg')",
       }
     },
     colors: {
