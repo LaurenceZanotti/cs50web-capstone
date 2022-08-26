@@ -68,7 +68,7 @@ export default function Home(/*{data}*/) {
             <h2 className="text-2xl sm:text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
           </div>
           <div className="flex flex-col-reverse sm:flex-row justify-center">
-            <div className="sm:m-8">
+            <div className="overflow-hidden sm:overflow-visible sm:w-auto sm:m-8">
               <WomanIcon />
             </div>
             <form action="" className="m-8 bg-man-working bg-no-repeat bg-bottom">
@@ -146,18 +146,24 @@ export default function Home(/*{data}*/) {
           </div>
         </section>
       </main>
-      <footer className="w-[60em] m-auto">
-        <div className="flex justify-around">
+      <footer className="bg-white w-full sm:w-[60em] m-auto">
+        <div className="flex flex-col sm:flex-row justify-around m-4 sm:m-auto">
           <div>
-            <JobfindrLogo width="139.5" height="29.25"/>
-            <div className="flex justify-evenly mt-4">
-              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><FacebookLogo size={32} /></div>
-              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><TwitterLogo size={32} /></div>
-              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><InstagramLogo size={32} /></div>
+            {/* <JobfindrLogo width="139.5" height="29.25"/> */}
+            <div className="w-[8rem] m-auto">
+              <h1 className='font-logo text-primary text-4xl mt-4'>
+                Job
+                <span className='text-secondary-500'>findr</span>
+              </h1>
+            </div>
+            <div className="flex justify-center gap-4 sm:justify-evenly mt-4">
+              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 sm:p-1"><FacebookLogo size={32} /></div>
+              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 sm:p-1"><TwitterLogo size={32} /></div>
+              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 sm:p-1"><InstagramLogo size={32} /></div>
             </div>
           </div>
-          <div id="contact">
-            <h2 className="text-primary text-lg font-medium">Contact us</h2>
+          <div className="" id="contact">
+            <h2 className="text-primary text-lg font-medium mt-4">Contact us</h2>
             <div className="text-xs">
               <p>contact@jobfindr.com</p>
               <p>+1 111 111 1110</p>
@@ -165,9 +171,9 @@ export default function Home(/*{data}*/) {
             </div>
           </div>
           <div>
-            <h2 className="text-primary text-lg font-medium">Subscribe</h2>
+            <h2 className="text-primary text-lg font-medium mt-4">Subscribe</h2>
             <form action="">
-              <div className="text-xs w-64">
+              <div className="text-xs w-full sm:w-64">
                 <p>Enter your email to get notified about our news and solutions!</p>
               </div>
               <div className="flex max-w-xs border border-gray-300 rounded-2xl my-2 justify-between h-10">

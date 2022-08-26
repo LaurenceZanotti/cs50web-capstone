@@ -6,7 +6,7 @@ export default function Testimonial({name, role, img_src, children}) {
             <div className="font-bold text-primary">{name}</div>
             <div className="font-bold text-secondary-500">{role}</div>
         </div>
-        <div className="font-medium text-justify m-4">
+        <div className="text-justify m-4">
             {children}
         </div>
     </div>
