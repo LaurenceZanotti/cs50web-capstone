@@ -53,7 +53,7 @@ class SeleniumIndexTests(LiveServerTestCase):
 
         # Test titles
         for title in section_titles:
-            self.assertEqual(title.text in titles_to_test)
+            self.assertTrue(title.text in titles_to_test)
 
     def test_welcome_page_logos(self):
         """Make sure product logo is correct"""
