@@ -75,3 +75,20 @@ class SeleniumIndexTests(LiveServerTestCase):
         # Test current page title to see if page was redirected
         self.assertEqual(self.selenium.title, "Register | Jobfindr")
         self.assertNotEqual(self.selenium.title, "Jobfindr - Your future happens now")
+
+    def test_welcome_page_navbar(self):
+        """Make sure navbar items are correct"""        
+        self.selenium.get(f'{CONTAINER_URL}/')
+        
+        navbar_options = [
+            "Home",
+            "Search jobs",
+            "Looking for talents",
+            "Contact us"
+        ]
+
+        ul = self.selenium.find_element(By.ID, "navbar-items")
+        navbar_items = ul.find_elements(By.TAG_NAME, "li")
+
+        for item in navbar_items:
+            self.assertTrue(item.text in navbar_options)

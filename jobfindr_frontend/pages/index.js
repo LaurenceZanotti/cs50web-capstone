@@ -24,14 +24,18 @@ export default function Home(/*{data}*/) {
       </Head>
       <div className="bg-gradient-to-b from-primary/[.6] to-white" id="main">
       <nav className="flex justify-between items-center p-4 w-screen sm:w-[60em] m-auto bg-white">
-        <div className="w-24 md:w-36">
+
+        {/* Logo */}
+        <div className="w-24 md:w-36" id="main-logo">
           <h1 className='font-logo text-primary text-4xl'>
             Job
             <span className='text-secondary-500'>findr</span>
           </h1>
         </div>
+
+        {/* Navbar items */}
         <div className='hidden sm:block'>
-          <ul className="list-none text-xl">
+          <ul className="list-none text-xl" id="navbar-items">
             <a href="#home">
               <li className="inline m-4 text-secondary-500">Home</li>
             </a>
@@ -46,20 +50,25 @@ export default function Home(/*{data}*/) {
             </a>
           </ul>
         </div>
-        <div className="hidden sm:flex w-auto sm:w-36 justify-center">
+
+        {/* Dropdown menu */}
+        <div className="hidden sm:flex w-auto sm:w-36 justify-center" id="dropdown-menu">
           <DropdownMenu 
             icon={<UserCircle size={36} />}
             list_options={["Log in", "Sign up"]}
             list_hrefs={["login", "register"]}
           />
         </div>
-        <div className="sm:hidden w-auto sm:w-36 flex justify-center">
+
+        {/* Mobile dropdown menu */}
+        <div className="sm:hidden w-auto sm:w-36 flex justify-center" id="dropdown-menu-mobile">
           <DropdownMenu 
             icon={<List size={36} />}
             list_options={["Home", "I'm looking for a job", "I'm hunting talents", "Contact us", "Log in", "Sign up"]}
             list_hrefs={["#home", "#hero-section", "#talent-hunter", "#contact", "login", "register"]}
           />
         </div>
+
       </nav>
       <main className="bg-white w-screen sm:w-[60em] m-auto">
         {/* {data.msg} */}
