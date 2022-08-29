@@ -9,10 +9,11 @@ import WomanIcon from "../components/index/WomanIcon"
 import MobileLogin from "../components/index/MobileLogin"
 import SwipeProfile from "../components/index/SwipeProfile"
 import JobOffers from "../components/index/JobOffers"
-import SignMenu from "../components/index/SignMenu"
+import DropdownMenu from "../components/index/DropdownMenu"
+import Testimonial from "../components/index/Testimonial"
 
 // Libraries
-import { CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
+import { UserCircle, List, CheckCircle, FacebookLogo, TwitterLogo, InstagramLogo } from "phosphor-react"
 
 export default function Home(/*{data}*/) {
   return (
@@ -22,40 +23,55 @@ export default function Home(/*{data}*/) {
         <meta property="og:title" content="Jobfindr - Your future happens now" key="title" />
       </Head>
       <div className="bg-gradient-to-b from-primary/[.6] to-white" id="main">
-      <nav className="flex justify-between items-center p-4 w-[60em] m-auto bg-white">
-        <div className="w-36">
-          <h1>
-            <JobfindrLogo />
+      <nav className="flex justify-between items-center p-4 w-screen sm:w-[60em] m-auto bg-white">
+        <div className="w-24 md:w-36">
+          <h1 className='font-logo text-primary text-4xl'>
+            Job
+            <span className='text-secondary-500'>findr</span>
           </h1>
         </div>
-        <div>
+        <div className='hidden sm:block'>
           <ul className="list-none text-xl">
             <a href="#home">
               <li className="inline m-4 text-secondary-500">Home</li>
             </a>
             <a href="#hero-section">
-              <li className="inline m-4 text-primary">Search talents</li>
+              <li className="inline m-4 text-primary">Search jobs</li>
             </a>
-            <a href="#">
-              <li className="inline m-4 text-primary">About</li>
+            <a href="#talent-hunter">
+              <li className="inline m-4 text-primary">Looking for talents</li>
+            </a>
+            <a href="#contact">
+              <li className="inline m-4 text-primary">Contact us</li>
             </a>
           </ul>
         </div>
-        <div className="w-36 flex justify-center">
-          <SignMenu/>
+        <div className="hidden sm:flex w-auto sm:w-36 justify-center">
+          <DropdownMenu 
+            icon={<UserCircle size={36} />}
+            list_options={["Log in", "Sign up"]}
+            list_hrefs={["login", "register"]}
+          />
+        </div>
+        <div className="sm:hidden w-auto sm:w-36 flex justify-center">
+          <DropdownMenu 
+            icon={<List size={36} />}
+            list_options={["Home", "I'm looking for a job", "I'm hunting talents", "Contact us", "Log in", "Sign up"]}
+            list_hrefs={["#home", "#hero-section", "#talent-hunter", "#contact", "login", "register"]}
+          />
         </div>
       </nav>
-      <main className="bg-white w-[60em] m-auto">
+      <main className="bg-white w-screen sm:w-[60em] m-auto">
         {/* {data.msg} */}
         <header className="hero-section bg-hero-wave bg-no-repeat bg-bottom" id="home">
           <div className="m-auto text-center">
-            <h2 className="text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
           </div>
-          <div className="flex justify-center mx-96">
-            <div className="m-8">
+          <div className="flex flex-col-reverse sm:flex-row justify-center">
+            <div className="overflow-hidden sm:overflow-visible sm:w-auto sm:m-8">
               <WomanIcon />
             </div>
-            <form action="" className="m-8 w-72 bg-man-working bg-no-repeat bg-bottom">
+            <form action="" className="m-8 bg-man-working bg-no-repeat bg-bottom">
               <div className="mt-0 mb-4">
                 <p className="text-darktext font-medium text-xl text-justify">More than <span className="text-primary">270,000</span> jobs are in the wait. Why not have a new opportunity?</p>
               </div>
@@ -70,7 +86,7 @@ export default function Home(/*{data}*/) {
                 <div className="text-darktext font-medium text-xl my-2">or</div>
                 <a href="#">
                   <div className="w-52 h-16 border border-none rounded-2xl bg-secondary-300 flex justify-center items-center">
-                    <span className="text-primary font-bold text-lg">Create profile</span>
+                    <span className="text-primary font-bold text-lg">Create a profile</span>
                   </div>
                 </a>
               </div>              
@@ -78,8 +94,8 @@ export default function Home(/*{data}*/) {
           </div>
         </header>
         <section className="flex flex-col items-center" id="hero-section">
-          <h2 className="text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
-          <div className="flex mb-8">
+          <h2 className="text-center text-2xl sm:text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
+          <div className="flex flex-col sm:flex-row mb-8">
             <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
               <h3 className="text-primary text-2xl text-center font-medium font-logo my-4"><span className="text-secondary-300 text-3xl inline-block relative left-0">1.</span> Sign in</h3>
               <div>
@@ -100,25 +116,54 @@ export default function Home(/*{data}*/) {
             </div>
           </div>
         </section>
-        <section className="flex justify-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="">
-          <h2 className="text-center w-[16em] text-4xl font-bold text-darktext m-8">
+        <section className="flex flex-col items-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="talent-hunter">
+          <h2 className="text-center w-[16em] text-2xl sm:text-4xl font-bold text-darktext m-8">
             <div>Are you a <span className="text-primary">talent hunter</span>?</div>
-            <div>We are here to help!</div>
+            <div>All you need is here!</div>
           </h2>
+          <div className='flex flex-col sm:flex-row'>
+            <Testimonial 
+              img_src={"index/testmon1.jpg"} 
+              name="Isabella Brite"
+              role="Copny P&C Manager"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
+            </Testimonial>
+            <Testimonial 
+              img_src={"index/testmon2.jpg"} 
+              name="Jose Gonzalez"
+              role="Talent Hunter at Inc LTD"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
+            </Testimonial>
+            <Testimonial 
+              img_src={"index/testmon3.jpg"} 
+              name="Allie Mont"
+              role="People & Culture Coordinator"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
+            </Testimonial>
+          </div>
         </section>
       </main>
-      <footer className="w-[60em] m-auto">
-        <div className="flex justify-around">
+      <footer className="bg-white w-full sm:w-[60em] m-auto">
+        <div className="flex flex-col sm:flex-row justify-around m-4 sm:m-auto">
           <div>
-            <JobfindrLogo width="139.5" height="29.25"/>
-            <div className="flex justify-evenly mt-4">
-              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><FacebookLogo size={32} /></div>
-              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><TwitterLogo size={32} /></div>
-              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 p-1"><InstagramLogo size={32} /></div>
+            {/* <JobfindrLogo width="139.5" height="29.25"/> */}
+            <div className="w-[8rem] m-auto">
+              <h1 className='font-logo text-primary text-4xl mt-4'>
+                Job
+                <span className='text-secondary-500'>findr</span>
+              </h1>
+            </div>
+            <div className="flex justify-center gap-4 sm:justify-evenly mt-4">
+              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 sm:p-1"><FacebookLogo size={32} /></div>
+              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 sm:p-1"><TwitterLogo size={32} /></div>
+              <div className="social_icon rounded-full bg-gradient-to-t from-secondary-300 to-secondary-100 sm:p-1"><InstagramLogo size={32} /></div>
             </div>
           </div>
-          <div>
-            <h2 className="text-primary text-lg font-medium">Contact us</h2>
+          <div className="" id="contact">
+            <h2 className="text-primary text-lg font-medium mt-4">Contact us</h2>
             <div className="text-xs">
               <p>contact@jobfindr.com</p>
               <p>+1 111 111 1110</p>
@@ -126,9 +171,9 @@ export default function Home(/*{data}*/) {
             </div>
           </div>
           <div>
-            <h2 className="text-primary text-lg font-medium">Subscribe</h2>
+            <h2 className="text-primary text-lg font-medium mt-4">Subscribe</h2>
             <form action="">
-              <div className="text-xs w-64">
+              <div className="text-xs w-full sm:w-64">
                 <p>Enter your email to get notified about our news and solutions!</p>
               </div>
               <div className="flex max-w-xs border border-gray-300 rounded-2xl my-2 justify-between h-10">
