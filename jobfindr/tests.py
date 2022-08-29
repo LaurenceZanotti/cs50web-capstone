@@ -56,7 +56,3 @@ class SeleniumIndexTests(LiveServerTestCase):
             self.assertEqual(title.text in titles_to_test)
 
         
-
-        
-
-        

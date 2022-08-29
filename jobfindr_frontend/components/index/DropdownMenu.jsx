@@ -54,7 +54,7 @@ export default function DropdownMenu({icon, list_options, list_hrefs}) {
             </Menu.Item> */}
             {list_options.map((el, index) => {
               return (
-              <Menu.Item>
+              <Menu.Item key={index}>
                 {({ active }) => (
                   <a
                     href={index < list_hrefs.length ? list_hrefs[index] : '#'}
