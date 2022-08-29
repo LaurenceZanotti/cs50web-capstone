@@ -55,4 +55,12 @@ class SeleniumIndexTests(LiveServerTestCase):
         for title in section_titles:
             self.assertEqual(title.text in titles_to_test)
 
-        
+    def test_welcome_page_logos(self):
+        """Make sure product logo is correct"""
+        self.selenium.get(f'{CONTAINER_URL}/')
+
+        # Get logos
+        logos = self.selenium.find_elements(By.CSS_SELECTOR, "h1 .font-logo")
+        # Test logos
+        for logo in logos:
+            self.assertEqual(logo.text, "Jobfindr")
