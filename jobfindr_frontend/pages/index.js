@@ -84,7 +84,7 @@ export default function Home(/*{data}*/) {
                   </div>
                 </div>
                 <div className="text-darktext font-medium text-xl my-2">or</div>
-                <a href="#">
+                <a href="register">
                   <div className="w-52 h-16 border border-none rounded-2xl bg-secondary-300 flex justify-center items-center">
                     <span className="text-primary font-bold text-lg">Create a profile</span>
                   </div>
