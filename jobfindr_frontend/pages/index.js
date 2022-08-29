@@ -24,14 +24,18 @@ export default function Home(/*{data}*/) {
       </Head>
       <div className="bg-gradient-to-b from-primary/[.6] to-white" id="main">
       <nav className="flex justify-between items-center p-4 w-screen sm:w-[60em] m-auto bg-white">
-        <div className="w-24 md:w-36">
+
+        {/* Logo */}
+        <div className="w-24 md:w-36" id="main-logo">
           <h1 className='font-logo text-primary text-4xl'>
             Job
             <span className='text-secondary-500'>findr</span>
           </h1>
         </div>
+
+        {/* Navbar items */}
         <div className='hidden sm:block'>
-          <ul className="list-none text-xl">
+          <ul className="list-none text-xl" id="navbar-items">
             <a href="#home">
               <li className="inline m-4 text-secondary-500">Home</li>
             </a>
@@ -46,26 +50,31 @@ export default function Home(/*{data}*/) {
             </a>
           </ul>
         </div>
-        <div className="hidden sm:flex w-auto sm:w-36 justify-center">
+
+        {/* Dropdown menu */}
+        <div className="hidden sm:flex w-auto sm:w-36 justify-center" id="dropdown-menu">
           <DropdownMenu 
             icon={<UserCircle size={36} />}
             list_options={["Log in", "Sign up"]}
             list_hrefs={["login", "register"]}
           />
         </div>
-        <div className="sm:hidden w-auto sm:w-36 flex justify-center">
+
+        {/* Mobile dropdown menu */}
+        <div className="sm:hidden w-auto sm:w-36 flex justify-center" id="dropdown-menu-mobile">
           <DropdownMenu 
             icon={<List size={36} />}
             list_options={["Home", "I'm looking for a job", "I'm hunting talents", "Contact us", "Log in", "Sign up"]}
             list_hrefs={["#home", "#hero-section", "#talent-hunter", "#contact", "login", "register"]}
           />
         </div>
+
       </nav>
       <main className="bg-white w-screen sm:w-[60em] m-auto">
         {/* {data.msg} */}
         <header className="hero-section bg-hero-wave bg-no-repeat bg-bottom" id="home">
           <div className="m-auto text-center">
-            <h2 className="text-2xl sm:text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
+            <h2 className="section-title text-2xl sm:text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
           </div>
           <div className="flex flex-col-reverse sm:flex-row justify-center">
             <div className="overflow-hidden sm:overflow-visible sm:w-auto sm:m-8">
@@ -84,7 +93,7 @@ export default function Home(/*{data}*/) {
                   </div>
                 </div>
                 <div className="text-darktext font-medium text-xl my-2">or</div>
-                <a href="#">
+                <a href="register" id="hero-section-cta-button">
                   <div className="w-52 h-16 border border-none rounded-2xl bg-secondary-300 flex justify-center items-center">
                     <span className="text-primary font-bold text-lg">Create a profile</span>
                   </div>
@@ -94,7 +103,7 @@ export default function Home(/*{data}*/) {
           </div>
         </header>
         <section className="flex flex-col items-center" id="hero-section">
-          <h2 className="text-center text-2xl sm:text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
+          <h2 className="section-title text-center text-2xl sm:text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
           <div className="flex flex-col sm:flex-row mb-8">
             <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
               <h3 className="text-primary text-2xl text-center font-medium font-logo my-4"><span className="text-secondary-300 text-3xl inline-block relative left-0">1.</span> Sign in</h3>
@@ -117,7 +126,7 @@ export default function Home(/*{data}*/) {
           </div>
         </section>
         <section className="flex flex-col items-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="talent-hunter">
-          <h2 className="text-center w-[16em] text-2xl sm:text-4xl font-bold text-darktext m-8">
+          <h2 className="section-title text-center w-[16em] text-2xl sm:text-4xl font-bold text-darktext m-8">
             <div>Are you a <span className="text-primary">talent hunter</span>?</div>
             <div>All you need is here!</div>
           </h2>
