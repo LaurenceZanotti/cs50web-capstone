@@ -64,3 +64,14 @@ class SeleniumIndexTests(LiveServerTestCase):
         # Test logos
         for logo in logos:
             self.assertEqual(logo.text, "Jobfindr")
+
+    def test_welcome_page_cta(self):
+        """Make sure CTA button redirects correctly"""
+        self.selenium.get(f'{CONTAINER_URL}/')
+
+        # Get CTA button and click it
+        self.selenium.find_element(By.ID, "hero-section-cta-button").click()
+
+        # Test current page title to see if page was redirected
+        self.assertEqual(self.selenium.title, "Register | Jobfindr")
+        self.assertNotEqual(self.selenium.title, "Jobfindr - Your future happens now")
