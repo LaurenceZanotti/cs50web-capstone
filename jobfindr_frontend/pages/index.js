@@ -65,7 +65,7 @@ export default function Home(/*{data}*/) {
         {/* {data.msg} */}
         <header className="hero-section bg-hero-wave bg-no-repeat bg-bottom" id="home">
           <div className="m-auto text-center">
-            <h2 className="text-2xl sm:text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
+            <h2 className="section-title text-2xl sm:text-4xl font-bold text-darktext">A <span className="text-primary">job</span> is waiting for <span className="text-secondary-500">you!</span></h2>
           </div>
           <div className="flex flex-col-reverse sm:flex-row justify-center">
             <div className="overflow-hidden sm:overflow-visible sm:w-auto sm:m-8">
@@ -94,7 +94,7 @@ export default function Home(/*{data}*/) {
           </div>
         </header>
         <section className="flex flex-col items-center" id="hero-section">
-          <h2 className="text-center text-2xl sm:text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
+          <h2 className="section-title text-center text-2xl sm:text-4xl font-bold text-darktext m-8">Getting your best <span className="text-primary">opportunity</span></h2>
           <div className="flex flex-col sm:flex-row mb-8">
             <div className="border border-gray-400 rounded-2xl m-4 px-4 py-0">
               <h3 className="text-primary text-2xl text-center font-medium font-logo my-4"><span className="text-secondary-300 text-3xl inline-block relative left-0">1.</span> Sign in</h3>
@@ -117,7 +117,7 @@ export default function Home(/*{data}*/) {
           </div>
         </section>
         <section className="flex flex-col items-center bg-talent-wave bg-no-repeat bg-top min-h-[25em]" id="talent-hunter">
-          <h2 className="text-center w-[16em] text-2xl sm:text-4xl font-bold text-darktext m-8">
+          <h2 className="section-title text-center w-[16em] text-2xl sm:text-4xl font-bold text-darktext m-8">
             <div>Are you a <span className="text-primary">talent hunter</span>?</div>
             <div>All you need is here!</div>
           </h2>

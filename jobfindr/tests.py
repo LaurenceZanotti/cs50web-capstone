@@ -34,9 +34,29 @@ class SeleniumIndexTests(LiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
-    def test_hello(self):
+    def test_welcome_page_title(self):
+        """Make sure Welcome page title is correct"""
         self.selenium.get(f'{CONTAINER_URL}/')
-        main = self.selenium.find_element(By.TAG_NAME, "main")
-        self.assertEqual('Hello world! as JSON', main.text)
-  
-        # self.assertEqual(self.selenium.title, 'Jobfindr')
+        # main = self.selenium.find_element(By.TAG_NAME, "main")
+        # self.assertEqual('Hello world! as JSON', main.text)
+        self.assertEqual(self.selenium.title, 'Jobfindr - Your future happens now')
+
+    def test_welcome_page_section_titles(self):
+        """Make sure Welcome page section titles are correct"""
+        self.selenium.get(f'{CONTAINER_URL}/')
+        titles_to_test = [
+            "A job is waiting for you!",
+            "Getting your best opportunity",
+            "Are you a talent hunter? All you need is here!"
+        ]
+        section_titles = self.selenium.find_elements(By.CSS_SELECTOR, "h2 .section-title")
+
+        # Test titles
+        for title in section_titles:
+            self.assertEqual(title.text in titles_to_test)
+
+        
+
+        
+
+        
