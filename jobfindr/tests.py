@@ -92,3 +92,47 @@ class SeleniumIndexTests(LiveServerTestCase):
 
         for item in navbar_items:
             self.assertTrue(item.text in navbar_options)
+
+class SeleniumLoginTests(LiveServerTestCase):
+    
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        chrome_options = ChromeOptions()
+        if os.environ.get('IS_CICD_TESTING'):
+            chrome_options.add_argument('--headless')
+        cls.selenium = webdriver.Remote(
+            command_executor='http://host.docker.internal:4444', 
+            options=chrome_options
+        )
+        # cls.selenium = webdriver.Chrome(options=chrome_options)
+        cls.selenium.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_login_page_title(self):
+        self.selenium.get(f'{CONTAINER_URL}/login')
+        self.assertEqual(self.selenium.title, "Log in | Jobfindr")
+
+    def test_login_form_existence(self):
+        self.selenium.get(f'{CONTAINER_URL}/login')
+
+        # Test form existence
+        form = self.selenium.find_element(By.CSS_SELECTOR, 'form[method="post"]')
+        self.assertTrue(form)
+
+        # Test form elements
+        username_input = form.find_element(By.CSS_SELECTOR, 'input[name="username"]')
+        self.assertTrue(username_input)
+        self.assertEqual(username_input.get_attribute("placeholder"), "Username")
+
+        password_input = form.find_element(By.CSS_SELECTOR, 'input[name="password"]')
+        self.assertTrue(password_input)
+        self.assertEqual(password_input.get_attribute("placeholder"), "Password")
+
+        login_button = form.find_element(By.CSS_SELECTOR, 'input[type="submit"]')
+        self.assertTrue(login_button)
+        self.assertEqual(login_button.get_attribute("value"), "Log in")
