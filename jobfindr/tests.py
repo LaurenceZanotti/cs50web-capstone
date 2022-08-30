@@ -114,10 +114,12 @@ class SeleniumLoginTests(LiveServerTestCase):
         super().tearDownClass()
 
     def test_login_page_title(self):
+        """Make sure login page title is correct"""
         self.selenium.get(f'{CONTAINER_URL}/login')
         self.assertEqual(self.selenium.title, "Log in | Jobfindr")
 
     def test_login_form_existence(self):
+        """Make sure login form exists with correct placeholders"""
         self.selenium.get(f'{CONTAINER_URL}/login')
 
         # Test form existence
@@ -136,3 +138,17 @@ class SeleniumLoginTests(LiveServerTestCase):
         login_button = form.find_element(By.CSS_SELECTOR, 'input[type="submit"]')
         self.assertTrue(login_button)
         self.assertEqual(login_button.get_attribute("value"), "Log in")
+
+    def test_login_page_create_account_redirect(self):
+        """Make sure create account link is working"""
+        self.selenium.get(f'{CONTAINER_URL}/login')
+        
+        self.assertEqual(self.selenium.title, "Log in | Jobfindr")
+
+        # Find and click "Create one" link to be redirected to the register page
+        create_account_button = self.selenium.find_element(By.CSS_SELECTOR, 'a[href="/register"]')
+        create_account_button.click()
+
+        # Make sure the title changed
+        self.assertNotEqual(self.selenium.title, "Log in | Jobfindr")
+        self.assertEqual(self.selenium.title, "Register | Jobfindr")
