@@ -14,6 +14,7 @@ import AuthLayout from "../../components/login/AuthLayout";
 import AuthHeader from "../../components/login/AuthHeader";
 import InputText from "../../components/login/InputText";
 import InputSubmit from "../../components/login/InputSubmit";
+import UserTypeModal from "../../components/register/UserTypeModal";
 
 
 
@@ -25,6 +26,7 @@ export default function Register() {
     </Head>
     <div>
         <AuthLayout>
+        <UserTypeModal/>
             <AuthHeader/>
             <form action="" method="post" className="w-80 m-auto">
                 <InputText 
