@@ -93,7 +93,7 @@ class SeleniumIndexTests(LiveServerTestCase):
         for item in navbar_items:
             self.assertTrue(item.text in navbar_options)
 
-class SeleniumLoginTests(LiveServerTestCase):
+class SeleniumAuthTests(LiveServerTestCase):
     
     @classmethod
     def setUpClass(cls):
@@ -152,3 +152,51 @@ class SeleniumLoginTests(LiveServerTestCase):
         # Make sure the title changed
         self.assertNotEqual(self.selenium.title, "Log in | Jobfindr")
         self.assertEqual(self.selenium.title, "Register | Jobfindr")
+
+    def test_register_page_title(self):
+        """Make sure register page title is correct"""
+        self.selenium.get(f'{CONTAINER_URL}/register')
+        self.assertEqual(self.selenium.title, "Register | Jobfindr")
+
+    def test_register_page_form_existence(self):
+        """Make sure login form exists with correct placeholders"""
+        self.selenium.get(f'{CONTAINER_URL}/register')
+
+        # Test form existence
+        form = self.selenium.find_element(By.CSS_SELECTOR, 'form[method="post"]')
+        self.assertTrue(form)
+
+        # Test form elements
+        username_input = form.find_element(By.CSS_SELECTOR, 'input[name="username"]')
+        self.assertTrue(username_input)
+        self.assertEqual(username_input.get_attribute("placeholder"), "Username")
+
+        email_input = form.find_element(By.CSS_SELECTOR, 'input[name="email"]')
+        self.assertTrue(email_input)
+        self.assertEqual(email_input.get_attribute("placeholder"), "Email")
+
+        password_input = form.find_element(By.CSS_SELECTOR, 'input[name="password"]')
+        self.assertTrue(password_input)
+        self.assertEqual(password_input.get_attribute("placeholder"), "Password")
+
+        cpassword_input = form.find_element(By.CSS_SELECTOR, 'input[name="cpassword"]')
+        self.assertTrue(cpassword_input)
+        self.assertEqual(cpassword_input.get_attribute("placeholder"), "Confirm your password")
+
+        login_button = form.find_element(By.CSS_SELECTOR, 'input[type="submit"]')
+        self.assertTrue(login_button)
+        self.assertEqual(login_button.get_attribute("value"), "Register")
+    
+    def test_register_page_already_have_account_redirect(self):
+        """Make sure already have an account link is working"""
+        self.selenium.get(f'{CONTAINER_URL}/register')
+        
+        self.assertEqual(self.selenium.title, "Register | Jobfindr")
+
+        # Find and click "Create one" link to be redirected to the register page
+        already_have_account_link = self.selenium.find_element(By.CSS_SELECTOR, 'a[href="/login"]')
+        already_have_account_link.click()
+
+        # Make sure the title changed
+        self.assertNotEqual(self.selenium.title, "Register | Jobfindr")
+        self.assertEqual(self.selenium.title, "Log in | Jobfindr")
