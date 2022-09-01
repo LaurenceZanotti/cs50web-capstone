@@ -101,6 +101,7 @@ class SeleniumAuthTests(LiveServerTestCase):
         chrome_options = ChromeOptions()
         if os.environ.get('IS_CICD_TESTING'):
             chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--window-size=1920,1080')
         cls.selenium = webdriver.Remote(
             command_executor='http://host.docker.internal:4444', 
             options=chrome_options
