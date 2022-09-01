@@ -1,6 +1,6 @@
 export default function InputText({icon, type, name, id, placeholder}) {
   return (
-    <div className='my-6 bg-gray-300 flex rounded-full justify-center items-center'>
+    <div className='my-6 bg-gray-300 flex rounded-full justify-center items-center border hover:border-primary'>
         {icon && icon}
         <input 
             type={type}
