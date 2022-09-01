@@ -21,11 +21,19 @@ import UserTypeModal from "../../components/register/UserTypeModal";
 
 export default function Register() {
 
+    // Open or close UserTypeModal
+    const [open, setOpen] = useState(true)
+    
     // Type of user
     const [userType, setUserType] = useState("jobseeker")
 
     function handleUserType(chosenUserType = "jobseeker") {
         setUserType(chosenUserType)
+    }
+
+    function handleModalUserType(ev) {
+        ev.preventDefault()
+        setOpen(true)
     }
 
     return (
@@ -35,10 +43,10 @@ export default function Register() {
         </Head>
         <div>
             <AuthLayout>
-                <UserTypeModal handleUserType={handleUserType}/>
+                <UserTypeModal handleUserType={handleUserType} open={open} setOpen={setOpen}/>
                 <AuthHeader/>
+                <h2 className='font-medium text-lg my-2 w-80 m-auto text-center'>Creating your account</h2>
                 <form action="" method="post" className="w-80 m-auto">
-                    <input type="hidden" name="usertype" id="usertype" value={userType}/>
                     <InputText 
                         icon={<UserCircle size={28} color="black" weight="fill" className='mx-4'/>} 
                         name="username"
@@ -66,6 +74,23 @@ export default function Register() {
                         type="password"
                         placeholder="Confirm your password"
                     />
+                    <input type="hidden" name="usertype" id="usertype" value={userType}/>
+                    <div className='w-80 m-auto flex justify-between items-center rounded-full bg-gray-300 py-2 px-4 mb-6 border hover:border-primary'>
+                        <div>I'm looking for: {
+                            userType == 'jobseeker' ? 
+                            <span className="text-primary font-medium">jobs</span> :
+                            <span className="text-primary font-medium">talents</span>
+                            }
+                        </div>
+                        <button 
+                            className="block border border-primary rounded-md px-2 hover:bg-primary hover:text-white transition-colors"
+                            onClick={ev => {
+                                handleModalUserType(ev)
+                            }}
+                        >
+                            Change
+                        </button>
+                    </div>
                     <InputSubmit value="Register" className="bg-secondary-500"/>
                 </form>
                 <div className='text-center mt-0 mb-10 leading-8'>

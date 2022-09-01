@@ -3,8 +3,7 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Confetti } from 'phosphor-react'
 
-export default function UserTypeModal(props) {
-  const [open, setOpen] = useState(true)
+export default function UserTypeModal({handleUserType, open, setOpen}) {
 
   const cancelButtonRef = useRef(null)
 
@@ -65,7 +64,7 @@ export default function UserTypeModal(props) {
                     type="button"
                     className="inline-flex sm:flex-1 w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      props.handleUserType("jobseeker")
+                      handleUserType("jobseeker")
                       setOpen(false)
                     }}
                     ref={cancelButtonRef}
@@ -77,7 +76,7 @@ export default function UserTypeModal(props) {
                     type="button"
                     className="mt-3 inline-flex sm:flex-1 w-full justify-center rounded-md border border-transparent bg-secondary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-priamry focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      props.handleUserType("talenthunter")
+                      handleUserType("talenthunter")
                       setOpen(false)
                     }}
                   >
