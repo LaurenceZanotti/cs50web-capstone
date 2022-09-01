@@ -10,7 +10,20 @@ export default function UserTypeModal(props) {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        initialFocus={cancelButtonRef}
+        open={open}
+        static
+        onClose={() => null}
+      >
+        {/* 
+        /* Inserting static prop and a null anonymous function above avoids the
+        /* user from skipping the modal step by clicking outside the modal
+        /* or by pressing Esc. The solution was given by GitHub user wengtytt
+        /* here: https://github.com/tailwindlabs/headlessui/issues/621
+        */}
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
