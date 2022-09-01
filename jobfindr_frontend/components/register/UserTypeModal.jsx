@@ -50,25 +50,25 @@ export default function UserTypeModal(props) {
                 <div className="bg-gray-50 px-4 py-3 mb-4 sm:flex sm:px-6">
                   <button
                     type="button"
-                    className="mt-3 inline-flex sm:flex-1 w-full justify-center rounded-md border border-transparent bg-secondary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-priamry focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => {
-                      props.handleUserType("talenthunter")
-                      setOpen(false)
-                    }}
-                    ref={cancelButtonRef}
-                  >
-                    New talents
-                  </button>
-                  <span className='font-medium ml-3 inline-flex items-center'>or</span>
-                  <button
-                    type="button"
                     className="inline-flex sm:flex-1 w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
                       props.handleUserType("jobseeker")
                       setOpen(false)
                     }}
+                    ref={cancelButtonRef}
                   >
                     Job opportunities
+                  </button>
+                  <span className='font-medium ml-3 inline-flex items-center'>or</span>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex sm:flex-1 w-full justify-center rounded-md border border-transparent bg-secondary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-priamry focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => {
+                      props.handleUserType("talenthunter")
+                      setOpen(false)
+                    }}
+                  >
+                    New talents
                   </button>
                 </div>
               </Dialog.Panel>
