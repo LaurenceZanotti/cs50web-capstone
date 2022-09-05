@@ -14,6 +14,7 @@ import LinkedinIcon from "../../components/login/icons/LinkedinIcon";
 import AuthLayout from "../../components/login/AuthLayout";
 import AuthHeader from "../../components/login/AuthHeader";
 import InputSubmit from "../../components/login/InputSubmit";
+import FormErrorMessage from "../../components/auth/FormErrorMessage";
 
 export default function Login() {
 
@@ -38,6 +39,11 @@ export default function Login() {
                 <AuthHeader/>            
                 <form onSubmit={formik.handleSubmit} action="" method="post" className="w-80 m-auto">
                     {/* Username input */}
+                    {
+                        formik.touched.username && formik.errors.username ? 
+                        <FormErrorMessage>{formik.errors.username}</FormErrorMessage> : 
+                        null
+                    }
                     <div className='my-6 bg-gray-300 flex rounded-full justify-center items-center border hover:border-primary'>
                         <UserCircle size={28} color="black" weight="fill" className='mx-4'/>
                         <input 
@@ -62,12 +68,12 @@ export default function Login() {
                             value={formik.values.username}
                         />
                     </div>
-                    {
-                        formik.touched.username && formik.errors.username ? 
-                        <div>{formik.errors.username}</div> : 
-                        null
-                    }
                     {/* Password input */}
+                    {
+                    formik.touched.password && formik.errors.password ? 
+                    <FormErrorMessage>{formik.errors.password}</FormErrorMessage> : 
+                    null
+                    }
                     <div className='my-6 bg-gray-300 flex rounded-full justify-center items-center border hover:border-primary'>
                         <LockSimple size={28} color="black" weight="fill" className='mx-4'/>
                         <input 
@@ -93,11 +99,6 @@ export default function Login() {
                             value={formik.values.password}
                         />
                     </div>
-                    {
-                    formik.touched.password && formik.errors.password ? 
-                    <div>{formik.errors.password}</div> : 
-                    null
-                    }
 
                     {/* Log in input */}
                     <InputSubmit value="Log in" className="bg-primary"/>
