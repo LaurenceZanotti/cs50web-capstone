@@ -36,7 +36,7 @@ export default function UserTypeModal({handleUserType, open, setOpen}) {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -71,7 +71,7 @@ export default function UserTypeModal({handleUserType, open, setOpen}) {
                   >
                     Job opportunities
                   </button>
-                  <span className='font-medium ml-3 inline-flex items-center'>or</span>
+                  <span className='font-medium m-auto w-5 block mt-3 sm:mt-1 sm:ml-4 sm:inline-flex items-center'>or</span>
                   <button
                     type="button"
                     className="mt-3 inline-flex sm:flex-1 w-full justify-center rounded-md border border-transparent bg-secondary-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-priamry focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
