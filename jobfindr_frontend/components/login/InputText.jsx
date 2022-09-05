@@ -1,4 +1,5 @@
-export default function InputText({icon, type, name, id, placeholder}) {
+export default function InputText({icon, type, name, id, placeholder, handleChange, value}) {
+  value={value}
   return (
     <div className='my-6 bg-gray-300 flex rounded-full justify-center items-center border hover:border-primary'>
         {icon && icon}
@@ -20,6 +21,8 @@ export default function InputText({icon, type, name, id, placeholder}) {
                 outline-none
             " 
             placeholder={placeholder}
+            onChange={handleChange}
+            value={value}
         />
     </div>
   )
