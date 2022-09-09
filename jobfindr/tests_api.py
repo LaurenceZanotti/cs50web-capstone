@@ -14,6 +14,7 @@ class AuthTests(TestCase):
     target_url_register = "/api/register"
     target_url_login = "/api/login"
     target_url_user = "/api/user"
+    target_url_logout = "/api/logout"
 
     # Utility functions
     def check_json_response(self, response, status_code, json_message):
@@ -283,6 +284,37 @@ class AuthTests(TestCase):
                     'id': id,
                     'username': 'dine'
                 }
+            },
+            status_code=200
+        )
+
+    def test_logout(self):
+        """Test if logout is working"""
+        c = Client()
+
+         # Sign up a user
+        response = c.post(self.target_url_register, {
+            'username': 'dine',
+            'email': 'dine@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'jobseeker'
+        })
+        self.assertEqual(201, response.status_code)
+
+        # Sign user in
+        response = c.post(self.target_url_login, {
+            'username': 'dine',
+            'password': 'secret'
+        })
+        self.assertEqual(200, response.status_code)
+
+        response = c.get(self.target_url_logout)
+        self.assertEqual(200, response.status_code)
+        self.check_json_response(
+            response=response,
+            json_message={
+                'msg': 'Logged out'
             },
             status_code=200
         )
