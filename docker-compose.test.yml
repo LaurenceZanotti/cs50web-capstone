@@ -77,6 +77,8 @@ services:
       DB_TEST_USER: "${DB_TEST_USER}"
       DB_TEST_PASS: "${DB_TEST_PASS}"
 
+    # --keepdb flag must be set in order to avoid EOF error 
+    # it also helps tests performance
     command: python manage.py test --keepdb
     # The command below runs a specific test suite
     # command: python manage.py test jobfindr.tests_api.AuthTests --keepdb

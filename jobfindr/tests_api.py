@@ -1,16 +1,15 @@
 from django.test import TestCase, Client
 
-DOMAIN = 'host.docker.internal'
-CONTAINER_URL = f'http://{DOMAIN}:3000'
-
 # Create your tests here.
 class IndexTests(TestCase):
+    """Welcome page test suite"""
     def test_index(self):
         c = Client()
         response = c.get("/api/")
         self.assertEqual(response.status_code, 200)
 
 class AuthTests(TestCase):
+    """Authentication API test suite"""
     target_url_register = "/api/register"
     target_url_login = "/api/login"
     target_url_user = "/api/user"
