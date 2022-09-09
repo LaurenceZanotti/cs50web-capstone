@@ -1,4 +1,3 @@
-import re
 from django.test import TestCase, Client
 
 DOMAIN = 'host.docker.internal'
@@ -14,6 +13,7 @@ class IndexTests(TestCase):
 class AuthTests(TestCase):
     target_url_register = "/api/register"
     target_url_login = "/api/login"
+    target_url_user = "/api/user"
 
     # Utility functions
     def check_json_response(self, response, status_code, json_message):
@@ -236,4 +236,53 @@ class AuthTests(TestCase):
                 'msg': 'Invalid username and/or password.'
             },
             status_code=401
+        )
+
+    def test_retrieve_anonymous_user_info(self):
+        """Test if anonymous user information is being retrieved"""
+        c = Client()
+
+        response = c.get(self.target_url_user)
+
+        # Log user in
+        self.check_json_response(
+            response=response,
+            json_message={
+                'user': None,
+                'error': 'Not authenticated'
+            },
+            status_code=403
+        )
+
+    def test_retrieve_user_info(self):
+        """Test if signed in user information is being retrieved"""
+        c = Client()
+
+        # Sign up a user
+        response = c.post(self.target_url_register, {
+            'username': 'dine',
+            'email': 'dine@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'jobseeker'
+        })
+
+        # Sign user in
+        response = c.post(self.target_url_login, {
+            'username': 'dine',
+            'password': 'secret'
+        })
+
+        # Retrieve logged in user information
+        response = c.get(self.target_url_user)
+        id = response.json()['user']['id']
+        self.check_json_response(
+            response=response,
+            json_message={
+                    'user': {
+                    'id': id,
+                    'username': 'dine'
+                }
+            },
+            status_code=200
         )
