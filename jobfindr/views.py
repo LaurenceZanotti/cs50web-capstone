@@ -89,7 +89,7 @@ def login_view(request):
         else:
             return JsonResponse({
                 'msg': 'Invalid username and/or password.'
-            })
+            }, status=401)
     else:
         return JsonResponse({
             'msg': 'Forbidden'

@@ -194,3 +194,46 @@ class AuthTests(TestCase):
             },
             status_code=200
         )
+
+    def test_login_invalid(self):
+        """Test invalid login"""
+        c = Client()
+
+        # Attempt to log in user that doesn't exists
+        response = c.post(self.target_url_login, {
+            'username': 'emilly',
+            'password': 'secret'
+        })
+
+        # Test response
+        self.check_json_response(
+            response=response, 
+            json_message={
+                'msg': 'Invalid username and/or password.'
+            },
+            status_code=401
+        )
+
+        # Sign a user
+        response = c.post(self.target_url_register, {
+            'username': 'dine',
+            'email': 'dine@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'jobseeker'
+        })
+
+        # Attempt to log in user with wrong credentials
+        response = c.post(self.target_url_login, {
+            'username': 'dine',
+            'password': 'secret1'
+        })
+
+        # Test response
+        self.check_json_response(
+            response=response, 
+            json_message={
+                'msg': 'Invalid username and/or password.'
+            },
+            status_code=401
+        )
