@@ -189,6 +189,14 @@ class SeleniumAuthTests(LiveServerTestCase):
         
         self.assertEqual(self.selenium.title, "Register | Jobfindr")
 
+        # Close modal
+        modal = self.selenium.find_element(
+            By.CSS_SELECTOR, 
+            "div#headlessui-portal-root"
+        )
+        modal_buttons = modal.find_elements(By.TAG_NAME, 'button')
+        modal_buttons[1].click()
+
         # Find and click "Create one" link to be redirected to the register page
         already_have_account_link = self.selenium.find_element(By.CSS_SELECTOR, 'a[href="/login"]')
         already_have_account_link.click()
