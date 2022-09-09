@@ -139,7 +139,7 @@ class AuthTests(TestCase):
             status_code=409
         )
 
-    def test_login(self):
+    def test_login_jobseeker(self):
         """Test user login"""
         c = Client()
 
@@ -155,6 +155,34 @@ class AuthTests(TestCase):
         # Attempt to log in user
         response = c.post(self.target_url_login, {
             'username': 'dine',
+            'password': 'secret'
+        })
+
+        # Test if response is correct
+        self.check_json_response(
+            response=response, 
+            json_message={
+                'msg': 'Logged in successfully!'
+            },
+            status_code=200
+        )
+
+    def test_login_talenthunter(self):
+        """Test user login"""
+        c = Client()
+
+        # Sign up user
+        response = c.post(self.target_url_register, {
+            'username': 'emilly',
+            'email': 'emilly@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'talenthunter'
+        })
+
+        # Attempt to log in user
+        response = c.post(self.target_url_login, {
+            'username': 'emilly',
             'password': 'secret'
         })
 
