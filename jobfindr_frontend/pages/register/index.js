@@ -185,7 +185,7 @@ export default function Register() {
                     {/* Select input (customized) */}
                     <input type="hidden" name="usertype" id="usertype" value={formik.values.usertype}/>
                     <div className='w-80 m-auto flex justify-between items-center rounded-full bg-gray-300 py-2 px-4 mb-6 border hover:border-primary'>
-                        <div>I'm looking for: {
+                        <div id="usertype_label">I'm looking for: {
                             formik.values.usertype == 'jobseeker' ? 
                             <span className="text-primary font-medium">jobs</span> :
                             <span className="text-primary font-medium">talents</span>

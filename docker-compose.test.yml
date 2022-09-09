@@ -81,7 +81,7 @@ services:
     # it also helps tests performance
     command: python manage.py test --keepdb
     # The command below runs a specific test suite
-    # command: python manage.py test jobfindr.<insert_test_suite_path_here> --keepdb
+    # command: python manage.py test jobfindr.tests_selenium.SeleniumAuthTests.test_register_page_modal_talenthunter_button --keepdb
     # The command below keeps the container executing enabling CLI access
     # command: tail -f /dev/null
 

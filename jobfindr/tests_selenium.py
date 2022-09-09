@@ -204,3 +204,43 @@ class SeleniumAuthTests(LiveServerTestCase):
         # Make sure the title changed
         self.assertNotEqual(self.selenium.title, "Register | Jobfindr")
         self.assertEqual(self.selenium.title, "Log in | Jobfindr")
+
+    def test_register_page_modal_jobseeker_button(self):
+        """Make sure modal job seeker modal button is working"""
+        self.selenium.get(f'{CONTAINER_URL}/register')
+        self.assertEqual(self.selenium.title, "Register | Jobfindr")
+        
+        # Find modal and button
+        modal = self.selenium.find_element(
+            By.CSS_SELECTOR, 
+            "div#headlessui-portal-root"
+        )
+        modal_buttons = modal.find_elements(By.TAG_NAME, 'button')
+        modal_buttons[1].click()
+
+        # Make sure the selected options is reflected within the form
+        hidden_input = self.selenium.find_element(By.CSS_SELECTOR, 'input#usertype')
+        self.assertEqual("jobseeker", hidden_input.get_attribute("value"))
+        label_container = self.selenium.find_element(By.CSS_SELECTOR, "div#usertype_label")
+        label = label_container.find_element(By.TAG_NAME, 'span')
+        self.assertEqual("jobs", label.text)
+
+    def test_register_page_modal_talenthunter_button(self):
+        """Make sure modal talent hunter modal button is working"""
+        self.selenium.get(f'{CONTAINER_URL}/register')
+        self.assertEqual(self.selenium.title, "Register | Jobfindr")
+        
+        # Find modal and button
+        modal = self.selenium.find_element(
+            By.CSS_SELECTOR, 
+            "div#headlessui-portal-root"
+        )
+        modal_buttons = modal.find_elements(By.TAG_NAME, 'button')
+        modal_buttons[2].click()
+
+        # Make sure the selected options is reflected within the form
+        hidden_input = self.selenium.find_element(By.CSS_SELECTOR, 'input#usertype')
+        self.assertEqual("talenthunter", hidden_input.get_attribute("value"))
+        label_container = self.selenium.find_element(By.CSS_SELECTOR, "div#usertype_label")
+        label = label_container.find_element(By.TAG_NAME, 'span')
+        self.assertEqual("talents", label.text)
