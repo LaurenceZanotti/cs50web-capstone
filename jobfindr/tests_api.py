@@ -11,12 +11,25 @@ class IndexTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 class AuthTests(TestCase):
-    target_url = "/api/register"
+    target_url_register = "/api/register"
+    target_url_login = "/api/login"
 
+    # Utility functions
+    def check_json_response(self, response, status_code, json_message):
+        """Check if JSON response is correct"""
+        # Test JSON response status and headers
+        self.assertEqual(response.headers.get('Content-Type'), 'application/json')
+        self.assertEqual(response.status_code, status_code)
+        # Test if API returns the appropriate message
+        self.assertJSONEqual(
+            str(response.content, encoding='utf8'), json_message
+        )
+
+    # Tests
     def test_register_jobseeker(self):
         """Tests the sign up of a Job Seeker user"""
         c = Client()
-        response = c.post(self.target_url, {
+        response = c.post(self.target_url_register, {
             'username': 'dine',
             'email': 'dine@test.com',
             'password': 'secret',
@@ -44,7 +57,7 @@ class AuthTests(TestCase):
     def test_register_talenthunter(self):
         """Tests the sign up of a Talent Hunter user"""
         c = Client()
-        response = c.post(self.target_url, {
+        response = c.post(self.target_url_register, {
             'username': 'emilly',
             'email': 'emilly@test.com',
             'password': 'secret',
@@ -72,7 +85,7 @@ class AuthTests(TestCase):
     def test_register_jobseeker_already_exists(self):
         """Tests if the API returns user already exists response"""
         c = Client()
-        response = c.post(self.target_url, {
+        response = c.post(self.target_url_register, {
             'username': 'johndoe',
             'email': 'johndoe@test.com',
             'password': 'secret',
@@ -88,7 +101,7 @@ class AuthTests(TestCase):
         )
 
         # Repeat request and form information
-        response = c.post(self.target_url, {
+        response = c.post(self.target_url_register, {
             'username': 'johndoe',
             'email': 'johndoe@test.com',
             'password': 'secret',
@@ -110,7 +123,7 @@ class AuthTests(TestCase):
     def test_register_talenthunter_already_exists(self):
         """Tests if the API returns user already exists response"""
         c = Client()
-        response = c.post(self.target_url, {
+        response = c.post(self.target_url_register, {
             'username': 'johndoe',
             'email': 'johndoe@test.com',
             'password': 'secret',
@@ -126,7 +139,7 @@ class AuthTests(TestCase):
         )
 
         # Repeat request and form information
-        response = c.post(self.target_url, {
+        response = c.post(self.target_url_register, {
             'username': 'johndoe',
             'email': 'johndoe@test.com',
             'password': 'secret',
@@ -146,4 +159,32 @@ class AuthTests(TestCase):
             {
                 'msg': 'User already exists'
             }
+        )
+
+    def test_login(self):
+        """Test user login"""
+        c = Client()
+
+        # Sign up user
+        response = c.post(self.target_url_register, {
+            'username': 'dine',
+            'email': 'dine@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'jobseeker'
+        })
+
+        # Attempt to log in user
+        response = c.post(self.target_url_login, {
+            'username': 'dine',
+            'password': 'secret'
+        })
+
+        # Test if response is correct
+        self.check_json_response(
+            response=response, 
+            json_message={
+                'msg': 'Logged in successfully!'
+            },
+            status_code=200
         )

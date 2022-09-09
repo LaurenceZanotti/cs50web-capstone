@@ -49,7 +49,6 @@ def register(request):
                 return JsonResponse({
                     'msg': 'User already exists'
                 }, status=409)
-            login(request, user)
             return JsonResponse({
                 'msg': "User created!"
             }, status=201)
@@ -62,7 +61,6 @@ def register(request):
                 return JsonResponse({
                     'msg': 'User already exists'
                 }, status=409)
-            login(request, user)
             return JsonResponse({
                 'msg': "User created!"
             }, status=201)
