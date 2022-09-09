@@ -78,6 +78,8 @@ services:
       DB_TEST_PASS: "${DB_TEST_PASS}"
 
     command: python manage.py test --keepdb
+    # The command below keeps the container executing enabling CLI access
+    # command: tail -f /dev/null
 
 volumes:
   capstone_db_data:

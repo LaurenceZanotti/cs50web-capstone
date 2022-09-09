@@ -1,4 +1,4 @@
-from django.test import TestCase, Client, LiveServerTestCase
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
@@ -8,12 +8,6 @@ DOMAIN = 'host.docker.internal'
 CONTAINER_URL = f'http://{DOMAIN}:3000'
 
 # Create your tests here.
-class IndexTests(TestCase):
-    def test_index(self):
-        c = Client()
-        response = c.get("/api/")
-        self.assertEqual(response.status_code, 200)
-
 class SeleniumIndexTests(LiveServerTestCase):
 
     @classmethod
