@@ -68,3 +68,82 @@ class AuthTests(TestCase):
                 'msg': 'User created!'
             }
         )
+
+    def test_register_jobseeker_already_exists(self):
+        """Tests if the API returns user already exists response"""
+        c = Client()
+        response = c.post(self.target_url, {
+            'username': 'johndoe',
+            'email': 'johndoe@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'jobseeker'
+        })
+
+        # Test if resource was created by status code
+        self.assertEqual(
+            201, 
+            response.status_code, 
+            msg="Status code not correct"
+        )
+
+        # Repeat request and form information
+        response = c.post(self.target_url, {
+            'username': 'johndoe',
+            'email': 'johndoe@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'jobseeker'
+        })
+        
+        # Test JSON response status and headers
+        self.assertEqual(response.headers.get('Content-Type'), 'application/json')
+        self.assertEqual(response.status_code, 409)
+        # Test if API returns "User already exists" message
+        self.assertJSONEqual(
+            str(response.content, encoding='utf8'),
+            {
+                'msg': 'User already exists'
+            }
+        )
+
+    def test_register_talenthunter_already_exists(self):
+        """Tests if the API returns user already exists response"""
+        c = Client()
+        response = c.post(self.target_url, {
+            'username': 'johndoe',
+            'email': 'johndoe@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'talenthunter'
+        })
+
+        # Test if resource was created by status code
+        self.assertEqual(
+            201, 
+            response.status_code, 
+            msg="Status code not correct"
+        )
+
+        # Repeat request and form information
+        response = c.post(self.target_url, {
+            'username': 'johndoe',
+            'email': 'johndoe@test.com',
+            'password': 'secret',
+            'cpassword': 'secret',
+            'usertype': 'talenthunter'
+        })
+        
+        # Test JSON response status and headers
+        self.assertEqual(response.headers.get('Content-Type'), 'application/json')
+        # Justification of the use of 409 code (not really using a standard)
+        # https://stackoverflow.com/questions/3825990/
+        # http-response-code-for-post-when-resource-already-exists
+        self.assertEqual(response.status_code, 409)
+        # Test if API returns "User already exists" message
+        self.assertJSONEqual(
+            str(response.content, encoding='utf8'),
+            {
+                'msg': 'User already exists'
+            }
+        )

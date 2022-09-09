@@ -48,7 +48,7 @@ def register(request):
             except IntegrityError:
                 return JsonResponse({
                     'msg': 'User already exists'
-                })
+                }, status=409)
             login(request, user)
             return JsonResponse({
                 'msg': "User created!"
@@ -61,7 +61,7 @@ def register(request):
             except IntegrityError:
                 return JsonResponse({
                     'msg': 'User already exists'
-                })
+                }, status=409)
             login(request, user)
             return JsonResponse({
                 'msg': "User created!"
