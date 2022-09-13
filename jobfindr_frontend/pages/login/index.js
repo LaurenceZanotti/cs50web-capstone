@@ -28,28 +28,26 @@ export default function Login() {
             username: '',
             password: '',
         },
-        onSubmit: (values, helpers) => {
-            const params = new URLSearchParams()
-            // const params = new URLSearchParams(new FormData())
-            params.append('username', username)
-            params.append('password', password)
-            console.log("onSubmit parameters", values, helpers);
-            console.log('csrftoken: ', getCSRFToken());
+        onSubmit: values => {
             const options = {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': getCSRFToken() // CSRF token header as per docs(https://docs.djangoproject.com/en/3.2/ref/csrf/#ajax)
                 },
-                body: {
+                body: JSON.stringify({
                     username: values.username,
-                    password: values.password
-                }
+                    password: values.password,
+                })
             }
+            // Delete console.log before PR merge
+            console.log("onSubmit parameters", values);
+            console.log('csrftoken: ', getCSRFToken());
             console.log("fetch options: ", options);
+
             fetch(`http://${ROUTE}`, options)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
+                    console.log(data)                    
                 })
                 .catch(error => {
                     console.error(error)

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from jobfindr.models import JobSeeker, TalentHunter
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Create your views here.
 def index(request):
@@ -72,12 +73,16 @@ def register(request):
                 }
             )
 
+@csrf_exempt
 def login_view(request):
     """Log in user"""
     if request.method == "POST":
+        # https://stackoverflow.com/questions/29780060
+        # /trying-to-parse-request-body-from-post-in-django
+        body = json.loads(request.body)
         # Get form values
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = body.get('username')
+        password = body.get('password')        
 
         if username == None or password == None:
             return JsonResponse({
@@ -86,10 +91,7 @@ def login_view(request):
 
         # Attempt to authenticate and log user in
         user = authenticate(request, username=username, password=password)
-        return JsonResponse({
-            'username': username,
-            'password': password
-        })
+
         if user is not None:
             login(request, user)
             return JsonResponse({
