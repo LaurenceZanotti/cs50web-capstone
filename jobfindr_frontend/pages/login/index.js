@@ -4,6 +4,7 @@ import Head from 'next/head'
 // Libraries
 import { UserCircle, LockSimple } from 'phosphor-react'
 import { useFormik } from 'formik'
+import getCSRFToken from '../../utils/getCSRFToken';
 
 // Icons
 import GoogleIcon from "../../components/login/icons/GoogleIcon";
@@ -16,15 +17,43 @@ import AuthHeader from "../../components/login/AuthHeader";
 import InputSubmit from "../../components/login/InputSubmit";
 import FormErrorMessage from "../../components/auth/FormErrorMessage";
 
-export default function Login() {
+const API_HOST = "localhost:5000"
+// const API_HOST = "host.docker.internal:5000"
+const ROUTE = `${API_HOST}/api/login`
 
+export default function Login() {
+    
     const formik = useFormik({
         initialValues: {
             username: '',
             password: '',
         },
-        onSubmit: values => {
-            console.log(values)
+        onSubmit: (values, helpers) => {
+            const params = new URLSearchParams()
+            // const params = new URLSearchParams(new FormData())
+            params.append('username', username)
+            params.append('password', password)
+            console.log("onSubmit parameters", values, helpers);
+            console.log('csrftoken: ', getCSRFToken());
+            const options = {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCSRFToken() // CSRF token header as per docs(https://docs.djangoproject.com/en/3.2/ref/csrf/#ajax)
+                },
+                body: {
+                    username: values.username,
+                    password: values.password
+                }
+            }
+            console.log("fetch options: ", options);
+            fetch(`http://${ROUTE}`, options)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => {
+                    console.error(error)
+                })
         },
         validate
     })

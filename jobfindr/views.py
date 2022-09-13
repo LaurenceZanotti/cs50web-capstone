@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.http import JsonResponse
 from jobfindr.models import JobSeeker, TalentHunter
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -75,12 +76,20 @@ def login_view(request):
     """Log in user"""
     if request.method == "POST":
         # Get form values
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if username == None or password == None:
+            return JsonResponse({
+                'msg': 'You must provide your username and password'
+            }, status=400)
 
         # Attempt to authenticate and log user in
         user = authenticate(request, username=username, password=password)
-
+        return JsonResponse({
+            'username': username,
+            'password': password
+        })
         if user is not None:
             login(request, user)
             return JsonResponse({
