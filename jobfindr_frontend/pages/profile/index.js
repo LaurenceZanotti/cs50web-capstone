@@ -10,11 +10,7 @@ export default function Profile() {
     useEffect(() => {
         fetch(`http://${ROUTE}`)
             .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setUser(data)
-            })
-            .catch(err => {console.error(err)})
+            .then(data => setUser(data))
     }, [])
 
     return (

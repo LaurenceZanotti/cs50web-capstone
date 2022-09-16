@@ -1,5 +1,6 @@
 // Built in
 import Head from 'next/head'
+import Router, { userRouter } from 'next/router'
 
 // Libraries
 import { UserCircle, LockSimple } from 'phosphor-react'
@@ -39,15 +40,11 @@ export default function Login() {
                     password: values.password,
                 })
             }
-            // Delete console.log before PR merge
-            console.log("onSubmit parameters", values);
-            console.log('csrftoken: ', getCSRFToken());
-            console.log("fetch options: ", options);
 
             fetch(`http://${ROUTE}`, options)
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)                    
+                .then(res => {
+                    if (res.status == 200) Router.push('/profile')
+                    else return res.json()
                 })
                 .catch(error => {
                     console.error(error)

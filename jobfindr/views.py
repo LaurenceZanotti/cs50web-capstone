@@ -2,7 +2,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 # App
 from jobfindr.models import JobSeeker, TalentHunter
 # Third party
@@ -87,7 +86,6 @@ def api_register(request):
                 }
             )
 
-@csrf_exempt
 def api_login(request):
     """Log in user"""
     if request.method == "POST":
