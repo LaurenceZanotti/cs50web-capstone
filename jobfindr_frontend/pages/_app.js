@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Find jobs and talents, or both. You choose." />
         <meta name="keywords" content="job, jobs, find, find jobs, search jobs, talents, talent, recruiting, opportunities" />
+        <link rel="shortcut icon" href="next/favicon.ico" type="image/x-icon" />
       </Head>
       <Component {...pageProps} />
     </>
