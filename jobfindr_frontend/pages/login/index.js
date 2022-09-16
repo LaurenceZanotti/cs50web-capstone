@@ -1,6 +1,6 @@
 // Built in
 import Head from 'next/head'
-import Router, { userRouter } from 'next/router'
+import Router from 'next/router'
 
 // Libraries
 import { UserCircle, LockSimple } from 'phosphor-react'
