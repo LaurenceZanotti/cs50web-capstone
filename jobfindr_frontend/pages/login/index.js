@@ -46,9 +46,7 @@ export default function Login() {
                     if (res.status == 200) Router.push('/profile')
                     else return res.json()
                 })
-                .catch(error => {
-                    console.error(error)
-                })
+                .then(data => console.log(data))
         },
         validate
     })

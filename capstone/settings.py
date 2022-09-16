@@ -162,3 +162,5 @@ ASGI_APPLICATION = "capstone.asgi.application"
 NEXTJS_SETTINGS = {
     "nextjs_server_url": "http://host.docker.internal:3000" if os.environ.get("IS_CONTAINER") else "http://localhost:3000",
 }
+
+LOGIN_URL = 'login'

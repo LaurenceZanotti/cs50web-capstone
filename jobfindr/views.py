@@ -1,7 +1,9 @@
 # Django
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 # App
 from jobfindr.models import JobSeeker, TalentHunter
 # Third party
@@ -114,11 +116,19 @@ def api_login(request):
                 'msg': 'Invalid username and/or password.'
             }, status=401)
     else:
-        return JsonResponse({
-            'msg': 'Forbidden'
-        }, status=403)
+        return HttpResponseRedirect(reverse('login'))
 
+@login_required(redirect_field_name="")
 def api_logout(request):
+    # Don't accept requests other than GET
+    if request.method != "GET":
+        return HttpResponseRedirect(reverse('login'))
+    
+    # Redirects user to login page if not authenticated
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+
+    # Perform log out action
     logout(request)
     return JsonResponse({
         'msg': 'Logged out'
