@@ -6,6 +6,7 @@ urlpatterns = [
     path("", views.nextjs_index, name="index"),
     path("login", views.nextjs_login, name="login"),
     path("register", views.nextjs_register, name="register"),
+    path("register/congratulations", views.nextjs_congratulations, name="congratulations"),
     path("logout", views.api_logout, name="logout"),
     path("profile", views.nextjs_profile, name="profile"),
     # API routes

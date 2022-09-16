@@ -21,6 +21,9 @@ def nextjs_login(request):
 def nextjs_register(request):
     return render_nextjs_page_sync(request)
 
+def nextjs_congratulations(request):
+    return render_nextjs_page_sync(request)
+
 def nextjs_profile(request):
     return render_nextjs_page_sync(request)
 
@@ -33,13 +36,19 @@ def api_hello(request):
 def api_register(request):
     """Register a new user"""
     if request.method == "POST":
+        # https://stackoverflow.com/questions/29780060
+        # /trying-to-parse-request-body-from-post-in-django
+        body = json.loads(request.body)
+
         # Store form field values
-        username = request.POST["username"]
-        email = request.POST["email"]
-        usertype = request.POST["usertype"]
+        username = body.get("username")
+        email = body.get("email")
+        usertype = body.get("usertype")
+        password = body.get("password")
+        cpassword = body.get("cpassword")
 
         # Check if fields are empty
-        for field in [username, email, usertype]:
+        for field in [username, email, usertype, password, cpassword]:
             if not field:
                 return JsonResponse(
                     {
@@ -48,8 +57,6 @@ def api_register(request):
                 )
 
         # Check if password confirmation matches
-        password = request.POST["password"]
-        cpassword = request.POST["cpassword"]
         if password != cpassword:
             return JsonResponse(
                 {
