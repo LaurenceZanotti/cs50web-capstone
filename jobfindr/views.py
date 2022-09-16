@@ -1,21 +1,35 @@
+# Django
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.shortcuts import render
 from django.http import JsonResponse
-from jobfindr.models import JobSeeker, TalentHunter
 from django.views.decorators.csrf import csrf_exempt
+# App
+from jobfindr.models import JobSeeker, TalentHunter
+# Third party
+from django_nextjs.render import render_nextjs_page_sync
+# Built in
 import json
 
-# Create your views here.
-def index(request):
-    if request.method == "GET":
-        return render(request, "jobfindr/index.html")
+# NextJS templates
+def nextjs_index(request):
+    return render_nextjs_page_sync(request)
 
-def hello(request):
+def nextjs_login(request):
+    return render_nextjs_page_sync(request)
+
+def nextjs_register(request):
+    return render_nextjs_page_sync(request)
+
+def nextjs_profile(request):
+    return render_nextjs_page_sync(request)
+
+# API endpoints
+def api_hello(request):
+    # Test route
     if request.method == "GET":
         return JsonResponse({'msg': 'Hello world! as JSON'})
 
-def register(request):
+def api_register(request):
     """Register a new user"""
     if request.method == "POST":
         # Store form field values
@@ -74,7 +88,7 @@ def register(request):
             )
 
 @csrf_exempt
-def login_view(request):
+def api_login(request):
     """Log in user"""
     if request.method == "POST":
         # https://stackoverflow.com/questions/29780060
@@ -106,13 +120,13 @@ def login_view(request):
             'msg': 'Forbidden'
         }, status=403)
 
-def logout_view(request):
+def api_logout(request):
     logout(request)
     return JsonResponse({
         'msg': 'Logged out'
     })
 
-def user(request):
+def api_user(request):
     """Returns user information if user is authenticated"""
     if request.method == "GET" and request.user.is_authenticated:
         return JsonResponse({

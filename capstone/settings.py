@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third party
     "corsheaders",
+    "channels",
+    "django_nextjs",
     # Apps
     "jobfindr",
 ]
@@ -154,3 +156,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "jobfindr.User"
+
+ASGI_APPLICATION = "capstone.asgi.application"
+
+NEXTJS_SETTINGS = {
+    "nextjs_server_url": "http://host.docker.internal:3000" if os.environ.get("IS_CONTAINER") else "http://localhost:3000",
+}
