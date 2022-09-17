@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 import os
 
 DOMAIN = 'host.docker.internal'
-CONTAINER_URL = f'http://{DOMAIN}:3000'
+CONTAINER_URL = f'http://{DOMAIN}:5000'
 
 # Create your tests here.
 class SeleniumIndexTests(LiveServerTestCase):
