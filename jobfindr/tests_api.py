@@ -5,7 +5,7 @@ class IndexTests(TestCase):
     """Welcome page test suite"""
     def test_index(self):
         c = Client()
-        response = c.get("/api/")
+        response = c.get("/")
         self.assertEqual(response.status_code, 200)
 
 class AuthTests(TestCase):
@@ -30,13 +30,17 @@ class AuthTests(TestCase):
     def test_register_jobseeker(self):
         """Tests the sign up of a Job Seeker user"""
         c = Client()
-        response = c.post(self.target_url_register, {
-            'username': 'dine',
-            'email': 'dine@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'jobseeker'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'dine',
+                'email': 'dine@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'jobseeker'
+            }, 
+            content_type='application/json'
+        )
 
         # Test if JSON response is correct
         self.check_json_response(
@@ -50,13 +54,17 @@ class AuthTests(TestCase):
     def test_register_talenthunter(self):
         """Tests the sign up of a Talent Hunter user"""
         c = Client()
-        response = c.post(self.target_url_register, {
-            'username': 'emilly',
-            'email': 'emilly@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'talenthunter'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'emilly',
+                'email': 'emilly@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'talenthunter'
+            }, 
+            content_type='application/json'
+        )
 
         # Test if JSON response is correct
         self.check_json_response(
@@ -70,13 +78,17 @@ class AuthTests(TestCase):
     def test_register_jobseeker_already_exists(self):
         """Tests if the API returns user already exists response"""
         c = Client()
-        response = c.post(self.target_url_register, {
-            'username': 'johndoe',
-            'email': 'johndoe@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'jobseeker'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'johndoe',
+                'email': 'johndoe@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'jobseeker'
+            }, 
+            content_type='application/json'
+        )
 
         # Test if resource was created by status code
         self.assertEqual(
@@ -86,13 +98,17 @@ class AuthTests(TestCase):
         )
 
         # Repeat request and form information
-        response = c.post(self.target_url_register, {
-            'username': 'johndoe',
-            'email': 'johndoe@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'jobseeker'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'johndoe',
+                'email': 'johndoe@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'jobseeker'
+            },
+            content_type='application/json'
+        )
         
         # Test if JSON response is correct
         self.check_json_response(
@@ -106,13 +122,17 @@ class AuthTests(TestCase):
     def test_register_talenthunter_already_exists(self):
         """Tests if the API returns user already exists response"""
         c = Client()
-        response = c.post(self.target_url_register, {
-            'username': 'johndoe',
-            'email': 'johndoe@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'talenthunter'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'johndoe',
+                'email': 'johndoe@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'talenthunter'
+            },
+            content_type='application/json'
+        )
 
         # Test if resource was created by status code
         self.assertEqual(
@@ -122,13 +142,17 @@ class AuthTests(TestCase):
         )
 
         # Repeat request and form information
-        response = c.post(self.target_url_register, {
-            'username': 'johndoe',
-            'email': 'johndoe@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'talenthunter'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'johndoe',
+                'email': 'johndoe@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'talenthunter'
+            },
+            content_type='application/json'
+        )
         
         # Test if JSON response is correct
         self.check_json_response(
@@ -144,19 +168,27 @@ class AuthTests(TestCase):
         c = Client()
 
         # Sign up user
-        response = c.post(self.target_url_register, {
-            'username': 'dine',
-            'email': 'dine@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'jobseeker'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'dine',
+                'email': 'dine@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'jobseeker'
+            },
+            content_type='application/json'
+        )
 
         # Attempt to log in user
-        response = c.post(self.target_url_login, {
-            'username': 'dine',
-            'password': 'secret'
-        })
+        response = c.post(
+            self.target_url_login, 
+            {
+                'username': 'dine',
+                'password': 'secret'
+            }, 
+            content_type='application/json'
+        )
 
         # Test if response is correct
         self.check_json_response(
@@ -172,19 +204,27 @@ class AuthTests(TestCase):
         c = Client()
 
         # Sign up user
-        response = c.post(self.target_url_register, {
-            'username': 'emilly',
-            'email': 'emilly@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'talenthunter'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'emilly',
+                'email': 'emilly@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'talenthunter'
+            },
+            content_type='application/json'
+        )
 
         # Attempt to log in user
-        response = c.post(self.target_url_login, {
-            'username': 'emilly',
-            'password': 'secret'
-        })
+        response = c.post(
+            self.target_url_login,
+            {
+                'username': 'emilly',
+                'password': 'secret'
+            },
+            content_type='application/json'
+        )
 
         # Test if response is correct
         self.check_json_response(
@@ -200,10 +240,14 @@ class AuthTests(TestCase):
         c = Client()
 
         # Attempt to log in user that doesn't exists
-        response = c.post(self.target_url_login, {
-            'username': 'emilly',
-            'password': 'secret'
-        })
+        response = c.post(
+            self.target_url_login, 
+            {
+                'username': 'emilly',
+                'password': 'secret'
+            },
+            content_type='application/json'
+        )
 
         # Test response
         self.check_json_response(
@@ -215,19 +259,27 @@ class AuthTests(TestCase):
         )
 
         # Sign a user
-        response = c.post(self.target_url_register, {
-            'username': 'dine',
-            'email': 'dine@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'jobseeker'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'dine',
+                'email': 'dine@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'jobseeker'
+            },
+            content_type='application/json'
+        )
 
         # Attempt to log in user with wrong credentials
-        response = c.post(self.target_url_login, {
-            'username': 'dine',
-            'password': 'secret1'
-        })
+        response = c.post(
+            self.target_url_login, 
+            {
+                'username': 'dine',
+                'password': 'secret1'
+            },
+            content_type='application/json'
+        )
 
         # Test response
         self.check_json_response(
@@ -259,19 +311,27 @@ class AuthTests(TestCase):
         c = Client()
 
         # Sign up a user
-        response = c.post(self.target_url_register, {
-            'username': 'dine',
-            'email': 'dine@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'jobseeker'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'dine',
+                'email': 'dine@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'jobseeker'
+            }, 
+            content_type='application/json'
+        )
 
         # Sign user in
-        response = c.post(self.target_url_login, {
-            'username': 'dine',
-            'password': 'secret'
-        })
+        response = c.post(
+            self.target_url_login, 
+            {
+                'username': 'dine',
+                'password': 'secret'
+            },
+            content_type='application/json'
+        )
 
         # Retrieve logged in user information
         response = c.get(self.target_url_user)
@@ -292,20 +352,28 @@ class AuthTests(TestCase):
         c = Client()
 
          # Sign up a user
-        response = c.post(self.target_url_register, {
-            'username': 'dine',
-            'email': 'dine@test.com',
-            'password': 'secret',
-            'cpassword': 'secret',
-            'usertype': 'jobseeker'
-        })
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'dine',
+                'email': 'dine@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'jobseeker'
+            },
+            content_type='application/json'
+        )
         self.assertEqual(201, response.status_code)
 
         # Sign user in
-        response = c.post(self.target_url_login, {
-            'username': 'dine',
-            'password': 'secret'
-        })
+        response = c.post(
+            self.target_url_login, 
+            {
+                'username': 'dine',
+                'password': 'secret'
+            },
+            content_type='application/json'
+        )
         self.assertEqual(200, response.status_code)
 
         response = c.get(self.target_url_logout)
