@@ -67,6 +67,32 @@ The fact that the project leverages the knowledge and tools teached throught the
 
 ## Installation
 
+You can install and run the project with (or without) Docker, though it is easier to get everything up and running with `docker-compose up` command. The following steps assumes you are familiar with Docker and already have it installed.
+
+1. Create a `.env` file with the following contents
+
+```
+   SECRET_KEY=django-insecure-yoursecretkey
+   DB_ROOT_PASS=your_root_password
+   DB_USER=jobfindr_app
+   DB_PASS=your_user_password
+   DB_HOST=mariadatabase
+   DB_TEST_USER=root
+   DB_TEST_PASS=your_root_password
+```
+
+2. On the project's root folder, open your terminal and run [`docker-compose up`](docker-compose.yml). It will setup and run 3 services, the database, api and frontend.
+
+3. Access `localhost:5000` in your browser.
+
+If you want to stop the services, go to the terminal you've opened and press `CTRL + C` or use Docker Desktop GUI app to stop them.
+
+### Tests
+
+After doing all steps above, you can run `docker-compose -f docker-compose.test.yml up` to run all tests. It will setup and run all previous services and 2 additional services, the `selenium` and `test` container.
+
+You can also use the `--exit-code-from test` flag to make all containers stop once the tests are done. Full command: `docker-compose -f docker-compose.test.yml up --exit-code-from test`
+
 ## Understanding the project's files
 
 ## Additional information
