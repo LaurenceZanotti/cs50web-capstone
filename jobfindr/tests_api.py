@@ -545,6 +545,50 @@ class AuthTests(TestCase):
             status_code=200
         )
 
+    def test_user_wrong_http_method(self):
+        """Test user route response when wrong HTTP method is used"""
+        c = Client()
+
+        response = c.post(self.target_url_user)
+        self.check_json_response(
+            response=response,
+            json_message={
+                'user': None,
+                'error': 'Not authenticated'
+            },
+            status_code=403
+        )
+
+        response = c.delete(self.target_url_user)
+        self.check_json_response(
+            response=response,
+            json_message={
+                'user': None,
+                'error': 'Not authenticated'
+            },
+            status_code=403
+        )
+
+        response = c.put(self.target_url_user)
+        self.check_json_response(
+            response=response,
+            json_message={
+                'user': None,
+                'error': 'Not authenticated'
+            },
+            status_code=403
+        )
+
+        response = c.patch(self.target_url_user)
+        self.check_json_response(
+            response=response,
+            json_message={
+                'user': None,
+                'error': 'Not authenticated'
+            },
+            status_code=403
+        )
+
     def test_logout(self):
         """Test if logout is working"""
         c = Client()
