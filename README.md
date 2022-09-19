@@ -89,9 +89,23 @@ If you want to stop the services, go to the terminal you've opened and press `CT
 
 ### Tests
 
-After doing all steps above, you can run `docker-compose -f docker-compose.test.yml up` to run all tests. It will setup and run all previous services and 2 additional services, the `selenium` and `test` container.
+After doing all steps above, you can run `docker-compose -f docker-compose.test.yml up` to run all tests. It will setup and run all previous services and 2 additional services, the `selenium` and `test` containers.
 
 You can also use the `--exit-code-from test` flag to make all containers stop once the tests are done. Full command: `docker-compose -f docker-compose.test.yml up --exit-code-from test`
+
+### Running specific tests
+
+If you want to **run a specific test**, you can: 
+
+1. Open the `docker-compose.test.yml` file
+2. Change the running `command` from the `test` container
+   1. Comment the `command: python manage.py test --keepdb`
+   2. Uncomment the `command: python manage.py test jobfindr.path.to.your.test --keepdb`
+   3. Edit the `jobfindr.path.to.your.test` flag to point to the test suite or function you want to run (as stated in the [Running tests](https://docs.djangoproject.com/en/4.1/topics/testing/overview/#running-tests) section from the Django Docs)
+3. Save the file 
+4. Run `docker-compose -f docker-compose.test.yml up`
+
+The last command is important because it recreates the `test` container with the new command that is pointing to your specific test class/function.
 
 ## Understanding the project's files
 
