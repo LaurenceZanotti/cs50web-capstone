@@ -163,6 +163,83 @@ class AuthTests(TestCase):
             status_code=409
         )
 
+    def test_register_empty_field(self):
+        """Test if any empty field is correctly handled"""
+        c = Client()
+
+        # Prepare empty form test cases
+        form_input_test_cases = [
+            # All fields are blank case
+            {
+                'username': '',
+                'email': '',
+                'password': '',
+                'cpassword': '',
+                'usertype': ''
+            },
+            # One of the fields cases
+            {
+                'username': 'testuser',
+                'email': '',
+                'password': '',
+                'cpassword': '',
+                'usertype': ''
+            },
+            {
+                'username': '',
+                'email': 'test@test.com',
+                'password': '',
+                'cpassword': '',
+                'usertype': ''
+            },
+            {
+                'username': '',
+                'email': '',
+                'password': 'secrettest',
+                'cpassword': '',
+                'usertype': ''
+            },
+            {
+                'username': '',
+                'email': '',
+                'password': '',
+                'cpassword': 'secrettest',
+                'usertype': ''
+            },
+            {
+                'username': '',
+                'email': '',
+                'password': '',
+                'cpassword': '',
+                'usertype': 'talenthunter'
+            },
+            {
+                'username': '',
+                'email': '',
+                'password': '',
+                'cpassword': '',
+                'usertype': 'jobseeker'
+            },
+        ]
+
+        # For each scenario, test form submission response
+        for input in form_input_test_cases:
+            response = c.post(
+                self.target_url_register, 
+                input,
+                content_type='application/json'
+            )
+
+            # Check if all fields are empty response
+            self.check_json_response(
+                response=response,
+                json_message={
+                    'msg': 'There must be no empty fields'
+                },
+                status_code=400
+            )
+
+
     def test_login_jobseeker(self):
         """Test user login"""
         c = Client()

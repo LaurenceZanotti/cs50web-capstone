@@ -53,7 +53,8 @@ def api_register(request):
                 return JsonResponse(
                     {
                         'msg': 'There must be no empty fields'
-                    }
+                    },
+                    status=400
                 )
 
         # Check if password confirmation matches
