@@ -267,6 +267,54 @@ class AuthTests(TestCase):
             status_code=400
         )
 
+    def test_register_usertype_not_specified(self):
+        """Test if usertype is not specified response"""
+        c = Client()
+
+        # First case scenario with all form fields except usertype
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'testuser',
+                'email': 'test@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': ''
+            },
+            content_type='application/json'
+        )
+        
+        # First response check
+        self.check_json_response(
+            response=response,
+            json_message={
+                'msg': 'There must be no empty fields'
+            },
+            status_code=400
+        )
+
+        # Second case scenario with all form fields and wrong usertype
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'testuser',
+                'email': 'test@test.com',
+                'password': 'secret',
+                'cpassword': 'secret',
+                'usertype': 'another'
+            },
+            content_type='application/json'
+        )
+        
+        # Second response check
+        self.check_json_response(
+            response=response,
+            json_message={
+                'msg': 'User must tell if they are looking for jobs or talents'
+            },
+            status_code=400
+        )
+
     def test_login_jobseeker(self):
         """Test user login"""
         c = Client()

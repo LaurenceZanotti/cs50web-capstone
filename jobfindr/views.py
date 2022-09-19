@@ -94,7 +94,8 @@ def api_register(request):
             return JsonResponse(
                 {
                     'msg': 'User must tell if they are looking for jobs or talents'
-                }
+                },
+                status=400
             )
 
 def api_login(request):
