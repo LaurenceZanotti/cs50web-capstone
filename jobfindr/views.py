@@ -106,9 +106,9 @@ def api_login(request):
         body = json.loads(request.body)
         # Get form values
         username = body.get('username')
-        password = body.get('password')        
+        password = body.get('password')  
 
-        if username == None or password == None:
+        if username == '' or password == '':
             return JsonResponse({
                 'msg': 'You must provide your username and password'
             }, status=400)

@@ -1,3 +1,4 @@
+import re
 from urllib import request
 from django.test import TestCase, Client
 
@@ -441,6 +442,35 @@ class AuthTests(TestCase):
             },
             status_code=401
         )
+
+    def test_login_empty_form(self):
+        """Test login form empty response"""
+        c = Client()
+
+        # Prepare test scenarios
+        input_scenarios = [
+            { 'username': '', 'password': '' },
+            { 'username': 'dine', 'password': '' },
+            { 'username': '', 'password': 'secret1' },
+        ]
+
+        # Test each form input scenario
+        for input in input_scenarios:
+            # Get response
+            response = c.post(
+                self.target_url_login, 
+                input,
+                content_type='application/json'
+            )
+
+            # Test if all inputs are empty response
+            self.check_json_response(
+                response=response,
+                json_message={
+                    'msg': 'You must provide your username and password'
+                },
+                status_code=400
+            )
 
     def test_retrieve_anonymous_user_info(self):
         """Test if anonymous user information is being retrieved"""
