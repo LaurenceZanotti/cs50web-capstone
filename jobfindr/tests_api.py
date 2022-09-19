@@ -472,6 +472,22 @@ class AuthTests(TestCase):
                 status_code=400
             )
 
+    def test_login_wrong_http_method(self):
+        """Test redirect response when wrong HTTP method is used"""
+        c = Client()
+
+        response = c.get(self.target_url_login)
+        self.assertEqual(302, response.status_code)
+
+        response = c.delete(self.target_url_login)
+        self.assertEqual(302, response.status_code)
+
+        response = c.put(self.target_url_login)
+        self.assertEqual(302, response.status_code)
+
+        response = c.patch(self.target_url_login)
+        self.assertEqual(302, response.status_code)
+
     def test_retrieve_anonymous_user_info(self):
         """Test if anonymous user information is being retrieved"""
         c = Client()
