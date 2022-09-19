@@ -584,6 +584,22 @@ class AuthTests(TestCase):
             status_code=200
         )
 
+    def test_logout_wrong_http_method(self):
+        """Test logout redirect response when wrong HTTP method is used"""
+        c = Client()
+
+        response = c.get(self.target_url_logout)
+        self.assertEqual(302, response.status_code)
+
+        response = c.delete(self.target_url_logout)
+        self.assertEqual(302, response.status_code)
+
+        response = c.put(self.target_url_logout)
+        self.assertEqual(302, response.status_code)
+
+        response = c.patch(self.target_url_logout)
+        self.assertEqual(302, response.status_code)
+
     def test_logout_login_required_redirect(self):
         """Test logout redirect when user is not authenticated"""
         c = Client()
