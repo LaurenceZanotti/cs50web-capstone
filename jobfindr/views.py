@@ -62,7 +62,8 @@ def api_register(request):
             return JsonResponse(
                 {
                     'msg': 'Password and confirmation password doesn\'t match'
-                }
+                },
+                status=400
             )
 
         # Create new user accordingly to the usertype

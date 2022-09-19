@@ -1,3 +1,4 @@
+from urllib import request
 from django.test import TestCase, Client
 
 # Create your tests here.
@@ -239,6 +240,32 @@ class AuthTests(TestCase):
                 status_code=400
             )
 
+
+    def test_register_passwords_doesnt_match(self):
+        """Test register passwords doesn't match response"""
+        c = Client()
+
+        # Request
+        response = c.post(
+            self.target_url_register, 
+            {
+                'username': 'testuser',
+                'email': 'test@test.com',
+                'password': 'secret',
+                'cpassword': 'secretwrong',
+                'usertype': 'jobseeker'
+            },
+            content_type='application/json'
+        )
+
+        # Check if response reflects wrong password confirmation
+        self.check_json_response(
+            response=response,
+            json_message={
+                'msg': 'Password and confirmation password doesn\'t match'
+            },
+            status_code=400
+        )
 
     def test_login_jobseeker(self):
         """Test user login"""
