@@ -583,3 +583,11 @@ class AuthTests(TestCase):
             },
             status_code=200
         )
+
+    def test_logout_login_required_redirect(self):
+        """Test logout redirect when user is not authenticated"""
+        c = Client()
+
+        response = c.get(self.target_url_logout)
+
+        self.assertEqual(302, response.status_code)
