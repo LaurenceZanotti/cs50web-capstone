@@ -20,10 +20,6 @@ import InputSubmit from "../../components/login/InputSubmit";
 import UserTypeModal from "../../components/register/UserTypeModal";
 import FormErrorMessage from "../../components/auth/FormErrorMessage";
 
-const API_HOST = "localhost:5000"
-// const API_HOST = "host.docker.internal:5000"
-const ROUTE = `${API_HOST}/api/register`
-
 export default function Register() {
 
     // Open or close UserTypeModal
@@ -61,7 +57,7 @@ export default function Register() {
                 })
             }
 
-            fetch(`http://${ROUTE}`, options)
+            fetch(`/api/register`, options)
                 .then(res => {
                     if (res.status == 201) Router.push('/register/congratulations')
                     else return res.json()

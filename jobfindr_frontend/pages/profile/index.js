@@ -1,21 +1,18 @@
 import { useState, useEffect } from 'react'
 import Router from 'next/router'
-
-const API_HOST = "localhost:5000"
-const ROUTE = `${API_HOST}/api/user`
-
+import Head from 'next/head'
 
 export default function Profile() {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        fetch(`http://${ROUTE}`)
+        fetch(`/api/user`)
             .then(res => res.json())
             .then(data => setUser(data))
     }, [])
 
     function handleClick() {
-        fetch(`http://${API_HOST}/api/logout`)
+        fetch(`/api/logout`)
             .then(res => {
                 if (res.status == 200) Router.push('/')
                 return res.json()
@@ -23,11 +20,16 @@ export default function Profile() {
     }
 
     return (
-        <div>
+        <>
+        <Head>
+            <title>Profile | Jobfindr</title>
+        </Head>
+        <div id="profile-container">
             <h1>Profile</h1>
             <div>{JSON.stringify(user)}</div>
             <button onClick={handleClick}>Log out</button>
         </div>
+        </>
     )
 }
 

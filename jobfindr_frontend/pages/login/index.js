@@ -18,10 +18,6 @@ import AuthHeader from "../../components/login/AuthHeader";
 import InputSubmit from "../../components/login/InputSubmit";
 import FormErrorMessage from "../../components/auth/FormErrorMessage";
 
-const API_HOST = "localhost:5000"
-// const API_HOST = "host.docker.internal:5000"
-const ROUTE = `${API_HOST}/api/login`
-
 export default function Login() {
     
     const formik = useFormik({
@@ -41,7 +37,7 @@ export default function Login() {
                 })
             }
 
-            fetch(`http://${ROUTE}`, options)
+            fetch(`/api/login`, options)
                 .then(res => {
                     if (res.status == 200) Router.push('/profile')
                     else return res.json()

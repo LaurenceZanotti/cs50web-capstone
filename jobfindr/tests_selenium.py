@@ -2,6 +2,9 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 import os
 
 DOMAIN = 'host.docker.internal'
@@ -88,7 +91,7 @@ class SeleniumIndexTests(LiveServerTestCase):
             self.assertTrue(item.text in navbar_options)
 
 class SeleniumAuthTests(LiveServerTestCase):
-    
+    """Test suite for form existence, components and links"""
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -135,7 +138,7 @@ class SeleniumAuthTests(LiveServerTestCase):
         self.assertTrue(login_button)
         self.assertEqual(login_button.get_attribute("value"), "Log in")
 
-    def test_login_page_create_account_redirect(self):
+    def test_login_page_create_account_link(self):
         """Make sure create account link is working"""
         self.selenium.get(f'{CONTAINER_URL}/login')
         
@@ -183,7 +186,7 @@ class SeleniumAuthTests(LiveServerTestCase):
         self.assertTrue(login_button)
         self.assertEqual(login_button.get_attribute("value"), "Register")
     
-    def test_register_page_already_have_account_redirect(self):
+    def test_register_page_already_have_account_link(self):
         """Make sure already have an account link is working"""
         self.selenium.get(f'{CONTAINER_URL}/register')
         
@@ -244,3 +247,72 @@ class SeleniumAuthTests(LiveServerTestCase):
         label_container = self.selenium.find_element(By.CSS_SELECTOR, "div#usertype_label")
         label = label_container.find_element(By.TAG_NAME, 'span')
         self.assertEqual("talents", label.text)
+
+class SeleniumLoginTests(LiveServerTestCase):
+    """Tests for peforming account login"""
+    fixtures = ['initial_data.json']
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        chrome_options = ChromeOptions()
+        if os.environ.get('IS_CICD_TESTING'):
+            # chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--window-size=1920,1080') # This line fixes a bug from 5bd797e
+            # https://stackoverflow.com/questions/47776774/element-is-not-clickable-at-point-in-headless-mode-but-when-we-remove-headless
+        cls.selenium = webdriver.Remote(
+            command_executor='http://host.docker.internal:4444', 
+            options=chrome_options
+        )
+        # cls.selenium = webdriver.Chrome(options=chrome_options)
+        # cls.selenium.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_login_jobseeker(self):
+        """Test a JobSeeker user login"""
+        self.selenium.get(f'{CONTAINER_URL}/login')
+        self.assertEqual(self.selenium.title, "Log in | Jobfindr")
+
+        # Locate components
+        username_input = self.selenium.find_element(By.NAME, 'username')
+        password_input = self.selenium.find_element(By.NAME, 'password')
+        login_button = self.selenium.find_element(By.CSS_SELECTOR, 'input[type="submit"]')
+
+        # Fill form fields
+        username_input.send_keys('dine')
+        password_input.send_keys('test12345')
+
+        # Send form / attempt login
+        login_button.click()
+
+        # Wait (fluently) for the page redirect
+        try:
+            element = WebDriverWait(
+                self.selenium, 
+                300, 
+                poll_frequency=1, 
+                ignored_exceptions=[NoSuchElementException]
+            ).until(
+                EC.presence_of_element_located((By.ID, "profile-container"))
+            )
+            element.click()
+        except NoSuchElementException as e:
+            print(e)
+
+        profile_container = self.selenium.find_element(By.ID, "profile-container")
+        self.assertTrue(profile_container)
+        
+        # Check if profile page is correct
+        self.assertEqual("Profile | Jobfindr", self.selenium.title)
+        self.assertEqual(
+            'Profile', 
+            profile_container.find_element(By.TAG_NAME, 'h1').text
+        )
+        self.assertEqual(
+            r'{"user":{"id":3,"username":"dine"}}', 
+            profile_container.find_element(By.TAG_NAME, 'div').text
+        )
