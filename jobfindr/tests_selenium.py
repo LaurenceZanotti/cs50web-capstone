@@ -257,7 +257,7 @@ class SeleniumLoginTests(LiveServerTestCase):
         super().setUpClass()
         chrome_options = ChromeOptions()
         if os.environ.get('IS_CICD_TESTING'):
-            # chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--headless')
             chrome_options.add_argument('--window-size=1920,1080') # This line fixes a bug from 5bd797e
             # https://stackoverflow.com/questions/47776774/element-is-not-clickable-at-point-in-headless-mode-but-when-we-remove-headless
         cls.selenium = webdriver.Remote(
@@ -293,7 +293,7 @@ class SeleniumLoginTests(LiveServerTestCase):
         try:
             element = WebDriverWait(
                 self.selenium, 
-                300, 
+                10, 
                 poll_frequency=1, 
                 ignored_exceptions=[NoSuchElementException]
             ).until(
@@ -314,5 +314,50 @@ class SeleniumLoginTests(LiveServerTestCase):
         )
         self.assertEqual(
             r'{"user":{"id":3,"username":"dine"}}', 
+            profile_container.find_element(By.TAG_NAME, 'div').text
+        )
+
+    def test_login_talenthunter(self):
+        """Test a TalentHunter user login"""
+        self.selenium.get(f'{CONTAINER_URL}/login')
+        self.assertEqual(self.selenium.title, "Log in | Jobfindr")
+
+        # Locate components
+        username_input = self.selenium.find_element(By.NAME, 'username')
+        password_input = self.selenium.find_element(By.NAME, 'password')
+        login_button = self.selenium.find_element(By.CSS_SELECTOR, 'input[type="submit"]')
+
+        # Fill form fields
+        username_input.send_keys('emilly')
+        password_input.send_keys('test12345')
+
+        # Send form / attempt login
+        login_button.click()
+
+        # Wait (fluently) for the page redirect
+        try:
+            element = WebDriverWait(
+                self.selenium, 
+                10, 
+                poll_frequency=1, 
+                ignored_exceptions=[NoSuchElementException]
+            ).until(
+                EC.presence_of_element_located((By.ID, "profile-container"))
+            )
+            element.click()
+        except NoSuchElementException as e:
+            print(e)
+
+        profile_container = self.selenium.find_element(By.ID, "profile-container")
+        self.assertTrue(profile_container)
+        
+        # Check if profile page is correct
+        self.assertEqual("Profile | Jobfindr", self.selenium.title)
+        self.assertEqual(
+            'Profile', 
+            profile_container.find_element(By.TAG_NAME, 'h1').text
+        )
+        self.assertEqual(
+            r'{"user":{"id":7,"username":"emilly"}}', 
             profile_container.find_element(By.TAG_NAME, 'div').text
         )
