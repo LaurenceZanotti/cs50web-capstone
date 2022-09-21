@@ -79,9 +79,9 @@ services:
 
     # --keepdb flag must be set in order to avoid EOF error 
     # it also helps tests performance
-    command: python manage.py test --keepdb
+    # command: python manage.py test --keepdb
     # The command below runs a specific test suite
-    # command: python manage.py test jobfindr.tests_api.AuthTests --keepdb
+    command: python manage.py test jobfindr.tests_selenium.SeleniumLoginTests --keepdb
     # The command below keeps the container executing enabling CLI access
     # command: tail -f /dev/null
 

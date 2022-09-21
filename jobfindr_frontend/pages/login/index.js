@@ -52,7 +52,7 @@ export default function Login() {
             fetch(`/api/login`, options)
                 .then(res => {
                     // If login was successful, redirect
-                    if (res.status == 200) Router.push('/profile')
+                    if (res.status == 200) return Router.push('/profile')
                     // else reset form message state
                     else setFormMessage(prevState => {
                         return {...prevState, loading: false}
