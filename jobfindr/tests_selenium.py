@@ -289,6 +289,8 @@ class SeleniumLoginTests(LiveServerTestCase):
         # Send form / attempt login
         login_button.click()
 
+        # Code snippet from: 
+        # https://selenium-python.readthedocs.io/waits.html#explicit-waits
         # Wait (fluently) for the page redirect
         try:
             element = WebDriverWait(
