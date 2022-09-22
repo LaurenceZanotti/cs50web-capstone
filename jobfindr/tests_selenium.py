@@ -257,7 +257,7 @@ class SeleniumLoginTests(LiveServerTestCase):
         super().setUpClass()
         chrome_options = ChromeOptions()
         if os.environ.get('IS_CICD_TESTING'):
-            chrome_options.add_argument('--headless')
+            # chrome_options.add_argument('--headless')
             chrome_options.add_argument('--window-size=1920,1080') # This line fixes a bug from 5bd797e
             # https://stackoverflow.com/questions/47776774/element-is-not-clickable-at-point-in-headless-mode-but-when-we-remove-headless
         cls.selenium = webdriver.Remote(
@@ -271,6 +271,23 @@ class SeleniumLoginTests(LiveServerTestCase):
     def tearDownClass(cls):
         cls.selenium.quit()
         super().tearDownClass()
+
+    def get_auth_form_elements(self):
+        """
+        Returns auth form elements as a dictionary
+
+        Driver should have accessed an URL for this function to work
+        """
+        form_elements = {}
+
+        form = self.selenium.find_element(By.CSS_SELECTOR, 'form[method="post"]')
+        form_inputs = form.find_elements(By.CSS_SELECTOR, 'input')
+        
+        # Transform list of inputs into dictionary
+        for input in form_inputs:
+            form_elements[input.get_attribute('name') or input.get_attribute('type')] = input
+
+        return form_elements
 
     def test_login_jobseeker(self):
         """Test a JobSeeker user login"""
@@ -363,3 +380,40 @@ class SeleniumLoginTests(LiveServerTestCase):
             r'{"user":{"id":7,"username":"emilly"}}', 
             profile_container.find_element(By.TAG_NAME, 'div').text
         )
+
+    def test_register_jobseeker(self):
+        """Test register JobSeeker action"""
+        self.selenium.get(f'{CONTAINER_URL}/register')
+
+        # Choose "Job opportunities" modal button
+        modal = self.selenium.find_element(
+            By.CSS_SELECTOR, 
+            "div#headlessui-portal-root"
+        )
+        modal_buttons = modal.find_elements(By.TAG_NAME, 'button')
+        modal_buttons[1].click()
+
+        # Fill form
+        form_elements = self.get_auth_form_elements()
+        form_elements['username'].send_keys('johndoe')
+        form_elements['email'].send_keys('johndoe@test.com')
+        form_elements['password'].send_keys('test12345')
+        form_elements['cpassword'].send_keys('test12345')
+        form_elements['submit'].click()
+        
+        # Wait (fluently) for the page redirect
+        try:
+            element = WebDriverWait(
+                self.selenium, 
+                10, 
+                poll_frequency=1, 
+                ignored_exceptions=[NoSuchElementException]
+            ).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Log in"]'))
+            )
+            element.click()
+        except NoSuchElementException as e:
+            print(e)
+
+        login_button = self.selenium.find_element(By.CSS_SELECTOR, '[value="Log in"]')
+        self.assertTrue(login_button)

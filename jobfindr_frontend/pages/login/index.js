@@ -1,10 +1,10 @@
 // Built in
 import Head from 'next/head'
 import Router from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 // Libraries
-import { UserCircle, LockSimple, CircleNotch } from 'phosphor-react'
+import { UserCircle, LockSimple } from 'phosphor-react'
 import { useFormik } from 'formik'
 import getCSRFToken from '../../utils/getCSRFToken';
 
