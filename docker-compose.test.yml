@@ -1,0 +1,89 @@
+version: '3.7'
+
+services:
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-chrome
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+
+  mariadatabase:
+    image: mariadb
+    container_name: mariadatabase
+    volumes:
+      - capstone_db_data:/var/lib/mysql
+    ports:
+      - "3307:3307"
+    environment:
+      MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASS}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
+      MARIADB_USER: "${DB_USER}"
+      MARIADB_PASSWORD: "${DB_PASS}"
+      MARIADB_DATABASE: capstone_db
+
+  api:
+    container_name: api
+    build: .
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mariadatabase
+    restart: on-failure
+    environment:
+      IS_CONTAINER: 1
+      IS_CICD_TESTING: '${IS_CICD_TESTING}'
+      SECRET_KEY: "${SECRET_KEY}"
+      DB_HOST: "${DB_HOST}"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+      DB_TEST_USER: "${DB_TEST_USER}"
+      DB_TEST_PASS: "${DB_TEST_PASS}"
+
+    
+  front:
+    container_name: front
+    build: ./jobfindr_frontend
+    volumes:
+      - ./jobfindr_frontend:/usr/src/app_front
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - api
+    command: npm run dev
+
+  test:
+    container_name: test
+    build: .
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "6666:6666"
+    depends_on:
+      - front
+      - selenium
+      - mariadatabase
+      - api
+    environment:
+      IS_CONTAINER: 1
+      IS_CICD_TESTING: 1
+      SECRET_KEY: "${SECRET_KEY}"
+      DB_HOST: "${DB_HOST}"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+      DB_TEST_USER: "${DB_TEST_USER}"
+      DB_TEST_PASS: "${DB_TEST_PASS}"
+
+    # --keepdb flag must be set in order to avoid EOF error 
+    # it also helps tests performance
+    command: python manage.py test --keepdb
+    # The command below runs a specific test suite
+    # command: python manage.py test jobfindr.tests_selenium.SeleniumAuthTests.test_register_page_modal_talenthunter_button --keepdb
+    # The command below keeps the container executing enabling CLI access
+    # command: tail -f /dev/null
+
+volumes:
+  capstone_db_data:

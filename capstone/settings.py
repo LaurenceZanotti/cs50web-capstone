@@ -35,13 +35,13 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'jobfindr',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jobfindr',
 ]
 
 MIDDLEWARE = [
@@ -84,8 +84,8 @@ DATABASES = {
         'NAME': 'capstone_db',
         'USER': os.environ['DB_TEST_USER'] if os.environ.get('IS_CICD_TESTING') else os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_TEST_PASS'] if os.environ.get('IS_CICD_TESTING') else os.environ['DB_PASS'],
-        'HOST':  os.environ['DB_HOST'] if os.environ.get('IS_CONTAINER') else '127.0.0.1',
-        'PORT': '3306',
+        'HOST':  'mariadatabase' if os.environ.get('IS_CONTAINER') or os.environ.get('IS_CICD_TESTING') else '127.0.0.1',
+        'PORT': os.environ['DB_PORT'] if os.environ.get('DB_PORT') else '3306',
     }
 }
 
@@ -130,3 +130,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "jobfindr.User"
