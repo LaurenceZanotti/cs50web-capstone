@@ -24,7 +24,7 @@ class SeleniumIndexTests(LiveServerTestCase):
             options=chrome_options
         )
         # cls.selenium = webdriver.Chrome(options=chrome_options)
-        cls.selenium.implicitly_wait(10)
+        cls.selenium.implicitly_wait(3)
 
     @classmethod
     def tearDownClass(cls):
@@ -105,7 +105,7 @@ class SeleniumAuthTests(LiveServerTestCase):
             options=chrome_options
         )
         # cls.selenium = webdriver.Chrome(options=chrome_options)
-        cls.selenium.implicitly_wait(10)
+        cls.selenium.implicitly_wait(3)
 
     @classmethod
     def tearDownClass(cls):
@@ -257,7 +257,7 @@ class SeleniumLoginTests(LiveServerTestCase):
         super().setUpClass()
         chrome_options = ChromeOptions()
         if os.environ.get('IS_CICD_TESTING'):
-            # chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--headless')
             chrome_options.add_argument('--window-size=1920,1080') # This line fixes a bug from 5bd797e
             # https://stackoverflow.com/questions/47776774/element-is-not-clickable-at-point-in-headless-mode-but-when-we-remove-headless
         cls.selenium = webdriver.Remote(
@@ -265,7 +265,6 @@ class SeleniumLoginTests(LiveServerTestCase):
             options=chrome_options
         )
         # cls.selenium = webdriver.Chrome(options=chrome_options)
-        # cls.selenium.implicitly_wait(10)
 
     @classmethod
     def tearDownClass(cls):

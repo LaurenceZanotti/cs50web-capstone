@@ -1,0 +1,66 @@
+[
+    {
+       "model": "jobfindr.user",
+       "pk": 1,
+       "fields": {
+          "password": "pbkdf2_sha256$320000$9LLLwoWdNe5Ex00CTlGXig$NWvEPWDUAbV2wcL68iFz0sO3GqiCp6Blu1KAS3oatOE=",
+          "last_login": "2022-09-19T20:16:04.731Z",
+          "is_superuser": true,
+          "username": "ulalau",
+          "first_name": "",
+          "last_name": "",
+          "email": "test@test.com",
+          "is_staff": true,
+          "is_active": true,
+          "date_joined": "2022-09-07T23:23:39Z",
+          "groups": [],
+          "user_permissions": []
+       }
+    },
+    {
+       "model": "jobfindr.user",
+       "pk": 3,
+       "fields": {
+          "password": "pbkdf2_sha256$320000$PFT8ytmChsLRaog2xGbRtm$wYrsqHtEvxO8eQl/DFLcwRVpOrtoOvSNzSqORO1Yvi4=",
+          "last_login": "2022-09-19T20:18:56.592Z",
+          "is_superuser": false,
+          "username": "mary",
+          "first_name": "",
+          "last_name": "",
+          "email": "test@test.com",
+          "is_staff": false,
+          "is_active": true,
+          "date_joined": "2022-09-08T00:19:25.250Z",
+          "groups": [],
+          "user_permissions": []
+       }
+    },
+    {
+       "model": "jobfindr.user",
+       "pk": 7,
+       "fields": {
+          "password": "pbkdf2_sha256$320000$onsBvrsfcbAkxIqGVkbhsu$Gxbl9LLdGfH3RXNfD3/3bG1fYtfp6s+MS3elNzyNPjI=",
+          "last_login": "2022-09-19T20:19:07.011Z",
+          "is_superuser": false,
+          "username": "edu",
+          "first_name": "",
+          "last_name": "",
+          "email": "test@test.com",
+          "is_staff": false,
+          "is_active": true,
+          "date_joined": "2022-09-08T00:41:31.926Z",
+          "groups": [],
+          "user_permissions": []
+       }
+    },
+    {
+       "model": "jobfindr.jobseeker",
+       "pk": 3,
+       "fields": {}
+    },
+    {
+       "model": "jobfindr.talenthunter",
+       "pk": 7,
+       "fields": {}
+    }
+]
