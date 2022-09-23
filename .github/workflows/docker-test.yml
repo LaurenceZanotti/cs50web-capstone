@@ -26,9 +26,13 @@ jobs:
       IS_CICD_TESTING: ${{ secrets.IS_CICD_TESTING }}
 
     steps:
+      # https://github.com/marketplace/actions/start-mariadb#shutdown-the-default-mysql
+      - name: Shutdown Ubuntu MySQL (SUDO)
+        run: sudo service mysql stop 
+
       - uses: actions/checkout@v3
       - name: Build and start testing
-        run: docker-compose -f docker-compose.test.yml up --build --remove-orphans --abort-on-container-exit --exit-code-from test
+        run: docker-compose -f docker-compose.test.yml up # --build --remove-orphans --abort-on-container-exit --exit-code-from test
       
       - name: Remove containers
         run: docker-compose -f docker-compose.test.yml down
