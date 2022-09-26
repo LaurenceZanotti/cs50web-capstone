@@ -416,3 +416,40 @@ class SeleniumLoginTests(LiveServerTestCase):
 
         login_button = self.selenium.find_element(By.CSS_SELECTOR, '[value="Log in"]')
         self.assertTrue(login_button)
+
+    def test_register_talenthunter(self):
+        """Test register TalentHunter action"""
+        self.selenium.get(f'{CONTAINER_URL}/register')
+
+        # Choose "Job opportunities" modal button
+        modal = self.selenium.find_element(
+            By.CSS_SELECTOR, 
+            "div#headlessui-portal-root"
+        )
+        modal_buttons = modal.find_elements(By.TAG_NAME, 'button')
+        modal_buttons[2].click()
+
+        # Fill form
+        form_elements = self.get_auth_form_elements()
+        form_elements['username'].send_keys('johndoe')
+        form_elements['email'].send_keys('johndoe@test.com')
+        form_elements['password'].send_keys('test12345')
+        form_elements['cpassword'].send_keys('test12345')
+        form_elements['submit'].click()
+        
+        # Wait (fluently) for the page redirect
+        try:
+            element = WebDriverWait(
+                self.selenium, 
+                10, 
+                poll_frequency=1, 
+                ignored_exceptions=[NoSuchElementException]
+            ).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, '[value="Log in"]'))
+            )
+            element.click()
+        except NoSuchElementException as e:
+            print(e)
+
+        login_button = self.selenium.find_element(By.CSS_SELECTOR, '[value="Log in"]')
+        self.assertTrue(login_button)
