@@ -18,5 +18,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('jobfindr.urls')),
+    path('', include('jobfindr.urls')),
+    path('', include('django_nextjs.urls')),
 ]

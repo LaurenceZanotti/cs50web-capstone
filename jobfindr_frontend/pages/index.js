@@ -132,21 +132,21 @@ export default function Home(/*{data}*/) {
           </h2>
           <div className='flex flex-col sm:flex-row'>
             <Testimonial 
-              img_src={"index/testmon1.jpg"} 
+              img_src={"next/index/testmon1.jpg"} 
               name="Isabella Brite"
               role="Copny P&C Manager"
             >
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
             </Testimonial>
             <Testimonial 
-              img_src={"index/testmon2.jpg"} 
+              img_src={"next/index/testmon2.jpg"} 
               name="Jose Gonzalez"
               role="Talent Hunter at Inc LTD"
             >
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ducimus a, officia quidem vero id excepturi recusandae neque soluta, necessitatibus est. Veritatis velit facere perferendis deleniti laudantium aut repellat nihil?
             </Testimonial>
             <Testimonial 
-              img_src={"index/testmon3.jpg"} 
+              img_src={"next/index/testmon3.jpg"} 
               name="Allie Mont"
               role="People & Culture Coordinator"
             >

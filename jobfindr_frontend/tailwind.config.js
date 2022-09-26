@@ -14,10 +14,10 @@ module.exports = {
         'logo': 'Righteous'
       },
       backgroundImage: {
-        'hero-wave': "url('/index/Wave.svg')",
-        'talent-wave': "url('/index/HeroWave.svg')",
-        'man-working': "url('/index/ManWorking.svg')",
-        'woman-working': "url('/login/working_bg.jpg')",
+        'hero-wave': "url('/next/index/Wave.svg')",
+        'talent-wave': "url('/next/index/HeroWave.svg')",
+        'man-working': "url('/next/index/ManWorking.svg')",
+        'woman-working': "url('/next/login/working_bg.jpg')",
       }
     },
     colors: {

@@ -1,10 +1,12 @@
 // Built in
 import Head from 'next/head'
+import Router from 'next/router'
 import { useState } from 'react';
 
 // Libraries
 import { UserCircle, LockSimple, Envelope, Repeat } from 'phosphor-react'
 import { useFormik } from 'formik';
+import getCSRFToken from '../../utils/getCSRFToken';
 
 // Icons
 import GoogleIcon from "../../components/login/icons/GoogleIcon";
@@ -17,7 +19,6 @@ import AuthHeader from "../../components/login/AuthHeader";
 import InputSubmit from "../../components/login/InputSubmit";
 import UserTypeModal from "../../components/register/UserTypeModal";
 import FormErrorMessage from "../../components/auth/FormErrorMessage";
-
 
 export default function Register() {
 
@@ -42,7 +43,26 @@ export default function Register() {
             usertype: 'jobseeker',
         },
         onSubmit: values => {
-            console.log(values)
+            const options = {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCSRFToken() // CSRF token header as per docs(https://docs.djangoproject.com/en/3.2/ref/csrf/#ajax)
+                },
+                body: JSON.stringify({
+                    username: values.username,
+                    email: values.email,
+                    password: values.password,
+                    cpassword: values.cpassword,
+                    usertype: values.usertype,
+                })
+            }
+
+            fetch(`/api/register`, options)
+                .then(res => {
+                    if (res.status == 201) Router.push('/register/congratulations')
+                    else return res.json()
+                })
+                .then(data => console.log(data))
         },
         validate
     })

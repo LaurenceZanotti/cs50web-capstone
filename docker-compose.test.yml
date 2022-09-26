@@ -35,13 +35,14 @@ services:
     restart: on-failure
     environment:
       IS_CONTAINER: 1
-      IS_CICD_TESTING: '${IS_CICD_TESTING}'
+      IS_CICD_TESTING: 1
       SECRET_KEY: "${SECRET_KEY}"
       DB_HOST: "${DB_HOST}"
       DB_USER: "${DB_USER}"
       DB_PASS: "${DB_PASS}"
       DB_TEST_USER: "${DB_TEST_USER}"
       DB_TEST_PASS: "${DB_TEST_PASS}"
+    command: python manage.py testserver --addrport 0.0.0.0:5000 test_initial_data.json --noinput
 
     
   front:
@@ -77,11 +78,9 @@ services:
       DB_TEST_USER: "${DB_TEST_USER}"
       DB_TEST_PASS: "${DB_TEST_PASS}"
 
-    # --keepdb flag must be set in order to avoid EOF error 
-    # it also helps tests performance
-    command: python manage.py test --keepdb
+    command: python manage.py test --noinput
     # The command below runs a specific test suite
-    # command: python manage.py test jobfindr.tests_selenium.SeleniumAuthTests.test_register_page_modal_talenthunter_button --keepdb
+    # command: python manage.py test jobfindr.tests_selenium.SeleniumLoginTests --noinput
     # The command below keeps the container executing enabling CLI access
     # command: tail -f /dev/null
 
