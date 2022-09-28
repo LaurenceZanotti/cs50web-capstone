@@ -15,10 +15,13 @@ class TalentHunter(User):
     pass
 
 class Profile(models.Model):
+    # Utility methods
+    def user_directory_path(self, filename):
+        return f'pros/{self.user.id}/{filename}'
+
+    # Fields
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
-    # profile_picture = None
-    # profile_picture = models.ImageField(upload_to="")
-    # ImageField needs Pillow library
+    profile_picture = models.ImageField(upload_to=user_directory_path)
     fullname = models.CharField(max_length=254)
     title = models.CharField(max_length=128, null=True, blank=True)
     about = models.TextField(max_length=1024, null=True, blank=True)
@@ -46,6 +49,8 @@ class Profile(models.Model):
         related_name="user_profile"
     )
     is_public = models.BooleanField(default=False)
+
+
 
 class Event(models.Models):
     """Abstract class for Experience and Education"""
