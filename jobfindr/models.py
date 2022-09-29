@@ -17,7 +17,41 @@ class TalentHunter(User):
 class Profile(models.Model):
     # Utility methods
     def user_directory_path(self, filename):
+        # Code based on Django Docs snippet
+        # https://docs.djangoproject.com/en/4.1/ref/
+        # models/fields/#django.db.models.FileField.upload_to
         return f'pros/{self.user.id}/{filename}'
+
+    # Fields
+    owner = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="profile"
+    )
+    profile_picture = models.ImageField(upload_to=user_directory_path)
+    fullname = models.CharField(max_length=254, null=True, blank=True)
+    title = models.CharField(max_length=128, null=True, blank=True)
+    about = models.TextField(max_length=1024, null=True, blank=True)
+    # https://docs.djangoproject.com/en/4.1/ref/models/fields/#jsonfield
+    contact_info = models.ForeignKey(
+        'Contact', 
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="user_profile",
+    )
+    # experience = See Experience model
+    # education = See Education model
+    # Certificates have a list of items with 
+    # title and description key/value pairs
+    certificates = models.JSONField(null=True, blank=True)
+    skills = models.ManyToManyField(
+        'Skill', 
+        related_name="user_profile"
+    )
+    is_public = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.fullname
 
     def save(self, *args, **kwargs):
         """
@@ -40,48 +74,6 @@ class Profile(models.Model):
         super(Profile, self).save(*args, **kwargs)
 
 
-    # Fields
-    owner = models.OneToOneField(
-        User, 
-        on_delete=models.CASCADE, 
-        related_name="profile"
-    )
-    profile_picture = models.ImageField(upload_to=user_directory_path)
-    fullname = models.CharField(max_length=254, null=True, blank=True)
-    title = models.CharField(max_length=128, null=True, blank=True)
-    about = models.TextField(max_length=1024, null=True, blank=True)
-    # https://docs.djangoproject.com/en/4.1/ref/models/fields/#jsonfield
-    contact_info = models.ForeignKey(
-        'Contact', 
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="user_profile",
-    )
-    experience = models.ForeignKey(
-        'Experience', 
-        null=True,
-        on_delete=models.SET_NULL, 
-        related_name="user_profile"
-    )
-    education = models.ForeignKey(
-        'Education', 
-        null=True,
-        on_delete=models.SET_NULL, 
-        related_name="user_profile"
-    )
-    # Certificates have a list of items with 
-    # title and description key/value pairs
-    certificates = models.JSONField(null=True, blank=True)
-    skills = models.ManyToManyField(
-        'Skill', 
-        related_name="user_profile"
-    )
-    is_public = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.fullname
-
-
 class Event(models.Model):
     """Abstract class for Experience and Education"""
     title = models.CharField(max_length=128)
@@ -93,10 +85,22 @@ class Event(models.Model):
         abstract = True
 
 class Experience(Event):
+    profile = models.ForeignKey(
+        Profile, 
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="experience"
+    )
     role = models.CharField(max_length=128)
 
 class Education(Event):
-    course = models.CharField(max_length=128)
+    profile = models.ForeignKey(
+        Profile, 
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="education"
+    )
+    teaching_facility = models.CharField(max_length=128)
 
 class Skill(models.Model):
     name = models.CharField(max_length=64, unique=True)

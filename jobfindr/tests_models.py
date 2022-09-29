@@ -1,5 +1,6 @@
 from django.test import TestCase
 from jobfindr.models import *
+from datetime import date
 
 # Create your tests here.
 class ProfileModelsTests(TestCase):
@@ -30,17 +31,17 @@ class ProfileModelsTests(TestCase):
     def test_save_profile_model(self):
         """Test create a profile and save"""
         # Create profiles
-        jobseeker = JobSeeker.objects.get(pk=3)
+        jobseeker = JobSeeker.objects.get(username='mary')
         jobseeker_profile = Profile(owner=jobseeker)
         jobseeker_profile.save()
-        talenthunter = TalentHunter.objects.get(pk=7)
+        talenthunter = TalentHunter.objects.get(username='edu')
         talenthunter_profile = Profile(owner=talenthunter)
         talenthunter_profile.save()
 
         # Test queries
-        self.assertTrue(Profile.objects.get(pk=7))
+        self.assertTrue(Profile.objects.get(fullname='mary'))
         self.assertTrue(jobseeker.profile)
-        self.assertTrue(Profile.objects.get(pk=8))
+        self.assertTrue(Profile.objects.get(fullname='edu'))
         self.assertTrue(talenthunter.profile)
 
     def test_profile_fullname_with_username(self):
@@ -56,3 +57,101 @@ class ProfileModelsTests(TestCase):
         profile = Profile.objects.get(fullname="janedoe")
         self.assertTrue(profile)
         self.assertEqual("janedoe", profile.fullname)
+    
+    def test_complete_profile(self):
+        """Create a complete profile for a user"""
+        
+        # Create user
+        fulano_user = JobSeeker(
+            username="fulano",
+            first_name="Fulano",
+            last_name="da Silva",
+            email="fulano@fulano.com", 
+            password="test12345"
+        )
+        fulano_user.save()
+        
+        # Create profile fields
+        contact = Contact(
+            email="fulano@fulano.com", 
+            phone="+5511919199191",
+            custom_field={
+                "instagram": "fulano",
+                "portfolio": "fulano.dev.br",
+                "github": "FulanoGitAcc"
+            }
+        )
+        contact.save()
+        skill_html = Skill(name="HTML")
+        skill_css = Skill(name="CSS")
+        skill_javascript = Skill(name="JavaScript")
+        for skill in [skill_html, skill_css,skill_javascript]:
+            skill.save()
+        
+
+        # Create profile
+        fulano_profile = Profile(
+            owner=fulano_user, 
+            title="Full stack Django Developer",
+            about="I craft full-stack web applications. Currently working on a \
+                job search/talent hunt web application using Django, React, \
+                MariaDB and Selenium for tests.",
+            contact_info=contact,
+            certificates={
+                "CS50's Introduction to Computer Science": "Introduction to \
+                    the intellectual enterprises of computer science and the art \
+                    of programming.",
+                "Computer Graphics": "A course on image and video editing and 3D",
+            },
+            is_public=True
+        )
+        fulano_profile.save()
+        # Add skills to profile
+        for skill in [skill_html, skill_css,skill_javascript]:
+            fulano_profile.skills.add(skill)
+
+        # Add academic history and experience
+        experience = Experience(
+            profile=fulano_profile,
+            title="Insurance Assistance CO",
+            role="International Assistant",
+            start_date=date(2017, 12, 1),
+            end_date=date(2020, 2, 27),
+            location="Zetaville",
+        )
+        experience.save()
+        education_cs50 = Education(
+            profile=fulano_profile,
+            title="CS50's Introduction to Computer Science",
+            teaching_facility="edX",
+            start_date=date(2020, 9, 1),
+            end_date=date(2020, 12, 15),
+            location="edX Platform",
+        )
+        education_cs50web = Education(
+            profile=fulano_profile,
+            title="CS50's Web Programming with Python and JavaScript",
+            teaching_facility="edX",
+            start_date=date(2021, 1, 1),
+            end_date=date(2022, 12, 30),
+            location="edX Platform",
+        )
+        for education in [education_cs50, education_cs50web]:
+            education.save()
+
+        self.assertTrue(fulano_profile)
+        self.assertFalse(fulano_profile.profile_picture)
+        for field in [
+            fulano_profile.owner,
+            fulano_profile.fullname,
+            fulano_profile.title,
+            fulano_profile.about,
+            fulano_profile.contact_info,
+            fulano_profile.experience.all(),
+            fulano_profile.education.all(),
+            fulano_profile.certificates,
+            fulano_profile.skills,
+            fulano_profile.is_public,
+
+        ]:
+            self.assertTrue(field)
