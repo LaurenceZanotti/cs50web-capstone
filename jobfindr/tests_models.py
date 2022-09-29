@@ -29,13 +29,19 @@ class ProfileModelsTests(TestCase):
 
     def test_save_profile_model(self):
         """Test create a profile and save"""
-        # Create profile
-        user = JobSeeker.objects.get(pk=3)
-        profile = Profile(owner=user)
-        profile.save()
+        # Create profiles
+        jobseeker = JobSeeker.objects.get(pk=3)
+        jobseeker_profile = Profile(owner=jobseeker)
+        jobseeker_profile.save()
+        talenthunter = TalentHunter.objects.get(pk=7)
+        talenthunter_profile = Profile(owner=talenthunter)
+        talenthunter_profile.save()
+
         # Test queries
         self.assertTrue(Profile.objects.get(pk=7))
-        self.assertTrue(user.profile)
+        self.assertTrue(jobseeker.profile)
+        self.assertTrue(Profile.objects.get(pk=8))
+        self.assertTrue(talenthunter.profile)
 
     def test_profile_fullname_with_username(self):
         """Test if profile fullname is using username 
