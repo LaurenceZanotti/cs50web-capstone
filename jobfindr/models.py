@@ -41,7 +41,11 @@ class Profile(models.Model):
 
 
     # Fields
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="profile"
+    )
     profile_picture = models.ImageField(upload_to=user_directory_path)
     fullname = models.CharField(max_length=254, null=True, blank=True)
     title = models.CharField(max_length=128, null=True, blank=True)
@@ -49,31 +53,34 @@ class Profile(models.Model):
     # https://docs.djangoproject.com/en/4.1/ref/models/fields/#jsonfield
     contact_info = models.ForeignKey(
         'Contact', 
-        related_name="user_profile"
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="user_profile",
     )
     experience = models.ForeignKey(
         'Experience', 
+        null=True,
         on_delete=models.SET_NULL, 
         related_name="user_profile"
     )
     education = models.ForeignKey(
         'Education', 
+        null=True,
         on_delete=models.SET_NULL, 
         related_name="user_profile"
     )
     # Certificates have a list of items with 
     # title and description key/value pairs
-    certificates = models.JSONField()
+    certificates = models.JSONField(null=True, blank=True)
     skills = models.ManyToManyField(
         'Skill', 
-        on_delete=models.SET_NULL,
         related_name="user_profile"
     )
     is_public = models.BooleanField(default=False)
 
 
 
-class Event(models.Models):
+class Event(models.Model):
     """Abstract class for Experience and Education"""
     title = models.CharField(max_length=128)
     start_date = models.DateField()
