@@ -90,22 +90,26 @@ class ProfileModelsTests(TestCase):
         
 
         # Create profile
-        fulano_profile = Profile(
-            owner=fulano_user, 
-            title="Full stack Django Developer",
-            about="I craft full-stack web applications. Currently working on a \
+        profile_title="Full stack Django Developer"
+        profile_about="I craft full-stack web applications. Currently working on a \
                 job search/talent hunt web application using Django, React, \
                 MariaDB and Selenium for tests.",
+        profile_certificates={
+            "CS50's Introduction to Computer Science": "Introduction to \
+                the intellectual enterprises of computer science and the art \
+                of programming.",
+            "Computer Graphics": "A course on image and video editing and 3D",
+        },
+        fulano_profile = Profile(
+            owner=fulano_user, 
+            title=profile_title,
+            about=profile_about,
             contact_info=contact,
-            certificates={
-                "CS50's Introduction to Computer Science": "Introduction to \
-                    the intellectual enterprises of computer science and the art \
-                    of programming.",
-                "Computer Graphics": "A course on image and video editing and 3D",
-            },
+            certificates=profile_certificates,
             is_public=True
         )
         fulano_profile.save()
+
         # Add skills to profile
         for skill in [skill_html, skill_css,skill_javascript]:
             fulano_profile.skills.add(skill)
@@ -139,6 +143,7 @@ class ProfileModelsTests(TestCase):
         for education in [education_cs50, education_cs50web]:
             education.save()
 
+        # Check if fields exist
         self.assertTrue(fulano_profile)
         self.assertFalse(fulano_profile.profile_picture)
         for field in [
@@ -155,3 +160,12 @@ class ProfileModelsTests(TestCase):
 
         ]:
             self.assertTrue(field)
+
+        # Check if fields are correct
+        self.assertEqual('Fulano da Silva', fulano_profile.fullname)
+        self.assertEqual(profile_title, fulano_profile.title)
+        self.assertEqual(profile_about, fulano_profile.about)
+        self.assertEqual(profile_certificates, fulano_profile.certificates)
+
+    # TODO: Make Profile model return JSON
+    # TODO: Test JSON
