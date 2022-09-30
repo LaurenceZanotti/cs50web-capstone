@@ -29,7 +29,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE, 
         related_name="profile"
     )
-    profile_picture = models.ImageField(upload_to=user_directory_path)
+    profile_picture = models.ImageField(upload_to=user_directory_path, null=True, blank=True)
     fullname = models.CharField(max_length=254, null=True, blank=True)
     title = models.CharField(max_length=128, null=True, blank=True)
     about = models.TextField(max_length=1024, null=True, blank=True)
@@ -37,6 +37,7 @@ class Profile(models.Model):
     contact_info = models.ForeignKey(
         'Contact', 
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name="user_profile",
     )
@@ -47,7 +48,8 @@ class Profile(models.Model):
     certificates = models.JSONField(null=True, blank=True)
     skills = models.ManyToManyField(
         'Skill', 
-        related_name="user_profile"
+        related_name="user_profile",
+        blank=True
     )
     is_public = models.BooleanField(default=False)
 
@@ -117,6 +119,9 @@ class Education(Event):
 
 class Skill(models.Model):
     name = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
 
 class Contact(models.Model):
     email = models.EmailField()

@@ -5,7 +5,7 @@ from django.db import IntegrityError
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 # App
-from jobfindr.models import JobSeeker, TalentHunter
+from jobfindr.models import JobSeeker, TalentHunter, Profile
 # Third party
 from django_nextjs.render import render_nextjs_page_sync
 # Built in
@@ -71,6 +71,8 @@ def api_register(request):
             try:
                 user = JobSeeker.objects.create_user(username, email, password)
                 user.save()
+                profile = Profile.objects.create(owner=user)
+                profile.save()
             except IntegrityError:
                 return JsonResponse({
                     'msg': 'User already exists'
@@ -83,6 +85,8 @@ def api_register(request):
             try:
                 user = TalentHunter.objects.create_user(username, email, password)
                 user.save()
+                profile = Profile.objects.create(owner=user)
+                profile.save()
             except IntegrityError:
                 return JsonResponse({
                     'msg': 'User already exists'
@@ -158,3 +162,28 @@ def api_user(request):
             'user': None,
             'error': 'Not authenticated'
         }, status=403)
+
+def api_get_profile(request, username=None):
+    """Get profile information"""
+    if request.method == "GET":
+        if not username and not request.user.is_authenticated:
+            # Redirect to login page if not authenticated
+            # TODO: Fix NoReverseMatch at /api/pros/
+            return HttpResponseRedirect(reverse('login'))
+        elif not username and request.user.is_authenticated:
+            # Redirect to user profile if authenticated and not username is provided
+            # TODO: Fix NoReverseMatch at /api/pros/
+            return HttpResponseRedirect(reverse('api_profile_user'), kwargs={'username': str(request.user.username)})
+
+        # TODO: Identify user type and process view accordingly
+
+        # Query database
+        user_query = JobSeeker.objects.filter(username=username) or TalentHunter.objects.filter(username=username)
+        if len(user_query):
+            # Return user profile JSON if found
+            user = user_query[0]
+            profile = Profile.objects.get(owner=user.id)
+            return JsonResponse({'profile': profile.get_profile_as_dict()})
+        else:
+            # Return return user not found 
+            return JsonResponse({'msg': 'User not found'}, status=404)
