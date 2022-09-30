@@ -104,6 +104,7 @@ class Experience(Event):
         related_name="experience"
     )
     role = models.CharField(max_length=128)
+    description = models.TextField(max_length=1024, default='', blank=True, null=True)
 
 class Education(Event):
     profile = models.ForeignKey(
