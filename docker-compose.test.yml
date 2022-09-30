@@ -43,6 +43,8 @@ services:
       DB_TEST_USER: "${DB_TEST_USER}"
       DB_TEST_PASS: "${DB_TEST_PASS}"
     command: python manage.py testserver --addrport 0.0.0.0:5000 test_initial_data.json --noinput
+    # command: tail -f /dev/null
+
 
     
   front:
@@ -68,6 +70,11 @@ services:
       - selenium
       - mariadatabase
       - api
+    # Enable interactive mode when using --pdb
+    # must use "docker-compose -f docker-compose.test.yml run --rm test"
+    # after "docker-compose -f docker-compose.test.yml up"
+    # stdin_open: true
+    # tty: true
     environment:
       IS_CONTAINER: 1
       IS_CICD_TESTING: 1
@@ -80,7 +87,10 @@ services:
 
     command: python manage.py test --noinput
     # The command below runs a specific test suite
-    # command: python manage.py test jobfindr.tests_selenium.SeleniumLoginTests --noinput
+    # command: python manage.py test jobfindr.tests_models --noinput
+    # The command below runs pdb on test failures 
+    # (needs to use stdin_open and tty options on test container)
+    # command: python manage.py test jobfindr.tests_models --noinput --pdb
     # The command below keeps the container executing enabling CLI access
     # command: tail -f /dev/null
 
