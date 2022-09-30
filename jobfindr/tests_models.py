@@ -1,6 +1,7 @@
 from django.test import TestCase
 from jobfindr.models import *
 from datetime import date
+from json import dumps, load
 
 # Create your tests here.
 class ProfileModelsTests(TestCase):
@@ -27,6 +28,70 @@ class ProfileModelsTests(TestCase):
             password="test12345"
         )
         janedoe_profile = Profile.objects.create(owner=only_nickname_user)
+
+        # Complete profile user
+        ciclano_user = JobSeeker.objects.create_user(
+            username="ciclano",
+            first_name="Ciclano",
+            last_name="da Silva",
+            email="ciclano@ciclano.com", 
+            password="test12345"
+        )
+        # Create profile fields
+        contact = Contact.objects.create(
+            email="ciclano@ciclano.com", 
+            phone="+5511919199192",
+            custom_field={
+                "instagram": "ciclano",
+                "portfolio": "ciclano.dev.br",
+                "github": "CiclanoGitAcc"
+            }
+        )
+        skill_react = Skill.objects.create(name="React")
+        skill_django = Skill.objects.create(name="Django")
+        skill_selenium = Skill.objects.create(name="Selenium")
+
+        # Create complete profile
+        profile_title="Full stack Developer"
+        profile_about="I craft full-stack web applications. Currently working on a startup using Django, React, MariaDB and Selenium for tests."
+        profile_certificates={
+            "CS50's Web Programming with Python and JavaScript": "Introduction to the intellectual enterprises of computer science and the art of programming.",
+            "Data Analysis": "A course on data analysis",
+        }        
+        ciclano_profile = Profile.objects.create(
+            owner=ciclano_user, 
+            title=profile_title,
+            about=profile_about,
+            contact_info=contact,
+            certificates=profile_certificates,
+            is_public=True
+        )
+
+        # Add academic history and experience
+        experience = Experience.objects.create(
+            profile=ciclano_profile,
+            title="Insurance Assistance CO",
+            role="International Assistant",
+            start_date=date(2017, 12, 1),
+            end_date=date(2020, 2, 27),
+            location="Zetaville",
+        )
+        education_cs50 = Education.objects.create(
+            profile=ciclano_profile,
+            title="CS50's Introduction to Computer Science",
+            teaching_facility="edX",
+            start_date=date(2020, 9, 1),
+            end_date=date(2020, 12, 15),
+            location="edX Platform",
+        )
+        education_cs50web = Education.objects.create(
+            profile=ciclano_profile,
+            title="CS50's Web Programming with Python and JavaScript",
+            teaching_facility="edX",
+            start_date=date(2021, 1, 1),
+            end_date=date(2022, 12, 30),
+            location="edX Platform",
+        )
 
     def test_save_profile_model(self):
         """Test create a profile and save"""
@@ -167,5 +232,37 @@ class ProfileModelsTests(TestCase):
         self.assertEqual(profile_about, fulano_profile.about)
         self.assertEqual(profile_certificates, fulano_profile.certificates)
 
-    # TODO: Make Profile model return JSON
-    # TODO: Test JSON
+    def test_get_simple_profile_as_dict(self):
+        """Get simple profile as a dictionary"""
+        johndoe = Profile.objects.get(fullname="John Doe")
+        self.assertDictEqual(
+            {
+                'id': 8,
+                'owner': 15,
+                'profile_picture': None,
+                'fullname': 'John Doe',
+                'title': None,
+                'about': None,
+                'contact_info': None,
+                'education': [],
+                'experience': [],
+                'certificates': None, 
+                'is_public': False, 
+                'skills': []
+            },
+            johndoe.get_profile_as_dict()
+        )
+
+    def test_get_complete_profile_as_dict(self):
+        """Get complete profile as a dictionary"""
+        ciclano = JobSeeker.objects.get(username="ciclano")
+        profile = Profile.objects.get(pk=ciclano.profile.id)
+        for skill in Skill.objects.all():
+            profile.skills.add(skill)
+        profile.save()
+        profile_as_dict = profile.get_profile_as_dict()
+        # Test contents
+        test_file = open('jobfindr/fixtures/test_complete_profile.json')
+        test_data = load(test_file)
+        self.assertJSONEqual(dumps(test_data, default=str), dumps(profile_as_dict, default=str))
+        

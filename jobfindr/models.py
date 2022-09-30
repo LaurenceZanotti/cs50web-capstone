@@ -1,3 +1,4 @@
+from django.forms.models import model_to_dict
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -50,9 +51,6 @@ class Profile(models.Model):
     )
     is_public = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.fullname
-
     def save(self, *args, **kwargs):
         """
         Overidden save method to fill fullname field
@@ -73,6 +71,20 @@ class Profile(models.Model):
                 self.owner.username
         super(Profile, self).save(*args, **kwargs)
 
+    def get_profile_as_dict(self):
+        """
+        Return profile as a dictionary
+        
+        Implementation based on:
+        https://stackoverflow.com/questions/21925671/convert-django-model-object-to-dict-with-all-of-the-fields-intact
+        """
+        profile = model_to_dict(self)
+        # Add fields not included with model_to_dict()
+        profile['profile_picture'] = self.profile_picture if self.profile_picture else None
+        profile['experience'] = list([model_to_dict(exp, exclude=['profile']) for exp in self.experience.all()])
+        profile['education'] = list([model_to_dict(edu, exclude=['profile']) for edu in self.education.all()])
+        profile['skills'] = list(skill.name for skill in profile['skills'])
+        return profile
 
 class Event(models.Model):
     """Abstract class for Experience and Education"""
