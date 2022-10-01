@@ -1,0 +1,96 @@
+[
+    {
+        "model": "jobfindr.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$9LLLwoWdNe5Ex00CTlGXig$NWvEPWDUAbV2wcL68iFz0sO3GqiCp6Blu1KAS3oatOE=",
+            "last_login": "2022-09-30T21:50:35.856Z",
+            "is_superuser": true,
+            "username": "lau",
+            "first_name": "",
+            "last_name": "",
+            "email": "test@test.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-09-07T23:23:39Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "jobfindr.user",
+        "pk": 33,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$Wu12I4e5KepAjiJIYsjqoE$C6O5rM9R0BLDWtnKkDqjhLljSsX9/xdVb6vgA63NLlM=",
+            "last_login": "2022-09-30T22:09:26.958Z",
+            "is_superuser": false,
+            "username": "dine",
+            "first_name": "",
+            "last_name": "",
+            "email": "dine@test.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-09-30T22:09:16.530Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "jobfindr.user",
+        "pk": 34,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$wCXbuJ3zTWNBvgbbGLjRSo$H0QVmHIRN6PQF9S2UekqPlHOu884BydMd4y871Zm5OM=",
+            "last_login": "2022-09-30T22:10:32.309Z",
+            "is_superuser": false,
+            "username": "emilly",
+            "first_name": "",
+            "last_name": "",
+            "email": "emilly@emilly.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-09-30T22:10:23.259Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "jobfindr.jobseeker",
+        "pk": 33,
+        "fields": {}
+    },
+    {
+        "model": "jobfindr.talenthunter",
+        "pk": 34,
+        "fields": {}
+    },
+    {
+        "model": "jobfindr.profile",
+        "pk": 2,
+        "fields": {
+            "owner": 33,
+            "profile_picture": "",
+            "fullname": "dine",
+            "title": null,
+            "about": null,
+            "contact_info": null,
+            "certificates": null,
+            "is_public": false,
+            "skills": []
+        }
+    },
+    {
+        "model": "jobfindr.profile",
+        "pk": 3,
+        "fields": {
+            "owner": 34,
+            "profile_picture": "",
+            "fullname": "emilly",
+            "title": null,
+            "about": null,
+            "contact_info": null,
+            "certificates": null,
+            "is_public": false,
+            "skills": []
+        }
+    }
+]
