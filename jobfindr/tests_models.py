@@ -1,11 +1,12 @@
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.contrib.auth import get_user
 from jobfindr.models import *
 from datetime import date
 from json import dumps, load
 
 # Create your tests here.
 class ProfileModelsTests(TestCase):
-    fixtures = ['test_initial_data.json']
+    fixtures = ['test_initial_data_v2.json']
     
     def setUp(self):
         # Fullname user and profile creation
@@ -266,3 +267,25 @@ class ProfileModelsTests(TestCase):
         test_data = load(test_file)
         self.assertJSONEqual(dumps(test_data, default=str), dumps(profile_as_dict, default=str))
         
+    def test_user_is_profile_owner(self):
+        """Test if a given user is the profile owner"""
+        # Get users
+        johndoe = JobSeeker.objects.get(username="johndoe")
+        janedoe = TalentHunter.objects.get(username="janedoe")
+        anonymous = get_user(Client())
+        # Line above and get_user function idea from
+        # https://stackoverflow.com/questions/17357536
+        # /how-to-test-for-anonymoususer-in-django-unittesting
+
+        # Get profiles
+        john_profile = Profile.objects.get(owner=johndoe.id)
+        jane_profile = Profile.objects.get(owner=janedoe.id)
+        # Check if user owns his/her profile
+        self.assertTrue(john_profile.is_owner(johndoe))
+        self.assertTrue(jane_profile.is_owner(janedoe))
+        # Check if user doesn't own another's profile
+        self.assertFalse(john_profile.is_owner(janedoe))
+        self.assertFalse(jane_profile.is_owner(johndoe))
+        # Check if anonymous user doesn't own another's profile
+        self.assertFalse(john_profile.is_owner(anonymous))
+        self.assertFalse(jane_profile.is_owner(anonymous))

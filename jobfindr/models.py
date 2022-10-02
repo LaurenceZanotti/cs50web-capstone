@@ -88,6 +88,20 @@ class Profile(models.Model):
         profile['skills'] = list(skill.name for skill in profile['skills'])
         return profile
 
+    def is_owner(self, user):
+        """
+        Returns if the a user is the profile's owner
+        
+        Parameter user should most likely be the request.user
+
+        But this function can be used with any User object
+
+        """
+        if user.is_anonymous:
+            return None
+        return user.id == self.owner.id
+
+
 class Event(models.Model):
     """Abstract class for Experience and Education"""
     title = models.CharField(max_length=128)
