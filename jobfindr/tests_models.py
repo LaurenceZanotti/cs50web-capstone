@@ -1,3 +1,4 @@
+import profile
 from django.test import TestCase, Client
 from django.contrib.auth import get_user
 from jobfindr.models import *
@@ -97,17 +98,27 @@ class ProfileModelsTests(TestCase):
     def test_save_profile_model(self):
         """Test create a profile and save"""
         # Create profiles
-        jobseeker = JobSeeker.objects.get(username='mary')
+        jobseeker = JobSeeker.objects.create_user(
+            username='giovanni', 
+            email="giovanni@test.com",
+            password='test12345',
+        )
+        jobseeker.save()
         jobseeker_profile = Profile(owner=jobseeker)
         jobseeker_profile.save()
-        talenthunter = TalentHunter.objects.get(username='edu')
+        talenthunter = TalentHunter.objects.create_user(
+            username='chris',
+            email='chris@test.com',
+            password='test12345',
+        )
+        talenthunter.save()
         talenthunter_profile = Profile(owner=talenthunter)
         talenthunter_profile.save()
 
         # Test queries
-        self.assertTrue(Profile.objects.get(fullname='mary'))
+        self.assertTrue(Profile.objects.get(fullname='giovanni'))
         self.assertTrue(jobseeker.profile)
-        self.assertTrue(Profile.objects.get(fullname='edu'))
+        self.assertTrue(Profile.objects.get(fullname='chris'))
         self.assertTrue(talenthunter.profile)
 
     def test_profile_fullname_with_username(self):
@@ -236,9 +247,15 @@ class ProfileModelsTests(TestCase):
     def test_get_simple_profile_as_dict(self):
         """Get simple profile as a dictionary"""
         johndoe = Profile.objects.get(fullname="John Doe")
+        profile_as_dict = johndoe.get_profile_as_dict()
+        try:
+            # Ignore id key
+            profile_as_dict.pop('id')
+        except KeyError:
+            raise KeyError("id key doesn't exist")
         self.assertDictEqual(
             {
-                'id': 8,
+                # 'id': 8,
                 'owner': 15,
                 'profile_picture': None,
                 'fullname': 'John Doe',
@@ -251,7 +268,7 @@ class ProfileModelsTests(TestCase):
                 'is_public': False, 
                 'skills': []
             },
-            johndoe.get_profile_as_dict()
+            profile_as_dict
         )
 
     def test_get_complete_profile_as_dict(self):
@@ -262,9 +279,19 @@ class ProfileModelsTests(TestCase):
             profile.skills.add(skill)
         profile.save()
         profile_as_dict = profile.get_profile_as_dict()
+        try:
+            # Ignore id key
+            profile_as_dict.pop('id')
+        except KeyError:
+            raise KeyError("id key doesn't exist")
         # Test contents
         test_file = open('jobfindr/fixtures/test_complete_profile.json')
         test_data = load(test_file)
+        try:
+            # Ignore id key
+            test_data.pop('id')
+        except KeyError:
+            raise KeyError("id key doesn't exist")
         self.assertJSONEqual(dumps(test_data, default=str), dumps(profile_as_dict, default=str))
         
     def test_user_is_profile_owner(self):
