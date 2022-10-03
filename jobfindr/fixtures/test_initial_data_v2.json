@@ -89,7 +89,7 @@
            "about": null,
            "contact_info": null,
            "certificates": null,
-           "is_public": false,
+           "is_public": true,
            "skills": []
        }
    }

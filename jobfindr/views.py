@@ -27,6 +27,10 @@ def nextjs_congratulations(request):
 def nextjs_profile(request):
     return render_nextjs_page_sync(request)
 
+def nextjs_profile_user(request, username):
+    return render_nextjs_page_sync(request, context={username: username})
+
+
 # API endpoints
 def api_hello(request):
     # Test route
@@ -163,11 +167,32 @@ def api_user(request):
             'error': 'Not authenticated'
         }, status=403)
 
+def api_root_profile(request):
+    if request.method == "GET":
+        if request.user.is_anonymous:
+            # Redirects anonymous users to login page
+            return JsonResponse({
+                'msg': 'You must be signed in to view your profile'
+            }, status=401)
+        if request.user.is_authenticated:
+            try:
+                if request.user.profile:
+                    # Redirect to `profile/<session_username>`
+                    return JsonResponse({
+                        'msg': 'Redirecting to your profile',
+                        'next': request.user.username
+                    }, status=302)
+            except Profile.DoesNotExist:
+                # If profile doesn't exists, returns a message
+                return JsonResponse({
+                    'msg': 'No profile found for this account'
+                }, status=404)
+
 def api_get_profile(request, username=None):
     """Get profile information"""
     if request.method == "GET":
         if not username and not request.user.is_authenticated:
-            # Redirect to login page if not authenticated
+            # Redirect to login page if not authenticated and no username provided
             # TODO: Fix NoReverseMatch at /api/pros/
             return HttpResponseRedirect(reverse('login'))
         elif not username and request.user.is_authenticated:
@@ -175,15 +200,24 @@ def api_get_profile(request, username=None):
             # TODO: Fix NoReverseMatch at /api/pros/
             return HttpResponseRedirect(reverse('api_profile_user'), kwargs={'username': str(request.user.username)})
 
-        # TODO: Identify user type and process view accordingly
 
+        # Identify user type and process view accordingly
         # Query database
         user_query = JobSeeker.objects.filter(username=username) or TalentHunter.objects.filter(username=username)
         if len(user_query):
             # Return user profile JSON if found
             user = user_query[0]
             profile = Profile.objects.get(owner=user.id)
-            return JsonResponse({'profile': profile.get_profile_as_dict()})
+            if profile.is_public:
+                return JsonResponse({'profile': profile.get_profile_as_dict()})
+            else:
+                # If not public profile, only the owner can view it
+                if profile.is_owner(request.user) or request.user.is_staff:
+                    return JsonResponse({'profile': profile.get_profile_as_dict()})
+                # TODO: Job postings owners which the user is subscribed can view private
+                # profiles too
+                else:
+                    return JsonResponse({'msg': 'This profile is private'})
         else:
             # Return return user not found 
-            return JsonResponse({'msg': 'User not found'}, status=404)
+            return JsonResponse({'msg': 'Profile not found'}, status=404)
