@@ -251,12 +251,14 @@ class ProfileModelsTests(TestCase):
         try:
             # Ignore id key
             profile_as_dict.pop('id')
+            profile_as_dict.pop('owner')
+            
         except KeyError:
-            raise KeyError("id key doesn't exist")
+            raise KeyError("id or owner key doesn't exist")
         self.assertDictEqual(
             {
                 # 'id': 8,
-                'owner': 15,
+                # 'owner': 15,
                 'profile_picture': None,
                 'fullname': 'John Doe',
                 'title': None,
@@ -282,6 +284,7 @@ class ProfileModelsTests(TestCase):
         try:
             # Ignore id key
             profile_as_dict.pop('id')
+            profile_as_dict.pop('owner')
         except KeyError:
             raise KeyError("id key doesn't exist")
         # Test contents
@@ -290,8 +293,9 @@ class ProfileModelsTests(TestCase):
         try:
             # Ignore id key
             test_data.pop('id')
+            test_data.pop('owner')
         except KeyError:
-            raise KeyError("id key doesn't exist")
+            raise KeyError("id or owner key doesn't exist")
         self.assertJSONEqual(dumps(test_data, default=str), dumps(profile_as_dict, default=str))
         
     def test_user_is_profile_owner(self):

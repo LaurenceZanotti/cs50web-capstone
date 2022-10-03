@@ -32,7 +32,7 @@ export default function ProfileUsername() {
     return (
         <>
         <Head>
-            <title>{username} user | Jobfindr</title>
+            <title>{username} | Jobfindr</title>
         </Head>
         <div id="profile-container">
             <h1>{username}</h1>
