@@ -1,6 +1,11 @@
+// Libraries
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+
+// Components
+import Header from '../../../components/protected/Header'
+import Footer from '../../../components/protected/Footer'
 
 export default function ProfileUsername() {
     // https://nextjs.org/docs/routing/dynamic-routes
@@ -10,7 +15,6 @@ export default function ProfileUsername() {
         profile: null,
         is_loading: true
     })
-    console.log(profile)
     // TODO: Probably change this to SSG instead of CSR 
     // (else whats the point of next)
     useEffect(() => {
@@ -34,6 +38,9 @@ export default function ProfileUsername() {
         <Head>
             <title>{username} | Jobfindr</title>
         </Head>
+        <Header>
+            {/* Insert menu options and components here */}
+        </Header>
         <div id="profile-container">
             <h1>{username}</h1>
         {
@@ -55,6 +62,7 @@ export default function ProfileUsername() {
         }
             <button onClick={handleLogout}>Log out</button>
         </div>
+        <Footer/>
         </>
     )
 }

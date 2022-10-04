@@ -2,14 +2,13 @@
 import Head from 'next/head'
 
 // Globals
-import JobfindrLogo from "../components/JobFindrLogo/JobfindrLogo"
+import DropdownMenu from "../components/DropdownMenu"
 
 // Page Icons
 import WomanIcon from "../components/index/WomanIcon"
 import MobileLogin from "../components/index/MobileLogin"
 import SwipeProfile from "../components/index/SwipeProfile"
 import JobOffers from "../components/index/JobOffers"
-import DropdownMenu from "../components/index/DropdownMenu"
 import Testimonial from "../components/index/Testimonial"
 
 // Libraries
