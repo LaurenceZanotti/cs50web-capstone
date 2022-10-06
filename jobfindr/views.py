@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 # App
 from jobfindr.models import JobSeeker, TalentHunter, Profile
+from jobfindr.forms import ProfileForm
 # Third party
 from django_nextjs.render import render_nextjs_page_sync
 # Built in
@@ -28,6 +29,10 @@ def nextjs_profile(request):
     return render_nextjs_page_sync(request)
 
 def nextjs_profile_user(request, username):
+    return render_nextjs_page_sync(request, context={username: username})
+
+@login_required(redirect_field_name="")
+def nextjs_profile_edit(request, username):
     return render_nextjs_page_sync(request, context={username: username})
 
 
@@ -221,3 +226,32 @@ def api_get_profile(request, username=None):
         else:
             # Return return user not found 
             return JsonResponse({'msg': 'Profile not found'}, status=404)
+
+@login_required(redirect_field_name="")
+def api_edit_profile(request, username=None):
+    """Edit profile information"""
+    if request.method == "POST":
+        profile = Profile.objects.get(username=username)
+        # Check usertype and permissions
+        if  not profile.is_owner(request.user) or \
+            not request.user.is_staff or \
+            request.user.is_anonymous:
+            # If not profile owner or admin, or is anonymous user
+            return JsonResponse({"msg": "You can't edit this profile"}, status=403)
+        
+        # Store form field values
+        body = json.loads(request.body)
+
+        # Retrieve form to be edited
+        # https://docs.djangoproject.com/en/4.1/topics
+        # /forms/modelforms/#modelform
+        profile_form = ProfileForm(body, instance=profile)
+        # Validate form
+
+            # Redirect to /profile/username after success
+
+            # Else show form errors
+        
+
+    else:
+        return JsonResponse({"msg": "Method not allowed"}, status=405)
