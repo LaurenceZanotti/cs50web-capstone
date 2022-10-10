@@ -86,6 +86,7 @@ class Profile(models.Model):
         profile['experience'] = list([model_to_dict(exp, exclude=['profile']) for exp in self.experience.all()])
         profile['education'] = list([model_to_dict(edu, exclude=['profile']) for edu in self.education.all()])
         profile['skills'] = list(skill.name for skill in profile['skills'])
+        profile['contact_info'] = model_to_dict(self.contact_info) if self.contact_info else None
         return profile
 
     def is_owner(self, user):
@@ -119,7 +120,7 @@ class Experience(Event):
         on_delete=models.CASCADE,
         related_name="experience"
     )
-    role = models.CharField(max_length=128)
+    role = models.CharField(max_length=128) # TODO: Change field name to company
     description = models.TextField(max_length=1024, default='', blank=True, null=True)
 
 class Education(Event):
@@ -140,4 +141,4 @@ class Skill(models.Model):
 class Contact(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=32)
-    custom_field = models.JSONField()
+    custom_field = models.JSONField(null=True, blank=True)
