@@ -9,10 +9,15 @@ urlpatterns = [
     path("register/congratulations", views.nextjs_congratulations, name="congratulations"),
     path("logout", views.api_logout, name="logout"),
     path("profile", views.nextjs_profile, name="profile"),
+    path("profile/<str:username>", views.nextjs_profile_user, name="profile_user"),
+    path("profile/<str:username>/edit", views.nextjs_profile_edit, name="profile_edit"),
     # API routes
     path("api/hello", views.api_hello, name="api_hello"),
     path("api/register", views.api_register, name="api_register"),
     path("api/login", views.api_login, name="api_login"),
     path("api/logout", views.api_logout, name="api_logout"),
     path("api/user", views.api_user, name="api_user"),
+    path("api/pros/", views.api_root_profile, name="api_root_profile"),
+    path("api/pros/<str:username>/", views.api_get_profile, name="api_profile_user"),
+    path("api/pros/<str:username>/edit", views.api_edit_profile, name="api_profile_edit"),
 ]

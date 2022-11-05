@@ -53,6 +53,7 @@ export default function DropdownMenu({icon, list_options, list_hrefs}) {
               )}
             </Menu.Item> */}
             {list_options.map((el, index) => {
+              // Generate a list o links using <Menu.Item> component
               return (
               <Menu.Item key={index}>
                 {({ active }) => (

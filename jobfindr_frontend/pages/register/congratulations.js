@@ -26,7 +26,7 @@ export default function Congratulations() {
                 <AuthHeader/>
                 <div className='text-center mt-0 mb-10 leading-8'>
                     <p className='text-secondary-500 font-medium'>Congratulations ✨🎉</p>
-                    <p>You are ready to start! Now you can <a href="/login" className='text-primary font-medium'>sign in</a></p>
+                    <p>You are ready to start! Now you can <a href="/login" className='text-primary font-medium' id="login_link">sign in</a></p>
                     <p>Redirecting in {countDown} seconds...</p>
                 </div>
             </AuthLayout>

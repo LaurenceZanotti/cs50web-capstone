@@ -5,7 +5,8 @@ from django.db import IntegrityError
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 # App
-from jobfindr.models import JobSeeker, TalentHunter
+from jobfindr.models import JobSeeker, TalentHunter, Profile
+from jobfindr.forms import ProfileForm
 # Third party
 from django_nextjs.render import render_nextjs_page_sync
 # Built in
@@ -26,6 +27,14 @@ def nextjs_congratulations(request):
 
 def nextjs_profile(request):
     return render_nextjs_page_sync(request)
+
+def nextjs_profile_user(request, username):
+    return render_nextjs_page_sync(request, context={username: username})
+
+@login_required(redirect_field_name="")
+def nextjs_profile_edit(request, username):
+    return render_nextjs_page_sync(request, context={username: username})
+
 
 # API endpoints
 def api_hello(request):
@@ -71,6 +80,8 @@ def api_register(request):
             try:
                 user = JobSeeker.objects.create_user(username, email, password)
                 user.save()
+                profile = Profile.objects.create(owner=user)
+                profile.save()
             except IntegrityError:
                 return JsonResponse({
                     'msg': 'User already exists'
@@ -83,6 +94,8 @@ def api_register(request):
             try:
                 user = TalentHunter.objects.create_user(username, email, password)
                 user.save()
+                profile = Profile.objects.create(owner=user)
+                profile.save()
             except IntegrityError:
                 return JsonResponse({
                     'msg': 'User already exists'
@@ -158,3 +171,87 @@ def api_user(request):
             'user': None,
             'error': 'Not authenticated'
         }, status=403)
+
+def api_root_profile(request):
+    if request.method == "GET":
+        if request.user.is_anonymous:
+            # Redirects anonymous users to login page
+            return JsonResponse({
+                'msg': 'You must be signed in to view your profile'
+            }, status=401)
+        if request.user.is_authenticated:
+            try:
+                if request.user.profile:
+                    # Redirect to `profile/<session_username>`
+                    return JsonResponse({
+                        'msg': 'Redirecting to your profile',
+                        'next': request.user.username
+                    }, status=302)
+            except Profile.DoesNotExist:
+                # If profile doesn't exists, returns a message
+                return JsonResponse({
+                    'msg': 'No profile found for this account'
+                }, status=404)
+
+def api_get_profile(request, username=None):
+    """Get profile information"""
+    if request.method == "GET":
+        if not username and not request.user.is_authenticated:
+            # Redirect to login page if not authenticated and no username provided
+            # TODO: Fix NoReverseMatch at /api/pros/
+            return HttpResponseRedirect(reverse('login'))
+        elif not username and request.user.is_authenticated:
+            # Redirect to user profile if authenticated and not username is provided
+            # TODO: Fix NoReverseMatch at /api/pros/
+            return HttpResponseRedirect(reverse('api_profile_user'), kwargs={'username': str(request.user.username)})
+
+
+        # Identify user type and process view accordingly
+        # Query database
+        user_query = JobSeeker.objects.filter(username=username) or TalentHunter.objects.filter(username=username)
+        if len(user_query):
+            # Return user profile JSON if found
+            user = user_query[0]
+            profile = Profile.objects.get(owner=user.id)
+            if profile.is_public:
+                return JsonResponse({'profile': profile.get_profile_as_dict()})
+            else:
+                # If not public profile, only the owner can view it
+                if profile.is_owner(request.user) or request.user.is_staff:
+                    return JsonResponse({'profile': profile.get_profile_as_dict()})
+                # TODO: Job postings owners which the user is subscribed can view private
+                # profiles too
+                else:
+                    return JsonResponse({'msg': 'This profile is private'})
+        else:
+            # Return return user not found 
+            return JsonResponse({'msg': 'Profile not found'}, status=404)
+
+@login_required(redirect_field_name="")
+def api_edit_profile(request, username=None):
+    """Edit profile information"""
+    if request.method == "POST":
+        profile = Profile.objects.get(username=username)
+        # Check usertype and permissions
+        if  not profile.is_owner(request.user) or \
+            not request.user.is_staff or \
+            request.user.is_anonymous:
+            # If not profile owner or admin, or is anonymous user
+            return JsonResponse({"msg": "You can't edit this profile"}, status=403)
+        
+        # Store form field values
+        body = json.loads(request.body)
+
+        # Retrieve form to be edited
+        # https://docs.djangoproject.com/en/4.1/topics
+        # /forms/modelforms/#modelform
+        profile_form = ProfileForm(body, instance=profile)
+        # Validate form
+
+            # Redirect to /profile/username after success
+
+            # Else show form errors
+        
+
+    else:
+        return JsonResponse({"msg": "Method not allowed"}, status=405)

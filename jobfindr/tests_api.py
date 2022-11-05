@@ -1,5 +1,3 @@
-import re
-from urllib import request
 from django.test import TestCase, Client
 
 # Create your tests here.

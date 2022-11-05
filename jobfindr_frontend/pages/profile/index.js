@@ -3,21 +3,21 @@ import Router from 'next/router'
 import Head from 'next/head'
 
 export default function Profile() {
-    const [user, setUser] = useState(null)
+    const [message, setMessage] = useState({ msg: '...loading profile' })
 
     useEffect(() => {
-        fetch(`/api/user`)
-            .then(res => res.json())
-            .then(data => setUser(data))
-    }, [])
-
-    function handleClick() {
-        fetch(`/api/logout`)
+        let res_status = null
+        fetch(`/api/pros`)
             .then(res => {
-                if (res.status == 200) Router.push('/')
+                res_status = res.status
                 return res.json()
             })
-    }
+            .then(data => {
+                if (res_status == 401) Router.push('/login')
+                if (res_status == 302) Router.push(`/profile/${data.next}`)
+                setMessage(data)    
+            })
+    }, [])
 
     return (
         <>
@@ -26,8 +26,8 @@ export default function Profile() {
         </Head>
         <div id="profile-container">
             <h1>Profile</h1>
-            <div>{JSON.stringify(user)}</div>
-            <button onClick={handleClick}>Log out</button>
+            <div>{message.msg}</div>
+            {/* <button onClick={handleClick}>Log out</button> */}
         </div>
         </>
     )
