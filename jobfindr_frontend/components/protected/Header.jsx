@@ -1,9 +1,10 @@
 // Libraries
-import { UserCircle, List} from "phosphor-react"
+import { UserCircle, Briefcase } from "phosphor-react"
 import { useEffect, useState } from "react"
+import { Popover } from "@headlessui/react"
 
 // Global components
-import DropdownMenu from "../DropdownMenu"
+// import DropdownMenu from "../DropdownMenu"
 
 export default function Header(props) {
     const [user, setUser] = useState(null)
@@ -18,11 +19,29 @@ export default function Header(props) {
         <nav className="bg-blue-700 flex items-center justify-between h-12 py-1">
             {/* Mobile menu */}
             <div className="sm:hidden" id="mobile-menu">
-                <DropdownMenu
+                {/* First try with DropdownMenu component */}
+                {/* <DropdownMenu
                     icon={<List size={20} color={"#71EFA3"} />}
-                    list_options={["Log in", "Sign up"]}
-                    list_hrefs={["login", "register"]}
-                />
+                    list_options={["Job feed", "Another options"]}
+                    list_hrefs={["", ""]}
+                /> */}
+                <Popover className="relative">
+                    <Popover.Button className="m-4 text-white">Menu</Popover.Button>
+
+                    <Popover.Panel className="absolute z-10">
+                        <div className="
+                            bg-secondary-500 
+                            text-white
+                            rounded py-2 w-32 
+                            grid grid-cols-3 items-center
+                            "
+                        >
+                            <Briefcase size={24} color="#f2eded" weight="fill" className="m-auto" /><a href="" className="col-span-2">Job feed</a>
+                        </div>
+                        
+                    </Popover.Panel>
+                </Popover>
+
             </div>
             {/* Logo */}
             <div className="sm:block border-solid sm:border-r-2 sm:border-r-secondary-300" id="logo">
