@@ -7,6 +7,9 @@ import Head from 'next/head'
 import Header from '../../../components/protected/Header'
 import Footer from '../../../components/protected/Footer'
 
+// Libraries
+import { Briefcase } from "phosphor-react"
+
 export default function ProfileUsername() {
     // https://nextjs.org/docs/routing/dynamic-routes
     const router = useRouter()
@@ -39,7 +42,8 @@ export default function ProfileUsername() {
             <title>{username} | Jobfindr</title>
         </Head>
         <Header>
-            {/* Insert menu options and components here */}
+            {/* Desktop menu options */}
+            <button className='text-white flex gap-2'><Briefcase size={24} color="#f2eded" weight="fill" />Job feed</button>
         </Header>
         <div id="profile-container">
             <h1>{username}</h1>
